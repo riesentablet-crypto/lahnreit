@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de">
+<html lang="de" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -10,29 +10,24 @@
 <link rel="stylesheet" href="app.css">
 </head>
 <body>
-<div class="app">
-  <header class="bar">
-    <div class="brand"><b>Lahnreit 1956</b><span>Spielleitung</span></div>
-    <button type="button" class="leise side-toggle" id="side-toggle" aria-controls="side" aria-expanded="false">Liste</button>
-    <nav class="tabs" aria-label="Bereiche">
-      <button type="button" data-tab="personen">Personen</button>
-      <button type="button" data-tab="szenen">Szenen</button>
-    </nav>
-    <div class="wer-wrap"><span class="wer-label">Wer fragt</span>
-      <div class="wer" role="group" aria-label="Wer fragt">
-        <button type="button" data-wer="B">Brandl</button>
-        <button type="button" data-wer="Hd">Hagedorn</button>
-        <button type="button" data-wer="Hs">Hias</button>
-      </div>
-    </div>
-    <div class="suche"><input id="suche" type="search" placeholder="Stichwort, z. B. Föhn, Knopf, Leni" aria-label="Suchen"></div>
-  </header>
-  <div class="shell">
-    <aside class="side" id="side" aria-label="Liste"></aside>
-    <main class="view" id="view"></main>
+<header class="bar">
+  <button type="button" class="leise nur-schmal" id="rail-knopf" aria-controls="rail">Liste</button>
+  <div class="brand"><b>Lahnreit 1956</b><span>Spielleitung</span></div>
+  <div class="uhr" role="group" aria-label="Tageszeit"></div>
+  <div class="bar-rechts">
+    <div class="suche"><input id="suche" type="search" placeholder="Suchen, z. B. Knopf" aria-label="Im ganzen Abenteuer suchen" autocomplete="off"><button type="button" class="leise" id="suche-knopf">Suchen</button></div>
+    <button type="button" class="leise" id="personen-knopf">Personen</button>
+    <button type="button" class="leise" id="thema-knopf" aria-label="Hell oder dunkel" title="Hell oder dunkel">◐</button>
   </div>
+</header>
+<div class="shell">
+  <aside class="rail" id="rail" aria-label="Ablauf und Orte"></aside>
+  <main class="view" id="view"></main>
+  <aside class="gespraech" id="gespraech" aria-label="Gespräch" hidden></aside>
 </div>
+<div class="overlay" id="overlay" hidden></div>
 <script src="data/lahnreit-daten.js"></script>
+<script src="data/grundrisse.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

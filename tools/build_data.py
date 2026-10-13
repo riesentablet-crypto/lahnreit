@@ -3,6 +3,9 @@
 import json, subprocess, sys, tempfile
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import ebenen
+
 root = Path(__file__).resolve().parent.parent
 tmp = Path(tempfile.mkdtemp())
 subprocess.run([sys.executable, str(root / 'tools' / 'parse_hb.py'), str(root / 'quellen' / 'handbuch'), str(tmp)], check=True)
@@ -11,9 +14,14 @@ personen = json.loads((tmp / 'personen.json').read_text())
 for p in personen['personen']:
     p.pop('md', None)
 szenen = json.loads((tmp / 'szenen.json').read_text())
+dorf = ebenen.baue(root / 'quellen' / 'handbuch', szenen)
+for s in szenen['szenen']:
+    s.pop('vorspann_md', None)
+    s.pop('abschnitte', None)
 daten = {
     'personen': personen,
     'szenen': szenen,
+    'dorf': dorf,
     'bilder': json.loads((tmp / 'bilder.json').read_text()),
     'toene': json.loads((tmp / 'toene.json').read_text()),
 }

@@ -42,6 +42,10 @@
   const KS = (sid) => KZ.szenen[sid] || {};
   const KO = (code) => KZ.orte[code] || {};
   const MOD = window.LAHNREIT_MODELLE || {};
+  const POR = window.LAHNREIT_PORTRAETS || {};
+  const porName = (key) => (P[key] ? P[key].name : (POR[key] && POR[key].name) || (MOD[key] && MOD[key].name) || key);
+  const kopfBild = (key, cls = '') => (POR[key] && !(typeof POR[key] === 'object' && !POR[key].kopf) ? `<img class="kopf ${cls}" src="bilder/app/${esc(key)}-kopf.webp" alt="" loading="lazy">` : '');
+  const portraetKnopf = (key) => (POR[key] ? `<button type="button" class="g-portraet" data-portraet="${esc(key)}" title="Bild groß zeigen" aria-label="Bild von ${esc(porName(key))} groß zeigen">${kopfBild(key)}</button>` : '');
   // Requisiten: Karten, Ansichtskarten, Handouts
   const REQ_GRUPPEN = window.LAHNREIT_REQUISITEN || [];
   const RQ = Object.fromEntries(REQ_GRUPPEN.flatMap((g) => g.stuecke.map((r) => [r.id, Object.assign({ gruppe: g.titel }, r)])));
@@ -502,7 +506,7 @@
   // ---------- Bausteine ----------
   function personKnopf(pid) {
     const p = P[pid];
-    return `<button type="button" class="pknopf" data-pid="${pid}"><span class="pk-name">${esc(kurzName(p))}</span><span class="pk-punkte">${punkte(pid)}</span></button>`;
+    return `<button type="button" class="pknopf" data-pid="${pid}"><span class="pk-name">${kopfBild(pid, 'klein')}${esc(kurzName(p))}</span><span class="pk-punkte">${punkte(pid)}</span></button>`;
   }
   function tagsHTML(f) {
     let h = '<span class="tags">';
@@ -613,10 +617,13 @@
     const liste = sl ? r.sl : r.bilder;
     const img = $(`.req-bild img[data-req-bild="${CSS.escape(liste[i] || '')}"]`);
     if (img && img.closest('figure').classList.contains('fehlt')) return;
-    T.zeigen = { id, i: Math.max(0, Math.min(i, liste.length - 1)), sl, liste: liste.map((src) => {
+    zeigeBilder(r.titel, liste.map((src) => {
       const x = $(`.req-bild img[data-req-bild="${CSS.escape(src)}"]`);
       return x && x.getAttribute('src') ? x.getAttribute('src') : src;
-    }) };
+    }), i, sl);
+  }
+  function zeigeBilder(titel, liste, i = 0, sl = false) {
+    T.zeigen = { titel, liste, i: Math.max(0, Math.min(i, liste.length - 1)), sl };
     zeichneZeigen();
     const z = $('#zeigen');
     const f = z.requestFullscreen || z.webkitRequestFullscreen;
@@ -625,10 +632,10 @@
   function zeichneZeigen() {
     const z = $('#zeigen');
     if (!T.zeigen) { z.hidden = true; z.innerHTML = ''; document.body.classList.remove('mit-zeigen'); return; }
-    const { id, i, sl, liste } = T.zeigen;
+    const { titel, i, sl, liste } = T.zeigen;
     z.hidden = false;
     document.body.classList.add('mit-zeigen');
-    z.innerHTML = `<div class="zg-buehne" data-zg-zoom><img src="${esc(liste[i])}" alt="${esc(RQ[id].titel)}"></div>
+    z.innerHTML = `<div class="zg-buehne" data-zg-zoom><img src="${esc(liste[i])}" alt="${esc(titel)}"></div>
       <div class="zg-leiste">${sl ? '<span class="zg-warn">Deine Fassung, nicht für die Spieler</span>' : ''}${liste.length > 1 ? `<button type="button" class="zg-knopf" data-zg="-1" aria-label="Vorheriges">‹</button><span class="zg-n">${i + 1} / ${liste.length}</span><button type="button" class="zg-knopf" data-zg="1" aria-label="Nächstes">›</button>` : ''}<button type="button" class="zg-knopf" data-zg="zu" aria-label="Schließen">×</button></div>`;
   }
   function schliesseZeigen() {
@@ -747,7 +754,8 @@
       box += jetzt.length ? `<ul class="leute">${jetzt.map((l) => `<li>${personKnopf(l.pid)}<div class="tut">${inline(l.text)}</div></li>`).join('')}</ul>` : `<p class="klein-text">Um diese Zeit ist hier niemand von den 22.</p>`;
       if (neben.length) box += `<div class="nebenliste"><div class="etikett">Außerdem</div>${neben.map((x) => {
         const i = SONST.indexOf(x), kn = KZ.nebenfiguren[i], mk = modellKnopf(modellNeben(x.wer));
-        return kn ? tipp(`n|${i}`, `<b>${esc(kurzNeben(x.wer))}</b> ${inline(kn)}${mk}`, 'nb') : `<div class="nb">${klapp(`<b>${esc(x.wer)}</b>, ${inline(x.wo)}. ${inline(x.wozu)}`, 1)}${mk}</div>`;
+        const nk = kopfBild(modellNeben(x.wer), 'klein');
+        return kn ? tipp(`n|${i}`, `${nk}<b>${esc(kurzNeben(x.wer))}</b> ${inline(kn)}${mk}`, 'nb') : `<div class="nb">${klapp(`<b>${esc(x.wer)}</b>, ${inline(x.wo)}. ${inline(x.wozu)}`, 1)}${mk}</div>`;
       }).join('')}</div>`;
     }
     const planCode = PL[code] ? code : null;
@@ -781,7 +789,7 @@
     const kontext = S.kontext && S.kontext.pid === pid ? S.kontext : null;
     const kp = KP(pid);
     const leiterText = leiter ? ((kp && kp.leiter && kp.leiter[leiter.stufe]) || leiter.text) : '';
-    let h = `<div class="g-kopf"><div><div class="ueber">${pid} · Gespräch</div><h2>${esc(p.name)}${modellKnopf(pid)}</h2></div><button type="button" class="zu-knopf" data-schliessen aria-label="Gespräch schließen">×</button></div>`;
+    let h = `<div class="g-kopf">${portraetKnopf(pid)}<div class="g-titel"><div class="ueber">${pid} · Gespräch</div><h2>${esc(p.name)}${modellKnopf(pid)}</h2></div><button type="button" class="zu-knopf" data-schliessen aria-label="Gespräch schließen">×</button></div>`;
     if (kontext && kontext.tut) h += `<div class="g-hier"><span class="etikett">Hier</span> ${inline(kontext.tut)}</div>`;
     h += `<div class="g-wer" role="group" aria-label="Wer redet">${ERM.map((e) => {
       const i = stufe(pid, e.k);
@@ -879,6 +887,9 @@
   function allesUeber(pid) {
     const p = P[pid], k = S.wer, er = pron(p);
     let h = olKopf(`${pid} · alles zur Person`, esc(p.name) + modellKnopf(pid)) + '<div class="ol-inhalt">';
+    if (POR[pid]) h += `<button type="button" class="au-bild" data-portraet="${pid}" title="Bild groß zeigen"><img src="bilder/app/${pid}.webp" alt="${esc(p.name)}" loading="lazy"></button>`;
+    const dazu = [...new Set([...Object.keys(MOD), ...Object.keys(POR)])].filter((key) => ((MOD[key] && MOD[key].zu) || (POR[key] && POR[key].zu)) === pid);
+    if (dazu.length) h += `<p class="feld au-dazu"><b>Dazu.</b> ${dazu.map((key) => `<span class="au-figur">${kopfBild(key, 'klein')}${esc(porName(key))}${POR[key] ? ` <button type="button" class="knopf klein" data-portraet="${esc(key)}">Bild</button>` : ''}${modellKnopf(key)}</span>`).join(' ')}</p>`;
     for (const [kk, v] of Object.entries(p.felder)) {
       if (/^Haltung zu Beginn/.test(kk)) continue;
       h += `<p class="feld"><b>${esc(kk)}.</b> ${inline(v)}</p>`;
@@ -910,7 +921,7 @@
       h += `<h3>${esc(gname)}</h3>`;
       for (const p of drin) {
         const w = WO[p.id] && WO[p.id][S.uhr];
-        h += `<button type="button" class="pzeile" data-pid="${p.id}"><span class="code">${p.id}</span><span class="pz-name">${esc(p.name)}</span><span class="pk-punkte">${punkte(p.id)}</span><span class="pz-wo">${w && w.text ? esc(flach(w.text)) : '<span class="leer">daheim</span>'}</span></button>`;
+        h += `<button type="button" class="pzeile" data-pid="${p.id}"><span class="code">${p.id}</span><span class="pz-name">${kopfBild(p.id, 'klein')}${esc(p.name)}</span><span class="pk-punkte">${punkte(p.id)}</span><span class="pz-wo">${w && w.text ? esc(flach(w.text)) : '<span class="leer">daheim</span>'}</span></button>`;
       }
     }
     h += `</div><h3>Neuer Abend</h3><p class="klein-text">Setzt alle Haltungen, Schlösser und Funde auf den Anfang.</p>
@@ -1212,6 +1223,7 @@
       if (el.classList.contains('gross')) { el.scrollLeft = fx * img.offsetWidth - el.clientWidth / 2; el.scrollTop = fy * img.offsetHeight - el.clientHeight / 2; }
       return;
     }
+    if ((el = t.closest('[data-portraet]'))) { const key = el.dataset.portraet; zeigeBilder(porName(key), [`bilder/app/${key}.webp`]); return; }
     if ((el = t.closest('[data-zeigen]'))) { const [id, i, nur] = el.dataset.zeigen.split('|'); zeige(id, Number(i), nur === 'spieler'); return; }
     if ((el = t.closest('[data-req-sl]'))) { const [id, v] = el.dataset.reqSl.split('|'); T.reqSl[id] = v === '1'; if (T.overlay) zeichneOverlay(); else zeichneHaupt(); return; }
     if ((el = t.closest('[data-req]'))) { zeigeOverlay('req', el.dataset.req); return; }

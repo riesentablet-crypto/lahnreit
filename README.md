@@ -25,8 +25,9 @@ Oben stehen nur Stichpunkte. Wer den ganzen Text braucht, tippt den Stichpunkt a
 
 ## Ordner
 
+- `bilder/` die Porträts der Figuren, benannt nach ihrem Namen. Für die App liegen verkleinerte Fassungen in `bilder/app/` (ganze Figur und Kopf, nach Personennummer); welche es gibt, steht in `data/modelle.js`. Das Porträt erscheint im Gespräch, in »Wer ist da«, in der Personenliste und in »Alles über«; antippen zeigt es groß.
 - `bilder/szenen/` Szenenbilder, benannt nach dem Code aus dem Reiter Bildprompts, also `S7a.jpg` oder `S23.png`. Fehlt ein Bild, zeigt die App dessen Beschreibung.
-- `modelle/` die 3D-Figuren: die ZIPs mit dem Original (OBJ), daraus verkleinert je eine `.glb` und eine `.js` mit demselben Inhalt, damit die App sie auch ohne Server laden kann. `data/modelle.js` sagt, welche Figur zu wem gehört. `lib/` enthält three.js (r147) zum Anzeigen.
+- `modelle/` die 3D-Figuren: die ZIPs mit dem Original (OBJ), daraus verkleinert je eine `.glb` und eine `.js` mit demselben Inhalt, damit die App sie auch ohne Server laden kann. `data/modelle.js` sagt, welche Figur und welches Porträt zu wem gehört. `lib/` enthält three.js (r147) zum Anzeigen.
 - `requisiten/karten/`, `requisiten/handouts/` die Bilder für den Bereich Requisiten. Die Handouts sind aus den Druckvorlagen geschnitten, ohne die grauen Hinweise für die Spielleitung.
 - `requisiten/ansichtskarten/` hier kommen die fertigen Ansichtskarten hin: `mandlkopf.jpg`, `dorf.jpg`, `lahnwirt.jpg` und `kudamm.jpg` (auch `.png` oder `.webp`). Bis dahin zeigt die App, dass sie fehlen.
 - `data/requisiten.js` welche Requisiten es gibt, wann man sie herausgibt und in welchen Szenen und Orten sie vorkommen.

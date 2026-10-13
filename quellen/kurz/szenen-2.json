@@ -1,0 +1,289 @@
+{
+  "S7": {
+    "worum": "Ganzes Dorf in Messe und Ritt: Leni erstmals sehen, ihren wachenden Vater spüren, dem Bürgermeister helfen.",
+    "leute": [
+      "predigt von Schuld; geht keiner früher, steigt er",
+      "letzte Bank Frauenseite, weint ohne Ton",
+      "Männerseite, schaut nur zu Leni, führt Ross zum Segen",
+      "reitet Umritt an, kniet nach Sturz bei seinem Buben",
+      "seit acht wieder heroben, hält die Leute zurück",
+      "Orgel, Weihrauch, Läuten",
+      "stürzt beim zweiten Böller vom Pferd (N5)",
+      "tratschen am Weihwasser über Lenis Beichte (M6)"
+    ],
+    "ablauf_text": [],
+    "ablauf": [
+      "Kommen nach Belieben, hinten oder Männerseite. Predigt steht oben.",
+      "letzte Bank Frauenseite, weint stumm; Vater schaut nur zu ihr.",
+      "Keiner geht: Pfarrer steigt dauerhaft eine Stufe. Hinausschleichen (S8): nicht.",
+      "Wer hinter den Bäuerinnen hinausgeht, hört es ohne Probe.",
+      "Drei Runden um die Kirche; zweiter Böller: Hans stürzt (N5).",
+      "Platz leer, Dorf beim Essen; Nachmittag offen (S9)."
+    ],
+    "hinweise": [],
+    "funde": [
+      "Treffen gegen sieben hinterm Friedhof (S9, N1); Hias, Hagedorn: abgewiesen.",
+      "Knopf ersetzt, vergleichbar mit H3; führt zu Schluss D.",
+      "Zeigt seine Kraft; später Vergleich mit Griffspuren an Lindner (H1)."
+    ],
+    "haeuser": [],
+    "proben": [
+      {
+        "erfolg": "Bei »bekennen« spricht er zu einem Menschen, nicht zur Gemeinde.",
+        "krit": "Er schaut dabei in die letzte Bank, zu Leni.",
+        "patzer": "Wirkt nur wie Hetze gegen das Hotel."
+      },
+      {
+        "erfolg": "H15: ein Knopf ist ersetzt.",
+        "krit": "Dazu frischer, heller Zwirn, an den anderen alter, dunkler.",
+        "patzer": "Gschwendtner merkt es; ab jetzt reicht eine Leni-Frage: S21."
+      },
+      {
+        "erfolg": "Keiner sieht es.",
+        "krit": "Sie steckt ihm einen Zettel zu: »Hinterm Friedhof.«",
+        "patzer": "Vater sieht es, Postbus (S21). Misserfolg: gilt als gesehen."
+      },
+      {
+        "erfolg": "Eingerenkt.",
+        "krit": "Bub lacht; Bürgermeister gibt dem Helfer vor allen die Hand.",
+        "patzer": "Schulter wieder heraus, Bader kommt: »Die ham's no schlimmer gmacht.«"
+      }
+    ],
+    "gespraeche": [
+      "Bäuerinnen: Leni beichtete Samstag um fünf, kam verweint heraus."
+    ],
+    "mehr": [
+      "Einrenken, Stute fangen oder tragen: Bürgermeister steigt dauerhaft eine Stufe.",
+      "Auch da: Moar-Kaspar, Korbi, Wolff, Agnes; Wimmer-Sepp fehlt."
+    ],
+    "haengt": "Nach der Messe bittet Schwester Benedikta Brandl oder Hagedorn: gut zu Leni sein.",
+    "weiter": "Hinausschleichen: S8. Nach dem Ritt offenes Dorf (S9). Dienstag halb sechs Berg (S10)."
+  },
+  "S8": {
+    "worum": "Nur wenn einer die Messe verlässt, nie anbieten: leere Häuser, Funde bis zur Kamera, erwischt: Dorf dagegen.",
+    "leute": [
+      "kocht und singt; freundlich gefragt, erzählt sie vom Ofen",
+      "deckt ab neun im Gasthof (D5) auf",
+      "sitzt am Fenster, schaut auf den Gschwendtner-Hof",
+      "putzt im Jägerhaus (D14) die Gewehre",
+      "kommt um zehn in den Pfarrhof (D4)",
+      "beim Ritt am Platz; schaut weg, hilft nicht"
+    ],
+    "ablauf_text": [],
+    "ablauf": [
+      "Wird gehört, Pfarrer steigt nicht (S7); abwechselnd Kirche, Gassen spielen.",
+      "Haus durchsuchen: halbe Stunde. Einer allein schafft drei, höchstens vier.",
+      "Ab halb neun voll. Hinten herum erreichbar, außer Kanzlei-Vordertür.",
+      "Meist Heimlichkeit hinein; Verstecktes braucht Probe; Misserfolg kostet halbe Stunde.",
+      "Gebeten: geht ohne Beschluss in kein Haus, schaut nur weg.",
+      "Patzer: Zurückgebliebener erwischt, fällt dauerhaft eine Stufe; Dorf erfährt es.",
+      "Vorhalten verrät Einbruch, Rauch fällt; außer bei ehrlichem Parallelweg (Ottilie)."
+    ],
+    "hinweise": [],
+    "funde": [],
+    "haeuser": [
+      {
+        "wer": "Ottilie kocht; solange sie singt, am Herd",
+        "hinein": "Vordertür bis halb neun Schließtechnik; sonst über Küche, Heimlichkeit.",
+        "erwischt": "Ottilie holt Bürgermeister: er, Rauch fallen; Stufe aus N5 weg.",
+        "funde": [
+          "Fehlende Notizbuchseiten (H10), Bürgermeister verbrannte sie; lügt bis Vorhalt (P2).",
+          "Heimlicher Verkauf an Bergbahn; vorgehalten: Geständnis, Alibi, kein Täter.",
+          "Jäger meldete zuerst den Direktor, dann Polizei (H24; P5, S11).",
+          "Ohne Einbruch: Bürgermeister verheizte Samstag Papier (H20); Kanzlei bleibt zu."
+        ]
+      },
+      {
+        "wer": "Bis neun keiner, dann Rosl, halb elf Wirtin",
+        "hinein": "Schlüssel hinter der Theke: bis neun frei, dann Heimlichkeit.",
+        "erwischt": "Rosl weint, fällt eine Stufe, schweigt aber; Dorf erfährt nichts.",
+        "funde": []
+      },
+      {
+        "wer": "Keiner; Kettenhund, nebenan Anna Hübl am Fenster",
+        "hinein": "Heimlichkeit mit Strafwürfel, ohne mit Hundefutter. Tenne: Stärke oder Klettern.",
+        "erwischt": "Anna Hübl: Gschwendtner fällt, schickt Leni fort (S21), meidet Polizei.",
+        "funde": [
+          "1955 fünf gleiche Knöpfe, heute einer fremd (H15); Schluss D.",
+          "Linker neu besohlt (H13, D9), rechter wie H2; Schluss D.",
+          "»L.« ist Leni, wollten zusammen fort; Schluss C, Rückgabe N1.",
+          "Lindners Kamera, Schluss E; mit Film (H19) Beweis; siehe S23."
+        ]
+      },
+      {
+        "wer": "Maxi putzt Gewehre bei offener Tür; Jäger fort",
+        "hinein": "Haustür offen; an der Werkstatttür vorbei: Heimlichkeit.",
+        "erwischt": "Maxi versperrt die Tür, Lauf gesenkt; fällt, sagt's dem Vater.",
+        "funde": [
+          "Schuss 16.10 Grubenwand, fern vom Sattel; entlastet Korbi (P6, N7).",
+          "Öffnet Jagdhütte (B6), nachts vielleicht Rettung; Mitnahme merkt der Jäger.",
+          "Jagdpächter ist Dr. Seefried, der Lindners Spesen unterschrieb (S3); H24."
+        ]
+      },
+      {
+        "wer": "Bis zehn keiner, dann die Zenzi",
+        "hinein": "Offen; ab zehn Heimlichkeit an der Küche vorbei.",
+        "erwischt": "Zenzi und Pfarrer fallen; war er feindselig, kippt er (P14).",
+        "funde": [
+          "1929 Geometer verschüttet: Spruch vom Berg; ohne Fallbezug; D11, B2.",
+          "Pfarrer kämpft offen gegen das Hotel; verbirgt nichts, verschweigt etwas.",
+          "Pfarrer: kein Unfall, Mitwisser im Dorf, Beichtgeheimnis; M6, Leni."
+        ]
+      }
+    ],
+    "proben": [
+      {
+        "erfolg": "Hinein, ungesehen.",
+        "krit": "Hinein, fündig, hinaus; keine weitere Probe für dieses Haus.",
+        "patzer": "Erwischt, siehe beim Haus."
+      },
+      {
+        "erfolg": "Der Fund.",
+        "krit": "Fund, und eine Viertelstunde bleibt übrig.",
+        "patzer": "Etwas fällt oder bricht, wird gehört: erwischt."
+      },
+      {
+        "erfolg": "Offen.",
+        "krit": "Offen, ohne Spuren.",
+        "patzer": "Dietrich bricht ab; Bürgermeister findet ihn, fällt eine Stufe."
+      },
+      {
+        "erfolg": "Balken heraus, hörbar: noch Heimlichkeit. Zurücklegen: Viertelstunde.",
+        "krit": "Leise, und der Balken liegt hinterher wie vorher.",
+        "patzer": "Balken auf den Fuß, 1W3 Trefferpunkte, Hund bellt: erwischt."
+      },
+      {
+        "erfolg": "Drin.",
+        "krit": "Drin, und der Hund merkt nichts.",
+        "patzer": "Sturz vom Holzstoß, 1W3 Trefferpunkte. Erwischt."
+      }
+    ],
+    "gespraeche": [],
+    "mehr": [
+      "Zulassen: Film entwickeln (H19), keine Festnahme, Berg bleibt; S23, S24."
+    ],
+    "haengt": "Glocken läuten zum Segen: noch anderthalb Stunden, der Platz füllt sich.",
+    "weiter": "Halb elf zurück zum Ritt-Ende (S7), dann offenes Dorf (S9)."
+  },
+  "S9": {
+    "worum": "Spieler ermitteln frei, nichts erzwingen: wer ist wo, erster Satz, Karte. Leni ist der Schlüssel.",
+    "leute": [
+      "P9; allein früh an D15, abends hinterm Friedhof (D3)",
+      "P3; am Hof (D10), grüßt und spaltet weiter",
+      "P4; allein im Schulhaus (D7), redet nur dort",
+      "P19; Poststelle (D6) ab zwei, Zettel gegen Versprechen (N2)",
+      "P16; Lahnwirt; Schloss offen: Lindner wollte Leni mitnehmen (H11)",
+      "P22; Pfarrhof (D4), Kaffee, Klatsch (H11), Lenis Beichte",
+      "P7; vor dem Laden (D8), M4, Brotzeit (H8)",
+      "P17; öffnet D9 auf Klopfen; Reparaturheft (H13)",
+      "P10; am Maibaum (D1); H14 nur mit Vorhalt",
+      "P20; ab Dämmerung vor seinem Häusl (D13); H14",
+      "P5; abends im Jägerhaus (D14); Revierbuch (H21), Lüge (H24)",
+      "P21; in seiner Kammer im Sägewerk (D12), Alibi",
+      "P13; auf der Bank am Moar-Hof (D11), Geschichten",
+      "P18; vor Kramerladen; sah Lindner (G9), Licht (H12)"
+    ],
+    "ablauf_text": [],
+    "ablauf": [],
+    "hinweise": [],
+    "funde": [],
+    "haeuser": [],
+    "proben": [
+      {
+        "erfolg": "Redet eine Stufe höher; bei Feindseligen wirkungslos.",
+        "krit": "Zwei Stufen höher, deutet ihr Anliegen an.",
+        "patzer": "Gespräch vorbei; fällt dauerhaft eine Stufe, Karte: »Wenn es kippt«."
+      },
+      {
+        "erfolg": "»Er weicht aus«, ohne zu sagen, wo die Wahrheit liegt.",
+        "krit": "Dazu, worüber er ausweicht.",
+        "patzer": "Du sagst, die Figur meine es ehrlich."
+      },
+      {
+        "erfolg": "Redet sofort eine Stufe höher, fällt danach dauerhaft eine Stufe.",
+        "krit": "Wie Erfolg.",
+        "patzer": "Schon feindselig: kippt. Druck öffnet nie ein Schloss."
+      },
+      {
+        "erfolg": "Ein halber Satz, nicht für Fremde bestimmt.",
+        "krit": "Ein ganzer Satz.",
+        "patzer": "Man merkt das Horchen und wechselt das Thema."
+      }
+    ],
+    "gespraeche": [
+      "Frauen: kein Tanz, Leni sagt Anprobe ab (G12), Näherin: H15."
+    ],
+    "mehr": [
+      "Wohin, wer da, erster Satz, Karte; drei, vier Orte reichen.",
+      "Georgi: Laden, Schule, Säge zu; Rauch nur bis sechs heroben.",
+      "D1 bis D15: wer da, was zu holen, welcher Schluss.",
+      "Allein an D15, D3; Schloss offen: H17; zweite Frage: S21.",
+      "Dachreiter, Schuster, Telefon (S22), N1, N2, N3, N4, N7, N8.",
+      "Jeder kann auftauchen: »Wo ist wer«, Karten im Reiter Personen."
+    ],
+    "haengt": "Fehlender Schluss: Bote schicken. C: Benedikta, Toni. D: Rauch. E: Säger. Jäger: Traudl.",
+    "weiter": "Dienstag halb sechs Berg (S10); danach Hof S20, Telefon S22, Bus S21, Stellen S23."
+  },
+  "S10": {
+    "worum": "Kurzer Aufbruch: Wirtin rüstet aus, gibt die Schuhe ihres gefallenen Mannes; Rauch kommt nicht mit.",
+    "leute": [
+      "packt, gibt die Schuhe, richtet Rauchs Nachricht aus",
+      "am Feuer der Maibaumwache, spotten; Maxi fehlt"
+    ],
+    "ablauf_text": [],
+    "ablauf": [
+      "Brot, Speck, Kaffee, Sturmlaterne, zwei Wolldecken; nicht auf die Rechnung.",
+      "Vor Hagedorn gestellt. Wer dankt, hebt Wirtin; Träger ohne Halbschuh-Strafwürfel.",
+      "Holt Lindner erst mit Schlitten, wenn die Lahn wieder trägt.",
+      "Burschen sehen, wer geht; nach Maxi gefragt: fort, mit Hund.",
+      "Ziehweg, Graben, Lahn, Kaser, Sattel; Lahn trägt nur bis elf."
+    ],
+    "hinweise": [],
+    "funde": [],
+    "haeuser": [],
+    "proben": [],
+    "gespraeche": [],
+    "mehr": [],
+    "haengt": "Wirtin stellt die Laterne hin: »Jetzt gehn's. Sonst gehn's umsonst.«",
+    "weiter": "S11 im Bergwald."
+  },
+  "S11": {
+    "worum": "Der Jäger berichtet wahr vom Fund, lügt über den Anruf, kennt Hias; danach folgt der Gruppe einer.",
+    "leute": [
+      "erzählt wahr vom Fund, lügt über Anruf, grüßt Hias",
+      "wedelt, schnuppert an jedem Rucksack",
+      "folgt ungesehen der Gruppe, den ganzen Tag (N6)"
+    ],
+    "ablauf_text": [],
+    "ablauf": [
+      "Jäger kommt herunter, erwartet sie; höflich, kurz, mit Hias vertraut.",
+      "Tabelle unten; antwortet, hält sich aber nicht lange auf.",
+      "Erster Anruf: »Glei d'Polizei«, für den Direktor gelogen; Psychologie merkt's.",
+      "Trägt ihn; fragt Hias, gibt er ihn sofort, anderen nicht.",
+      "Ast knackt; Horchen verrät Verfolger: Maxi, den ganzen Tag (N6)."
+    ],
+    "hinweise": [],
+    "funde": [
+      "Einzelner Verfolger mit Hund; führt zu S12, S14, S15, S17."
+    ],
+    "haeuser": [],
+    "proben": [
+      {
+        "erfolg": "Er weicht aus.",
+        "krit": "Er schaut dabei zu Hias, als wüsste der es.",
+        "patzer": "Er wirkt glaubwürdig."
+      },
+      {
+        "erfolg": "Einer geht hinter euch, bleibt stehen, wenn ihr steht.",
+        "krit": "Zweihundert Meter zurück duckt sich ein Mann mit Gewehr.",
+        "patzer": "Nichts."
+      }
+    ],
+    "gespraeche": [],
+    "mehr": [
+      "Wahr außer Anruf (H24), Maxi halbwahr; ehrlich, kein Täter."
+    ],
+    "haengt": "Jäger zeigt hangauf: »Da droben liegt er. Gehts zua, sonst kemmts ned rüber.«",
+    "weiter": "S12 im Lahngraben."
+  }
+}

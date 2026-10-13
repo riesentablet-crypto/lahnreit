@@ -1,0 +1,308 @@
+{
+  "S19": {
+    "worum": "Zweite Leichenschau, zweite Chance: stärkste Beweise für Schluss A und B, erklärbar vor Rauch und Mesner.",
+    "leute": [
+      "Schlüssel, Lampe, hilft beim Umdrehen. Hier ist kein Pfarrer.",
+      "Schaut zu. Darf er Protokoll führen, steigt er."
+    ],
+    "ablauf_text": [],
+    "ablauf": [
+      "Mesner sperrt auf: Rauch immer, Gruppe ab neutral (P12).",
+      "Medizin, eine gute Stunde. Nach Patzer am Berg: richtige Leichenschau.",
+      "Erlaubt, wenn Rauch nicht feindselig. Nur so: leerer Magen (H7).",
+      "Faust am Berg zu? Jetzt aufgetaut, Knopf fällt heraus (H3).",
+      "Protokoll oder mitschauen lassen: steigt dauerhaft eine Stufe (P15).",
+      "Anfassen lassen: steigt. Schweigen versprechen plus Sterbeglöckerl-Frage: Schloss auf (P12).",
+      "Kleider vor Rauch und Mesner erklärt: zählt als erklärter Spuk."
+    ],
+    "hinweise": [],
+    "funde": [
+      "Von vorn gepackt, sehr starke Hände: Schluss A, Georgiritt (S7).",
+      "Hirschhornknopf einer Lodenjoppe, nicht Lindners. Schluss A, H15, S20.",
+      "Derselbe Mann wie beim Knopf. Vergleich nur in München möglich.",
+      "Nicht tödlich, aber stundenlang bewusstlos: Brotzeit unberührt, spät gekrochen.",
+      "Hände durch harschen Schnee gezogen: Er ist gekrochen.",
+      "Falsche Hitze beim Erfrieren: selbst ausgezogen. Schluss B, Hagedorns Ziel.",
+      "Tod Freitag früh, fast zwölf Stunden nach Sturz. Schluss B."
+    ],
+    "haeuser": [],
+    "proben": [
+      {
+        "erfolg": "H1, Bruch, Nägel und H6",
+        "krit": "Alles, auch ohne Öffnung; Rauch glaubt: »Des war koa Unfall.«",
+        "patzer": "Lodenfaden am Knopf reißt ab, verloren. Sonst gilt Bergbefund."
+      },
+      {
+        "erfolg": "leerer Magen und Todeszeitpunkt",
+        "krit": "Dazu: leichtes Mittagessen; er wollte oben zu zweit essen.",
+        "patzer": "Nichts sicher, Todeszeitpunkt bleibt ungefähr."
+      },
+      {
+        "erfolg": "die Lodenfasern",
+        "krit": "Dunkelgrün wie der Faden am Knopf.",
+        "patzer": "nichts"
+      }
+    ],
+    "gespraeche": [],
+    "mehr": [],
+    "haengt": "Rauch: »Is er gfalln oder ned?« Übersieht man die Arme, zeigt sie der Mesner.",
+    "weiter": "Dorf (S9), Hof (S20), abends Telefon (S22). Grab? Mesner: kein Grab, evangelisch."
+  },
+  "S20": {
+    "worum": "Hof des stillen, höflichen Täters: fremder Knopf, Atelierbild, Kamera in der Tenne; Besuch löst S21 aus.",
+    "leute": [
+      "spaltet Holz, lügt über Donnerstag, öffnet die Tenne nicht",
+      "kommt mit Milchkanne aus dem Stall, wird hineingeschickt",
+      "sitzt nebenan am Fenster und sieht alles",
+      "lässt keinen Fremden an die Tenne"
+    ],
+    "ablauf_text": [],
+    "ablauf": [
+      "Ohne Rauch: fällt. Anpacken: steigt. Mit Rauch: eine Stufe höher.",
+      "Donnerstag »im Stall«, gelogen. Bei Lenis Namen stockt die Axt.",
+      "Muss ins Haus. Vor dem Vater nur »Ned do«.",
+      "Hängt am Zaunpfosten; fremder Knopf ohne Probe sichtbar (H15).",
+      "Mit Rauch oder nach Anpacken: Bilder (H16), Bergschuhe im Flez.",
+      "Erstmals verriegelt; »bloß Heu«, er öffnet nicht. Zugang: »Die Tenne«.",
+      "Anna Hübl, neutral zu allen, freut sich über Klopfen.",
+      "Gruppe weg: Leni muss mit nächstem Postbus nach Miesbach (S21)."
+    ],
+    "hinweise": [],
+    "funde": [
+      "Ein Knopf neu ersetzt, die alten gleichen H3. Schluss D.",
+      "1955 Knöpfe gleich: Schluss D. Mit H13 Grund für Tennensuche.",
+      "Rechter passt zu H2, linker neu besohlt zu H13.",
+      "Tenne erst seit kurzem zu; Säger verkaufte ihn Samstag (D12).",
+      "Knopf Freitag früh ersetzt, Schuhe nachts gewaschen: Schluss D, E.",
+      "Lindners Kamera, passt zu H4, Film drin. Schluss E, H19.",
+      "Letztes Bild: Gschwendtner am Hang, verwackelt. Damit redet er (S23)."
+    ],
+    "haeuser": [],
+    "proben": [
+      {
+        "erfolg": "Er weicht aus.",
+        "krit": "Bei Lenis Namen stockt die Axt einen Schlag.",
+        "patzer": "Sag dem Spieler: mürrischer, ehrlicher Bauer."
+      },
+      {
+        "erfolg": "Sie hat Angst, nicht vor euch.",
+        "krit": "Bei »Heu« schaut sie zur Tenne.",
+        "patzer": "nichts"
+      },
+      {
+        "erfolg": "Unter der Bank Bergschuhe, einer neu besohlt.",
+        "krit": "Umdrehen und vergleichen, ohne dass es einer merkt.",
+        "patzer": "nichts"
+      },
+      {
+        "erfolg": "die Kamera, in einer Stunde",
+        "krit": "die Kamera in einer Viertelstunde",
+        "patzer": "Tritt durch die Luke: 1W3 Trefferpunkte, Hund schlägt an."
+      },
+      {
+        "erfolg": "drin",
+        "krit": "drin, Hund hat nichts gemerkt",
+        "patzer": "erwischt (siehe »Wer nachts erwischt wird«)"
+      },
+      {
+        "erfolg": "drin",
+        "krit": "drin und still",
+        "patzer": "Sturz vom Holzstoß, 1W3 Trefferpunkte. Erwischt."
+      },
+      {
+        "erfolg": "Keil heraus; wieder einlegen kostet eine Viertelstunde.",
+        "krit": "leise",
+        "patzer": "Balken auf den Fuß, 1W3 Trefferpunkte. Erwischt."
+      }
+    ],
+    "gespraeche": [],
+    "mehr": [
+      "Zugänge; Rauch braucht H13 und H15 oder H16; Flucht S24."
+    ],
+    "haengt": "Anna Hübl winkt ans Fenster: »Seit Samstag sperrt er d'Tenn zua.«",
+    "weiter": "Stellt die Gruppe ihn mit Beweisen: S23. Jeder Hofbesuch löst S21 aus."
+  },
+  "S21": {
+    "worum": "Vater schickt Leni zur Tante, schon das verdächtig; letzte Chance, im Dorf mit ihr zu reden.",
+    "leute": [
+      "steigt mit dem Pappkoffer in den Bus",
+      "bringt sie hin, bleibt stehen, bis der Bus fährt",
+      "lässt jeden zu Leni, der höflich fragt"
+    ],
+    "ablauf_text": [
+      "Haltestelle: stumm. Briefe (N1) oder Haarband zurück: heimlich Adresszettel.",
+      "Im Bus: Vater fällt dauerhaft, Leni redet eine Stufe höher.",
+      "Mit dem Wagen nach: Leni eine Stufe höher, Zusicherung genügt.",
+      "Keiner da: H17 nur in Miesbach. Adresse: Ilse, Benedikta, Rosl."
+    ],
+    "ablauf": [],
+    "hinweise": [
+      "Vroni Kirchberger, Wollladen Stadtplatz 7, kooperativ, mag den Schwager nicht.",
+      "Ohne Rauch gestellt: Flucht (S24). Leni zurück bei offenem Schloss."
+    ],
+    "funde": [],
+    "haeuser": [],
+    "proben": [
+      {
+        "erfolg": "Angst um jemanden, nicht vor jemandem.",
+        "krit": "Blickt kurz zum Berg, dann auf Vaters Hand am Arm.",
+        "patzer": "nichts"
+      },
+      {
+        "erfolg": "Erleichtert, dass sie fährt.",
+        "krit": "Wischt sich bei der Abfahrt über die Augen.",
+        "patzer": "Sag dem Spieler: strenger Vater, sonst nichts."
+      }
+    ],
+    "gespraeche": [],
+    "mehr": [],
+    "haengt": "Abends hält Schwester Benedikta an: Leni bei der Tante, Miesbach, Stadtplatz sieben.",
+    "weiter": "Zurück ins Dorf (S9), nach Miesbach, oder zum Hof (S23)."
+  },
+  "S22": {
+    "worum": "Einziges Telefon, Traudl hört mit: Nachfragen nach außen, und München macht Druck auf Hias und Brandl.",
+    "leute": [
+      "vermittelt, hört mit, schreibt mit; will nach München (N2)",
+      "will einen Bergunfall und Hias auf seiner Seite",
+      "will keinen Wirbel"
+    ],
+    "ablauf_text": [],
+    "ablauf": [
+      "Bei Traudl anmelden, 10 bis 30 Minuten, Berlin eine Stunde.",
+      "Notiert (H24). Mit N2 verschwiegen, gekippt erfährt's ihr Vater (P19).",
+      "Erster Abend nach dem Berg, sieben Uhr; Brandl unauffindbar: neun.",
+      "Blatt rät jeden Abend; Spieler entscheidet. Danebenstehende hören nur Hias.",
+      "steht in der Tabelle. Je Anruf halbe bis ganze Stunde."
+    ],
+    "hinweise": [],
+    "funde": [
+      "Jäger rief erst Direktor (P5), dann Polizei: S11 gelogen."
+    ],
+    "haeuser": [],
+    "proben": [
+      {
+        "erfolg": "Zweites Knacken in der Leitung: Traudl hört mit.",
+        "krit": "Dazu ihr Atem und das Kratzen des Bleistifts.",
+        "patzer": "nichts"
+      },
+      {
+        "erfolg": "Redet, als hörte einer mit.",
+        "krit": "Im Hintergrund fragt Seefried; erkennt nur, wer seine Stimme kennt.",
+        "patzer": "Sag dem Spieler: Der Kriminalrat meint es gut."
+      },
+      {
+        "erfolg": "Angst, nicht um Lindner, sondern um die Bahn.",
+        "krit": "Weiß mehr über den Bürgermeister, kennt den Vorvertrag.",
+        "patzer": "Klingt wie einer, dem ein Mitarbeiter fehlt."
+      }
+    ],
+    "gespraeche": [],
+    "mehr": [
+      "Sätze von Seefried, Wiesinger. Vor dem Berg verrät Seefried N6.",
+      "Mutter, Brückl, Zirngibl, Landratsamt, Bahn, Wiesinger: Alibis und Schluss C."
+    ],
+    "haengt": "Traudl: Anruf aus München für den Kommissar, er ruft um neun wieder an.",
+    "weiter": "Zurück in die Gaststube, oder in die Nacht nach dem Berg (N7, N8, S9)."
+  },
+  "S23": {
+    "worum": "Leiser Höhepunkt, langsam spielen: Er hält jedem Vorhalt stand, gesteht erst bei Lenis Aussage oder Film.",
+    "leute": [
+      "sitzt still, gesteht erst bei H17 oder H19",
+      "steht in der Küchentür, bleibt nur bei offenem Schloss",
+      "steht in der Stubentür, schweigt bis zum Schluss"
+    ],
+    "ablauf_text": [],
+    "ablauf": [
+      "Schloss offen (P9): Leni bleibt. Leni im Haus: keine Flucht.",
+      "Antwortet wie in S20; beim ersten Vorhalt geht er: S24.",
+      "Reihenfolge wählen die Spieler; Antworten in der Tabelle, dazwischen Schweigen.",
+      "H17 und Schloss offen: sie wiederholt es, dann redet er.",
+      "H17, H19, Abkürzung: vorlesen. Stoß und Kamera ja, Weiterleben nie.",
+      "Sie war bis eins unter ihm, geht hinaus. Vater verstummt.",
+      "Ohne Gegenwehr. Verhaftet Brandl ohne Rauch, fällt Rauch dauerhaft (P15).",
+      "Spieler entscheiden. Tat drin: Ende 1. Bergunfall: Ende 2. Raushalten."
+    ],
+    "hinweise": [],
+    "funde": [],
+    "haeuser": [],
+    "proben": [
+      {
+        "erfolg": "Er wartet nur darauf, dass einer Lenis Namen sagt.",
+        "krit": "Schaut zu den Bildern; ihm geht es um die Tochter.",
+        "patzer": "Sag dem Spieler: unschuldig und gekränkt."
+      },
+      {
+        "erfolg": "Redet eine Stufe höher, kein Geständnis; danach fällt er dauerhaft.",
+        "krit": "wie Erfolg",
+        "patzer": "Ohne Rauch, Leni: S24. Sonst nur noch H17 oder H19."
+      },
+      {
+        "erfolg": "Redet ohne H17, H19, wenn H13 und H15 vorliegen.",
+        "krit": "wie Erfolg, und er sagt, wo die Kamera liegt",
+        "patzer": "»Die Leni woaß nix.« Schweigt; keine Abkürzung mehr."
+      },
+      {
+        "erfolg": "Sie will, dass es vorbei ist.",
+        "krit": "Schaut den Vater an; sie hat Angst um ihn.",
+        "patzer": "nichts"
+      }
+    ],
+    "gespraeche": [],
+    "mehr": [
+      "Seine Antworten zu H13 bis H17, H19 und Schluss B.",
+      "Haltungen wie zu Beginn, plus bisherige Verschiebungen."
+    ],
+    "haengt": "Ohne H17, H19: Rauch will in d'Tenn, mit Grund sofort; ohne Rauch: Lenis Blick.",
+    "weiter": "Geständnis: S25, Ende 1 oder 2. Flucht: S24. Mittwochabend ohne Beweis: S25, Ende 4."
+  },
+  "S24": {
+    "worum": "Er geht den Weg vom Donnerstag zur Lahn; Verfolgung, Tod möglich, Lenis Name holt ihn zurück.",
+    "leute": [
+      "steigt den Donnerstagsweg hinauf, reagiert nur auf Lenis Namen"
+    ],
+    "ablauf_text": [],
+    "ablauf": [
+      "»I muss in Stall.« Hinten Stalltür offen, Spur zum Bergwald.",
+      "Zwei von drei: rechtzeitig, einer: zu spät. Zögern: erster verloren.",
+      "Nirgendwohin; Bergwald (B1), Lahngraben (B2), in die Lahn (B4).",
+      "Haltung egal; es zählt nur, ob einer Leni nennt.",
+      "Vormittags trägt die Lahn: er kommt hinüber, Verfolger wie S13."
+    ],
+    "hinweise": [],
+    "funde": [],
+    "haeuser": [],
+    "proben": [],
+    "gespraeche": [],
+    "mehr": [
+      "Zaun: Springen oder Geschick; Wald: Konstitution; Graben: Spurensuche.",
+      "Leni rufen: Überzeugen. Sonst Glück 40; misslungen: Lahn geht ab.",
+      "Stabilität 1/1W6, drei Runden ausgraben, sonst tot: Ende 3.",
+      "Sitzt in der Kaser; folgt keiner, gesteht er nachts Rauch."
+    ],
+    "haengt": "Bleibt die Gruppe auf dem Hof, ruft Anna Hübl: »Der is naus, zum Wald!«",
+    "weiter": "S25."
+  },
+  "S25": {
+    "worum": "Abfahrt, keine Probe: Wer kommt, zeigt, was der Abend bewirkt hat; dann geheime Ziele.",
+    "leute": [],
+    "ablauf_text": [],
+    "ablauf": [
+      "Passenden Endtext vorlesen, dann sagen, wer noch kommt.",
+      "Großzügig; erreicht: 1W6 Stabilität zurück. Einzeln sagen oder Rückseiten vorlesen.",
+      "letzten Absatz allen vorlesen."
+    ],
+    "hinweise": [],
+    "funde": [],
+    "haeuser": [],
+    "proben": [],
+    "gespraeche": [],
+    "mehr": [
+      "Wer am Wagen steht, nach N2, N4, N6, N8, H12.",
+      "Brandl: eine Frau. Hagedorn: drei Spuks, Gutachten. Hias: Bergunfall.",
+      "Schlussabsatz zum Vorlesen, für alle.",
+      "Nachspiel für Gschwendtner, Leni, Bahn, Rauch; je nach Akte."
+    ],
+    "haengt": null,
+    "weiter": "Das Abenteuer ist aus."
+  }
+}

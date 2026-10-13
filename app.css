@@ -121,8 +121,8 @@ body.mit-gespraech .shell { grid-template-columns: 240px minmax(0, 1fr) 440px; }
 }
 
 /* ---------- Liste links ---------- */
-.rail-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; background: var(--bg); border-radius: 10px; padding: 4px; margin-bottom: 0.75rem; }
-.rail-tabs button { border: 0; border-radius: 7px; background: transparent; min-height: 36px; cursor: pointer; font-family: var(--font-display); color: var(--muted); }
+.rail-tabs { display: grid; grid-template-columns: 1fr 1fr 1.3fr; gap: 4px; background: var(--bg); border-radius: 10px; padding: 4px; margin-bottom: 0.75rem; }
+.rail-tabs button { border: 0; border-radius: 7px; background: transparent; min-height: 36px; cursor: pointer; font-family: var(--font-display); color: var(--muted); font-size: 0.9rem; padding: 0 0.3rem; }
 .rail-tabs button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.15); }
 .rail h3 { display: flex; align-items: center; justify-content: space-between; margin: 1rem 0.4rem 0.3rem; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; }
 .rail h3 .info { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--line); background: transparent; cursor: pointer; font: italic 600 0.8rem var(--font-body); color: var(--muted); }
@@ -479,3 +479,87 @@ details.ak-mehr > summary { cursor: pointer; font: 500 0.85rem var(--font-displa
   .pz-wo { grid-column: 2 / -1; }
   .lg-tipp { margin-left: 0; }
 }
+
+/* ---------- Kurzfassungen: antippen zeigt den ganzen Text ---------- */
+.tippbar { cursor: pointer; border-radius: 8px; transition: background .12s; }
+.tippbar:hover { background: var(--surface-2); }
+.stich { margin: 0; padding-left: 1.1rem; }
+.stich li { margin: 0.1rem 0; }
+.trenner { color: var(--muted); padding: 0 0.1rem; }
+.kontext {
+  position: fixed; z-index: 70; background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, .45); padding: 0.55rem 0.9rem 0.8rem; overflow-y: auto;
+}
+.kx-kopf { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; font: 600 0.9rem var(--font-display); border-bottom: 1px solid var(--line); padding-bottom: 0.35rem; margin-bottom: 0.3rem; }
+.kx-text { font-size: 0.97rem; }
+.kx-text p { margin: 0.4rem 0; }
+.zu-knopf.klein { width: 30px; height: 30px; min-height: 30px; font-size: 1rem; }
+.g-kurz { display: grid; gap: 0.1rem; margin: 0 0 0.8rem; }
+.g-kurz .gk { display: grid; grid-template-columns: 5.4rem minmax(0, 1fr); gap: 0.4rem; padding: 0.25rem 0.35rem; }
+.gk-t { font: 600 0.78rem var(--font-display); text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); padding-top: 0.15rem; }
+.gk-v { font-size: 0.95rem; }
+.g-bewegt { display: grid; gap: 0.25rem; padding: 0.4rem 0.5rem; border: 1px solid var(--line); font-size: 0.92rem; }
+.gb-z { display: grid; grid-template-columns: 1.1rem minmax(0, 1fr); gap: 0.35rem; align-items: baseline; }
+.gb-pf { font-size: 0.8rem; text-align: center; }
+.gb-pf.hoch { color: var(--st4); }
+.gb-pf.runter { color: var(--st0); }
+.gb-z.kippt .gb-pf { color: var(--st1); font-weight: 700; }
+details.zeile.mit-kurz > summary .vorschau, .vorschau.ganz { white-space: normal; overflow: visible; }
+.fund-kurz { font: 500 0.95rem var(--font-display); margin: 0.25rem 0 0.4rem; color: var(--accent); }
+.probe-kurz { display: grid; gap: 0.15rem; }
+.pk-z { display: grid; grid-template-columns: 6rem minmax(0, 1fr); gap: 0.5rem; padding: 0.2rem 0.35rem; }
+.pk-t { font: 600 0.75rem var(--font-display); text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); padding-top: 0.15rem; }
+.ort-kurz { margin-top: 0.4rem; font-size: 1.02rem; max-width: 75ch; padding: 0.15rem 0.3rem; margin-left: -0.3rem; }
+.haus-kurz { padding: 0.1rem 0.3rem; margin: 0 -0.3rem; }
+.nebenliste .tippbar.nb { padding: 0.15rem 0.3rem; margin: 0 -0.3rem; }
+.leute .tippbar.tut { padding: 0.1rem 0.3rem; margin: 0 -0.3rem; }
+.worum.tippbar { padding: 0.15rem 0.3rem; margin-left: -0.3rem; }
+.weiter.tippbar, .anfang.tippbar { display: block; }
+
+/* ---------- 3D-Figuren ---------- */
+.modell-knopf { margin-left: 0.5rem; vertical-align: middle; font-size: 0.75rem; padding: 0.1rem 0.5rem; min-height: 28px; }
+.modell-buehne { position: relative; height: min(66vh, 620px); border-radius: 12px; overflow: hidden; touch-action: none; background: radial-gradient(ellipse at 50% 30%, var(--surface-2), var(--bg) 75%); }
+.modell-buehne canvas { display: block; width: 100%; height: 100%; }
+.modell-buehne:fullscreen { height: 100%; border-radius: 0; background: radial-gradient(ellipse at 50% 30%, #3a352d, #12100d 75%); }
+.mb-status { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font: 0.95rem var(--font-display); padding: 1rem; text-align: center; }
+.modell-knoepfe { margin-top: 0.6rem; }
+.modell-knoepfe .knopf[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+
+/* Fehlendes Szenenbild: kurze Beschreibung statt leerer Fläche */
+.bildbox:has(.bild-fehlt:not([hidden])) { aspect-ratio: auto; }
+.bf-tipp { margin: 0 -0.5rem; padding: 0.35rem 0.5rem; border-radius: 8px; }
+
+/* ---------- Requisiten ---------- */
+.knopf.haupt { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 500; }
+.req-knoepfe { margin: 0.9rem 0; align-items: center; }
+.req-fassung { display: inline-flex; gap: 4px; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 3px; }
+.req-fassung button { border: 0; border-radius: 7px; background: transparent; min-height: 34px; padding: 0 0.75rem; cursor: pointer; font-family: var(--font-display); font-size: 0.9rem; color: var(--muted); }
+.req-fassung button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.15); }
+.req-bilder { display: grid; gap: 1rem; }
+.req-bilder.mehrere { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); align-items: start; }
+.req-bild { margin: 0; }
+.req-zeig { display: block; width: 100%; padding: 0; border: 0; background: transparent; cursor: zoom-in; }
+.req-zeig img { display: block; max-width: 100%; max-height: 72vh; margin: 0 auto; object-fit: contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,.25)); }
+.req-bild.fehlt { border: 1px dashed var(--line); border-radius: 12px; background: var(--surface); }
+.req-bild .bild-fehlt { padding: 1rem 1.2rem; }
+.req-bild code { font-family: var(--font-code); font-size: 0.9em; }
+.req-fuss { margin-top: 1rem; }
+.req-zeile { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin: 0.9rem 0 1.1rem; }
+.req-chip { border: 1px solid var(--line); background: var(--surface); border-radius: 99px; padding: 0.2rem 0.8rem; min-height: 34px; cursor: pointer; font-family: var(--font-display); font-size: 0.9rem; color: var(--ink); }
+.req-chip::before { content: "▤ "; color: var(--accent); }
+.req-chip:hover { border-color: var(--accent); }
+
+/* Zeigen: Vollbild für die Spieler */
+.zeigen { position: fixed; inset: 0; z-index: 90; background: #0b0d0c; display: flex; flex-direction: column; }
+.zeigen:fullscreen { background: #0b0d0c; }
+.zg-buehne { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: zoom-in; padding: 2vmin; }
+.zg-buehne img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+.zg-buehne.gross { display: block; overflow: auto; cursor: zoom-out; padding: 0; }
+.zg-buehne.gross img { max-width: none; max-height: none; }
+.zg-leiste { position: absolute; top: 10px; right: 10px; display: flex; gap: 6px; align-items: center; }
+.zg-knopf { width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,.35); background: rgba(12,14,13,.72); color: #fff; font-size: 1.4rem; cursor: pointer; }
+.zg-knopf:hover { background: rgba(12,14,13,.9); }
+.zg-n { color: #fff; background: rgba(12,14,13,.72); border-radius: 8px; padding: 0.3rem 0.5rem; font-family: var(--font-display); font-size: 0.95rem; }
+.zg-warn { background: #8a2f22; color: #fff; border-radius: 8px; padding: 0.35rem 0.7rem; font-family: var(--font-display); font-size: 0.9rem; }
+body.mit-zeigen { overflow: hidden; }
+.req-bild figcaption { text-align: center; font-size: 0.88rem; color: var(--muted); margin-top: 0.4rem; }

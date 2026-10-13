@@ -1,0 +1,238 @@
+{
+  "S1": {
+    "worum": "Spieler spüren den Ort vor dem Fall: einziger langer Vorlesetext, langsam mit Pausen, Dorf erst am Ende.",
+    "leute": [
+      "wartet vor dem Gasthof, schaut auf die Uhr",
+      "stehen am Feuer, drehen sich um, schweigen"
+    ],
+    "ablauf_text": [
+      "Geht einer zu den Burschen: Größter sagt nur »Grüß Gott«.",
+      "Mehr zu den Burschen in S5.",
+      "Bleiben alle am Wagen: der Uniformierte kommt herüber (S2)."
+    ],
+    "ablauf": [
+      "Prolog lesen bis »Und auf einmal ist das Dorf da.«",
+      "Bild S1: Abend, Stamm und Feuer, zuletzt Leute. Keine Namen.",
+      "Die letzten zwei Sätze lesen.",
+      "Spieler fragen, was ihre Ermittler beim Aussteigen tun."
+    ],
+    "hinweise": [],
+    "funde": [],
+    "haeuser": [],
+    "proben": [],
+    "gespraeche": [],
+    "mehr": [
+      "Später wichtig: Lahnkehre (G8), Maibaumwache (S5, N8), Lahn, Anruf (S22)."
+    ],
+    "haengt": null,
+    "weiter": "S2, sobald die Ermittler aussteigen."
+  },
+  "S2": {
+    "worum": "Rauch nennt Toten, Fundort und warum keiner bei ihm war, verschweigt drei Dinge; Durchreiche verrät Hausgeheimnis.",
+    "leute": [
+      "berichtet kollegial und vorsichtig, lässt drei Dinge weg",
+      "bringt Kaffee, rechnet, verschweigt: sperrte dem Bürgermeister auf",
+      "trägt Koffer hinauf, wird rot, wenn Brandl sie anspricht"
+    ],
+    "ablauf_text": [],
+    "ablauf": [
+      "Drei Schritte entgegen, zu jedem ein Satz, dann ins Nebenzimmer.",
+      "Wirtin bringt Kaffee, geht; Rauch erstattet Bericht (oben).",
+      "Antwortet laut P15; Hotel, Drohung 17.4., Burschenlärm nur auf Nachfrage.",
+      "Wirtin ließ Bürgermeister Samstag um vier ein; Rauch verübelt's ihr.",
+      "Gegen halb sieben bietet Rauch Zimmerbesichtigung an, dann S3.",
+      "Geht um acht, kommt morgen zum Georgiritt um acht wieder."
+    ],
+    "hinweise": [
+      "Zimmer 2, 3, 4 neben Lindners Nr. 1; Schlüssel: Wirtin."
+    ],
+    "funde": [],
+    "haeuser": [],
+    "proben": [
+      {
+        "erfolg": "Weiß mehr über das Dorf, als er sagt.",
+        "krit": "Wird unruhig, sobald einer »Bürgermeister« sagt.",
+        "patzer": "Spieler hält ihn für einfachen Dorfgendarmen."
+      },
+      {
+        "erfolg": "Hört M5 ganz.",
+        "krit": "M5, Wirtin merkt nichts.",
+        "patzer": "Wirtin sieht Lauscher, schiebt Durchreiche zu, fällt eine Stufe."
+      }
+    ],
+    "gespraeche": [
+      "Wirtin zu Rosl: Daxers Zimmerbesuch, Leni verschweigen; Leni erst P16."
+    ],
+    "mehr": [
+      "Rauch als Kollege: Skeptiker neutral, Durchsuchung möglich; gekippt: Skeptiker feindselig."
+    ],
+    "haengt": "Rauch steht auf, nimmt die Mütze, bietet das Zimmer an.",
+    "weiter": "S3 Lindners Zimmer, oder gleich S4 die Stube."
+  },
+  "S3": {
+    "worum": "Lindner war kein Kurgast, liebte heimlich, jemand war vor der Polizei drin; Spuren: Hotel, Leni, Bürgermeister.",
+    "leute": [
+      "sperrt auf, bleibt in der Tür, lügt über Bürgermeister",
+      "putzt Schuhe im Flur, erzählt Gesehenes nur auf Frage"
+    ],
+    "ablauf_text": [],
+    "ablauf": [
+      "Wirtin sperrt auf, lügt. Wahrheit: Bürgermeister Samstag um vier drin.",
+      "Offenes ohne Probe, Verstecktes mit Verborgenes erkennen; Komplettsuche halbe Stunde.",
+      "Alles in einem Durchgang, auch Durchdruck und Briefe.",
+      "Wirtin ertappt Kofferwühler, fällt eine Stufe, erzählt's abends am Stammtisch.",
+      "Vorhalt Stumpen, M5 oder »nur sie hatte Schlüssel«: Daxer war's."
+    ],
+    "hinweise": [],
+    "funde": [
+      "Seit Donnerstag unbenutzt: Lindner kam Donnerstag nicht mehr heim.",
+      "H10. Treffen mit »L.«, zuletzt Kaser (S14); Seiten frisch herausgerissen.",
+      "Bleistift: ohne Probe. »xer hat unterschr«: Daxer, Kanzleiofen (H20, D6).",
+      "Lindner plante Lift, Hotel; Talstation auf Daxer-Wiese. Ausräumen: ohne Probe.",
+      "Lindner: Angestellter von Seefrieds Bergbahn. Seefried pachtet Jagd (S11, D14).",
+      "Geliebte: Dorfmädchen »L.«, strenger Vater. Zurückgeben öffnet Leni (N1).",
+      "Kamera fehlt: zum leeren Etui (H4, S15), Schluss E.",
+      "Keine Tropfen, kein Diätzettel, kein Kurarztbrief: Kur erfunden.",
+      "Fremder Raucher nach Lindner: Bürgermeister raucht Virginia (S4); Vorhalt Wirtin.",
+      "Dipl.-Ing. aus Berlin, Zweck »Erholung«, doch Rechenschieber auf dem Tisch.",
+      "Fehlten Freitag früh; Tricouni-Nagelung, Spur unverwechselbar (H2, H13)."
+    ],
+    "haeuser": [],
+    "proben": [],
+    "gespraeche": [],
+    "mehr": [
+      "Hat die Gruppe Lenis Briefe, will Leni sie zurück (N1)."
+    ],
+    "haengt": "Rosl bringt Handtücher und schaut eine Spur zu lang auf den Koffer.",
+    "weiter": "S4 Die Stube."
+  },
+  "S4": {
+    "worum": "Dorf zeigt Kasermandl und laute Männer: Hotelstreit, Drohung gegen Lindner, Spuk; der Täter kommt nie ins Wirtshaus.",
+    "leute": [
+      "hält Hof, raucht Virginia, lügt über das Hotel",
+      "84, erzählt vom Kasermandl, von 1929, vom Haberfeld",
+      "Ein Satz; Schussfrage vor Leuten: geht. Angefasst: schlägt (1W3).",
+      "flüstert vom Sterbeglöckerl, bekreuzigt sich",
+      "spielt Karten, schaut jedem zuerst auf die Schuhe",
+      "bedient; allein gefragt, erzählt sie von der Drohung",
+      "zapft, erzählt von Kasermandln vor Lindners Fenster",
+      "Bauern und Häusler, reden, wissen nichts zum Fall"
+    ],
+    "ablauf_text": [],
+    "ablauf": [
+      "Stille, Gruß des Bürgermeisters; im Vorbeigehen M1 ohne Probe.",
+      "Neben Stammtisch; wer still sitzt, hört M2, sonst Horchen.",
+      "Stock auf Dielen, erzählt allen vom Kasermandl und 1929.",
+      "Alle ansprechbar, Antwort nach Haltung; Bürgermeister: »Unglück«, Hotel »Weibergred«.",
+      "Rauch fährt. Gekippt (S2): sein Satz, Skeptiker werden feindselig.",
+      "Kuhglocken, Goaßln; Moar-Kaspar: »Jetzt treibn's eahm aus.« Weiter S5."
+    ],
+    "hinweise": [
+      "Spukerklärung zählt fürs geheime Ziel; Spott: Zuhörer fällt, Kaspar lacht.",
+      "Hotelmord laut gefragt: Ziegler »Den nächsten schicken's halt.« Sonst später."
+    ],
+    "funde": [
+      "Wimmer, für tot erklärt, lebt (P20, G11, N4); Augenzeuge H14.",
+      "Korbis Axtdrohung; war am Berg, nicht Täter (P6, H21, G10).",
+      "Bürgermeister raucht Virginia, passt zum Stumpen aus S3.",
+      "Gschwendtner kommt nie ins Wirtshaus, seit die Bäuerin tot ist."
+    ],
+    "haeuser": [],
+    "proben": [
+      {
+        "erfolg": "Hört M2 ganz.",
+        "krit": "M2, dazu Bürgermeister zu Kaspar: »Vom Dienstag redt koaner.«",
+        "patzer": "Korbi stellt sich vor Lauscher: »Is was?« Dann nur Wetter."
+      },
+      {
+        "erfolg": "Will, dass es ein »Unglück« bleibt.",
+        "krit": "Bei Lindners Namen kurzer Blick zur Treppe.",
+        "patzer": "Spieler hält ihn für einen besorgten Bürgermeister."
+      },
+      {
+        "erfolg": "Hat Angst, aber nicht vor euch.",
+        "krit": "Reibt rechte Schulter wie nach einem Rückschlag.",
+        "patzer": "Spieler ist sicher: Der war's."
+      },
+      {
+        "erfolg": "Föhn erklärt Vieh, Hunde und Glöckerl.",
+        "krit": "Glocke schlägt nur bei offenen Schallladen; Mesner-Michl wird bleich.",
+        "patzer": "Erklärer klingt städtisch; Moar-Kaspar und Stammtisch lachen."
+      }
+    ],
+    "gespraeche": [
+      "Kartentisch: Georgitanz abgesagt (G2), Autounfall Lahnkehre (G8); ohne Mordbezug.",
+      "Stammtisch: Hotel (G3), Beilmann (G9), Schuss (G10); alles falsche Fährten."
+    ],
+    "mehr": [
+      "Kasermandl holt Kaser-Schläfer vor Georgi; 1929 holte Lahn den Geometer."
+    ],
+    "haengt": "Moar-Kaspar klopft mit dem Stock, bis es still ist: »Neunazwanzge«",
+    "weiter": "Gegen elf S5 Das Kasermandl-Austreiben."
+  },
+  "S5": {
+    "worum": "Erster Spuk ist Brauch, bis oben Licht geht; Burschen planen Kasermandl-Schreck: soll erwartet werden, bleibt aus.",
+    "leute": [
+      "führt Zug mit Larve an, Wortführer; soll Leni heiraten",
+      "schweigt am Feuer; folgt am Bergtag der Gruppe (N6)",
+      "erzählt alles, nur allein; am Feuer stets Martl dabei",
+      "Burschen am Feuer",
+      "Flüchtlingsbub, darf nicht mitwachen"
+    ],
+    "ablauf_text": [],
+    "ablauf": [
+      "Lärm holt ans Fenster oder hinaus; Spieler entscheiden.",
+      "Zug vom Maibaum zum Waldrand und zurück, gut zehn Minuten.",
+      "Wimmer-Sepp mit Laterne, schlaflos. Martl: »Des is bloß der Russ.«",
+      "Wer Licht sieht, ohne Wimmers Laterne zu kennen. Verlust: Albtraum.",
+      "Wer im Dunkeln am Platz steht: ohne Probe; Fenster: Horchen."
+    ],
+    "hinweise": [],
+    "funde": [
+      "Haberer-Larven vom Moar-Hof (D11): Burschen lärmten damit vor Lindners Fenster.",
+      "Wimmer-Sepp (D13, N4) sah Donnerstag, wer hinaufging (H14)."
+    ],
+    "haeuser": [],
+    "proben": [
+      {
+        "erfolg": "Hört M3 ganz.",
+        "krit": "M3; Schorsch: Gschwendtner kam Donnerstag halb acht aus dem Wald.",
+        "patzer": "Fenster quietscht, Martl spuckt ins Feuer, fällt eine Stufe."
+      },
+      {
+        "erfolg": "Echte, alte Larven, keine Faschingsmasken.",
+        "krit": "Der Martl hebt die Maske.",
+        "patzer": "Nichts."
+      }
+    ],
+    "gespraeche": [
+      "Burschen planen Kasermandl-Schreck; bleiben an Wache (N8), Klopfer Maxi (S17)."
+    ],
+    "mehr": [],
+    "haengt": "Rosl: »Des is bloß der Brauch. Aber des Liacht da droben«, bekreuzigt sich.",
+    "weiter": "Ruhige Nacht; um fünf früh klopft es: S6 in Teil 2."
+  },
+  "S6": {
+    "worum": "Große Entscheidung, heute auf den Berg oder erst Georgi; schon am Vorabend entschieden: gleich weiter.",
+    "leute": [
+      "bringt Kaffee und Brot und fragt"
+    ],
+    "ablauf_text": [
+      "Spieler beraten; nur sagen: Spuren schwinden täglich, heute Georgi.",
+      "Jetzt hinauf (S10): H2, H5 voll; ohne Georgi, N5, S8.",
+      "Erst Georgi (S7): N5, S8, S9; H2, H5 nur halb.",
+      "Bei Georgi kommt der Berg erst am Dienstag."
+    ],
+    "ablauf": [],
+    "hinweise": [
+      "Rauch: nachmittags nie über Lahn. Trotzdem: Probe S13, Patzer Lawine."
+    ],
+    "funde": [],
+    "haeuser": [],
+    "proben": [],
+    "gespraeche": [],
+    "mehr": [],
+    "haengt": null,
+    "weiter": "S10 Berg oder S7 Georgi; bei Georgi klopft Wirtin Dienstag fünf Uhr wieder."
+  }
+}

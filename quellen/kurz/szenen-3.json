@@ -1,0 +1,326 @@
+{
+  "S12": {
+    "worum": "Die Geschichte von 1929 bekommt ein Gesicht, und wer genau hinschaut, merkt: Einer folgt der Gruppe.",
+    "leute": [],
+    "ablauf_text": [],
+    "ablauf": [
+      "Inschrift lesbar; wer 1929 kennt (S4, D2, D4), erkennt es.",
+      "Neu geschnitten, sichtbar ohne Probe.",
+      "Im Wald neben dem Weg, nur mit Spurensuche (N6).",
+      "Kein Steg, vereiste Steine: Springen oder Geschick."
+    ],
+    "hinweise": [],
+    "funde": [
+      "Martls dumme Drohung; Vorhalt: Geständnis samt Larvenspuk (P10), entlastet Burschen.",
+      "Ein Mann mit Hund folgt heimlich; führt zu Maxi (S17)."
+    ],
+    "haeuser": [],
+    "proben": [
+      {
+        "erfolg": "Zweite Spur: Mann mit Hund, keine Stunde alt.",
+        "krit": "Tiefe Tritte: Er trägt schwer, wohl ein Gewehr.",
+        "patzer": "nichts"
+      },
+      {
+        "erfolg": "Trocken hinüber.",
+        "krit": "Trocken hinüber, der Nächste bekommt Bonuswürfel.",
+        "patzer": "Ausgerutscht: 1W3 Trefferpunkte, nasse Füße, friert nachts mehr (S17)."
+      }
+    ],
+    "gespraeche": [],
+    "mehr": [],
+    "haengt": "Eichelhäher schreit; im Wald rieselt Schnee vom Ast, als hätte ihn einer gestreift.",
+    "weiter": "Über untere Alm (B3) zur Lahn, S13; Naturkunde dort: Hang trägt bis elf."
+  },
+  "S13": {
+    "worum": "Die Lahn ist die Uhr des Tages: Morgens trägt sie, nachmittags gibt es kein Zurück.",
+    "leute": [],
+    "ablauf_text": [],
+    "ablauf": [
+      "Spieler entscheiden. Möglich mit Seil laut Blatt oder von Wolff.",
+      "Jeder würfelt Klettern oder Geschick; Halbschuhe Strafwürfel, Seil Bonuswürfel.",
+      "Rückweg bis elf, nicht ansagen; Quelle: Wirtin, Jäger, Rauch, Naturkunde.",
+      "Nur gegen jeden Rat: Schnee nass, Patzer löst Lawine aus."
+    ],
+    "hinweise": [],
+    "funde": [],
+    "haeuser": [],
+    "proben": [
+      {
+        "erfolg": "Drüben.",
+        "krit": "Drüben, der Nächste bekommt Bonuswürfel.",
+        "patzer": "1W6 Trefferpunkte oder Laterne, Kamera, Rucksack in den Graben."
+      },
+      {
+        "erfolg": "Drüben.",
+        "krit": "Drüben, der Nächste bekommt Bonuswürfel.",
+        "patzer": "Nur Ausrüstung verloren, keine Trefferpunkte."
+      }
+    ],
+    "gespraeche": [],
+    "mehr": [],
+    "haengt": "Oben löst sich Harsch, rollt dicht an der Spur vorbei. Warnung genug.",
+    "weiter": "Über der Lahn öffnet sich die Hochalm, S14."
+  },
+  "S14": {
+    "worum": "Lindners und Lenis heimlicher Treffpunkt: Spuren zeigen Verabredung mit einem Mädchen, unterm Boden falsche Fährte.",
+    "leute": [
+      "beobachtet vom Waldrand die Tür, mit Fernglas"
+    ],
+    "ablauf_text": [],
+    "ablauf": [
+      "Angeblich seit Herbst leer; Milch, zwei Becher (H9) sieht jeder.",
+      "Verborgenes erkennen: Haarband am Lager; kritisch dazu Buchstaben im Brett.",
+      "Verborgenes erkennen, dazu Korbis Versteck (H22); Viertelstunde, abends nachholbar.",
+      "Wer zurückschaut: Verborgenes erkennen, Fernglas blitzt (N6); drüben nur Spuren.",
+      "Dreiviertelstunde offenen Hang hinauf zum Joch mit Steinmann."
+    ],
+    "hinweise": [],
+    "funde": [
+      "Zwei Becher, kein Kasermandl: Verabredung (Schluss C). Milchträger: H12, H14.",
+      "Führt zu Leni. Allein zurückgeben: Gesprächsanlass; vor anderen: verloren (P9).",
+      "R und L: Rolf und das »L.« (H10); zu Leni.",
+      "Wilderei, falsche Fährte (G10). Korbi allein gestellt: sah Ringen (P6).",
+      "Der Mann aus dem Wald beobachtet die Gruppe (S15, S17).",
+      "Milchdeutung zählt erst vor Dorfzeugen; Leni laut genannt: fällt (P9)."
+    ],
+    "haeuser": [],
+    "proben": [
+      {
+        "erfolg": "Das Haarband.",
+        "krit": "Dazu R und L im Brett über dem Lager.",
+        "patzer": "nichts"
+      },
+      {
+        "erfolg": "Dazu Korbis Versteck (H22).",
+        "krit": "Dazu R und L.",
+        "patzer": "Brett festgetreten; Versteck erst abends mit neuer Probe."
+      },
+      {
+        "erfolg": "Am Waldrand blitzt ein Fernglas.",
+        "krit": "Junger Mann mit Hut und Gewehr tritt zwischen Fichten zurück.",
+        "patzer": "nichts"
+      }
+    ],
+    "gespraeche": [],
+    "mehr": [],
+    "haengt": "Wer die Becher anfasst: einer mit Milchrand, einer nicht. Einer kam nie.",
+    "weiter": "Sattel eine Dreiviertelstunde höher, S15. Abends Schutzhütte (S16, S17), Übersehenes nachholbar."
+  },
+  "S15": {
+    "worum": "Kein Unfall (Schluss A), lebend liegengelassen (B), kam zum Treffen (C), falsche Spuren fallen; Funde nur auf Handlung.",
+    "leute": [
+      "schaut vom Grat mit Fernglas; angerufen, ist er weg"
+    ],
+    "ablauf_text": [],
+    "ablauf": [
+      "Steinmann Messpunkt, Pflock Hotelecke (S3); Hias war im März hier.",
+      "Drei Wege (Tabelle unten); Halbschuhe Strafwürfel; Rinne sicher, aber langsam.",
+      "Wer vorher Schnee ansehen will: Spurensuche mit Bonuswürfel, sonst ohne.",
+      "Keine Probe; Gesicht frei: Stabilität 0/1W4, außer Hagedorn. Bild S15b.",
+      "Medizin, eine Stunde: H1, H6, H7, Ausschlüsse; Sichtbares ohne Probe.",
+      "Ohne Probe: Brotzeit (H8), Geldbörse, Messgeräte; Verborgenes erkennen: Faust (H3).",
+      "Zwei Spurensuchen: Felsstufe (H2), Kriechspur (H5); Dienstag nur Halbwert.",
+      "Mitten in der Leichenschau fragen, wer aufschaut: Verborgenes erkennen (N6).",
+      "Gegen zwölf Fischwolken; Naturkunde: Sturm in einer Stunde (S16).",
+      "Liegenlassen oder zur Kaser ziehen (eine Stunde); morgen Schlitten (S18)."
+    ],
+    "hinweise": [],
+    "funde": [
+      "Ein Zweiter stand beim Gestürzten; Schuster: Gschwendtners Nagelung (H13, S9).",
+      "Vorm Sturz hart gepackt (Schluss A); solche Hände: Gschwendtner (S7).",
+      "Joppenknopf eines Gegners (Schluss A); passende Joppe (H15): Schluss D.",
+      "Kamera weg, Geld da: jemand wollte Bilder (Schluss A, E).",
+      "Sturz um 17.34 Uhr; mit H7: fast zwölf Stunden gelegen.",
+      "Lebte nach dem Sturz und kroch, wollte Hilfe (Schluss B).",
+      "Erfrierend selbst ausgezogen, Schluss B; Hagedorns Ziel: erst vor Dorfzeugen.",
+      "Blut in Schichten: lebte noch die halbe Nacht (Schluss B).",
+      "Kam zum Treffen (Schluss C); dazu Kramerin (D8), Becher (H9).",
+      "Messband, Kompass, Höhenmesser (eingesteckt: S16); Notizbuch nicht hier (H10)."
+    ],
+    "haeuser": [],
+    "proben": [
+      {
+        "erfolg": "H1, H6 gefaltete Kleider, H7; keine Schusswunde, kein Werkzeug.",
+        "krit": "Dazu Griff von vorn und Todeszeitpunkt.",
+        "patzer": "Nur Sturzbefund, so ansagen; neuer Versuch erst im Leichenhaus (S19)."
+      },
+      {
+        "erfolg": "H2, Tritte von zwei Männern.",
+        "krit": "Dazu Sohlenfetzen in der Felsritze.",
+        "patzer": "In die alten Tritte getreten, H2 verloren."
+      },
+      {
+        "erfolg": "H5, die Kriechspur.",
+        "krit": "Sie zeigt zur Kaser.",
+        "patzer": "Spur zertreten; Schluss B bleibt über H7 und Uhr."
+      },
+      {
+        "erfolg": "Helles in der Faust (H3); Viertelstunde wärmen, Gewalt bricht Finger.",
+        "krit": "Dazu abgerissener Kamerariemen (H4).",
+        "patzer": "nichts"
+      },
+      {
+        "erfolg": "Kerben vom Gesteinsklopfen (G9).",
+        "krit": "Kalk mit Versteinerungen, wie Studenten ihn suchen.",
+        "patzer": "nichts"
+      },
+      {
+        "erfolg": "Mann mit Fernglas auf dem Grat, dann weg (N6).",
+        "krit": "Gewehr über der Schulter, kleiner Hund.",
+        "patzer": "nichts"
+      },
+      {
+        "erfolg": "Erkennt die Wechte, bleibt davon weg.",
+        "krit": "Findet Maxis frische Spur zur Alm.",
+        "patzer": "Wechte bricht: zehn Meter in die Rinne, 1W6 Trefferpunkte."
+      },
+      {
+        "erfolg": "Sturm in einer Stunde.",
+        "krit": "Bis zur Lahn reicht es nicht, nur zur Hütte.",
+        "patzer": "Hält die Wolken für harmlos."
+      }
+    ],
+    "gespraeche": [],
+    "mehr": [
+      "Seil, Sprung, Rinne (sicher, halbe Stunde, Sturm S16); Bild S15b.",
+      "Ausgeschlossen: Hammer, Kampfkerben (G9), Schuss (G10), Raub, Dunkelheit, Spaziergang."
+    ],
+    "haengt": "Ein Rabe scharrt am Fuß der Felsstufe; im Eis darunter Nagelabdrücke (H2).",
+    "weiter": "S16 Der Wettersturz."
+  },
+  "S16": {
+    "worum": "Sturm kommt, Lahn trägt nicht: kurzer Wettlauf gegen das Licht zur offenen Kaser oder verschlossenen Jagdhütte.",
+    "leute": [],
+    "ablauf_text": [],
+    "ablauf": [
+      "Wer mittags Naturkunde schaffte, weiß es; sonst Zeichen (Tabelle).",
+      "Nicht ansagen. Trotzdem hinunter? Gehen lassen: Lawine (S13), Strafwürfel.",
+      "Kaser oder Jagdhütte (Tabelle »Wohin«); Spieler entscheiden, nur Wissen nennen.",
+      "Bis halb zwei probenfrei, danach Orientierung; Toter kostet eine Stunde.",
+      "Folgt unbemerkt bis zur Hütte; zeigt sich nachts (S17)."
+    ],
+    "hinweise": [],
+    "funde": [],
+    "haeuser": [],
+    "proben": [
+      {
+        "erfolg": "In einer Stunde ist der Sturm da.",
+        "krit": "Er dauert bis zum Morgen.",
+        "patzer": "Hält ihn für einen kurzen Schauer."
+      },
+      {
+        "erfolg": "Die Gruppe findet die Hütte.",
+        "krit": "Hütte gefunden, daneben zweite Spur von Mann und Hund.",
+        "patzer": "Einer stürzt in Mulde, 1W6 Trefferpunkte; Hütte dann doch gefunden."
+      },
+      {
+        "erfolg": "Schloss gibt nach, ohne Schaden.",
+        "krit": "In einer Minute.",
+        "patzer": "Dietrich bricht ab; nur noch Stärke hilft."
+      },
+      {
+        "erfolg": "Tür gibt nach, Rahmen gesplittert.",
+        "krit": "Tür springt auf, Schloss bleibt ganz.",
+        "patzer": "Schulter geprellt, 1W3 Trefferpunkte; der Nächste darf versuchen."
+      }
+    ],
+    "gespraeche": [],
+    "mehr": [
+      "Fischwolken, Höhenmesser 1700 statt 1620 (S15), Wind von unten, Graupel.",
+      "Kaser offen (H9, H22); Jagdhütte warm (H23), Einbruch: Jäger fällt."
+    ],
+    "haengt": "Kurz reißt das Treiben auf: Kaserdach, daneben Jagdhütte mit Hirschgeweih. Dann weiß.",
+    "weiter": "S17 Die Nacht im Sturm."
+  },
+  "S17": {
+    "worum": "Erst Ruhe am Feuer, Funde zusammensetzen; dann draußen der Verfolger, dessen Überleben an der Gruppe hängt.",
+    "leute": [
+      "ab 20 Uhr draußen; hereingeholt steigt er eine Stufe",
+      "heult 18 Uhr, kratzt 22 Uhr an der Tür"
+    ],
+    "ablauf_text": [],
+    "ablauf": [
+      "Reden lassen, nicht drängen, zuhören. Kaser: S14 nachholbar; Jagdhütte: H23.",
+      "Ab 18 Uhr Stundentabelle; bei Untätigkeit zu 20 Uhr springen.",
+      "Mit Seil an der Tür sicher; ohne Seil Orientierung.",
+      "Begegnung: siehe N6 unten; draußen gefunden: Bild S17b.",
+      "Sturm bricht ab: klar, bitterkalt, Tür zugeweht (S18)."
+    ],
+    "hinweise": [
+      "Halbschuhe, Bach (S12): ungetrocknet 1 Trefferpunkt, nicht ansagen; Jagdhütte trocknet."
+    ],
+    "funde": [
+      "Seefried, Lindner, Hias im März hier; Wiesinger war Jagdgast (S22).",
+      "Funde aus S14 nachholbar, gleiche Proben; sonst nichts Neues.",
+      "Kein Gamszähler; Vorhalt: Maxi gibt zu, Vater schickte ihn (P11)."
+    ],
+    "haeuser": [],
+    "proben": [
+      {
+        "erfolg": "Ein Mann allein, mit Hund.",
+        "krit": "Redet bairisch mit dem Hund, Stimme zittert.",
+        "patzer": "Klingt wie mehrere."
+      },
+      {
+        "erfolg": "Findet zurück.",
+        "krit": "Findet zurück und dabei Maxis Spur.",
+        "patzer": "Nur durch Rufe und Licht zurück; 1W3 Trefferpunkte, Laterne weg."
+      },
+      {
+        "erfolg": "Er kommt.",
+        "krit": "Er kommt und gibt sein Gewehr ab.",
+        "patzer": "Fühlt sich verspottet, schießt einmal in die Luft."
+      },
+      {
+        "erfolg": "Er lebt.",
+        "krit": "Er lebt und ist morgens auf den Beinen.",
+        "patzer": "Gegen Morgen hört er auf zu atmen."
+      }
+    ],
+    "gespraeche": [],
+    "mehr": [
+      "18 Heulen (0/1W3), 20 Klopfen, 22 Kratzen, Mitternacht Maxi bewusstlos.",
+      "Tat hilft jedem, Drohung: Luftschuss, Waffe: Maxi schießt; Lohn G10.",
+      "Hagedorns Sohn, Hias im Hüttenbuch, Brandls Platzangst; Spieler entscheiden."
+    ],
+    "haengt": "22 Uhr: Hund kratzt, winselt; geöffnet, läuft er drei Schritte und schaut zurück.",
+    "weiter": "S18 Freischaufeln und Abstieg."
+  },
+  "S18": {
+    "worum": "Abstieg mit dem Toten und Rauch; Wagners Satz führt zu Schluss B, das Dorf sieht die drei anders.",
+    "leute": [
+      "bringt Tee und Obstler, fragt erst nach der Gruppe",
+      "bremst den Schlitten, sagt den Satz vom Kriechen",
+      "lenkt den Hörnerschlitten an den Hörnern",
+      "steigt schweigend mit ab"
+    ],
+    "ablauf_text": [],
+    "ablauf": [
+      "Halbe Stunde, keine Probe; Brandls Platzangst spielt sein Spieler.",
+      "Mit Wagner und Kaje; fragt zuerst nach der Gruppe.",
+      "Einbeziehen hebt ihn dauerhaft (P15); abgespeist fragt er nicht mehr.",
+      "Kaser: gleich aufladen; Sattel: Dreiviertelstunde hinauf, Rauch schaut schweigend.",
+      "»Der is no krocha.« Bestätigt oder eröffnet Schluss B.",
+      "Helfer am Steilstück: Stärke; ohne Trödeln rechtzeitig vor elf.",
+      "Burschen ziehen schweigend Hüte; Leichenhaus (D3), Schlüssel hat der Mesner.",
+      "Wohnt ab jetzt beim Lahnwirt, solange die Gruppe da ist."
+    ],
+    "hinweise": [],
+    "funde": [],
+    "haeuser": [],
+    "proben": [
+      {
+        "erfolg": "Schlitten bleibt in der Spur.",
+        "krit": "Alle eine halbe Stunde früher unten.",
+        "patzer": "Schlitten bricht aus: Haltender 1W6 Trefferpunkte, Toter bleibt angeseilt."
+      }
+    ],
+    "gespraeche": [],
+    "mehr": [
+      "Maxi lebt; Maxi tot, Dorf gegen Gruppe; Ermittler tot; Tagesabstieg."
+    ],
+    "haengt": "Rauch reicht die Kanne herum, wartet, dann: »Und? Was habts gfundn?«",
+    "weiter": "Teil 4: meist Leichenhaus (S19) oder erst schlafen; Dorf wieder offen (S9)."
+  }
+}

@@ -36,6 +36,17 @@
   const ORTE = D.dorf.orte;
   const WO = D.dorf.wo;
   const SONST = D.dorf.sonst;
+  // Kurzfassungen (oberste Ebene) und 3D-Figuren
+  const KZ = Object.assign({ personen: {}, szenen: {}, orte: {}, nebenfiguren: [] }, window.LAHNREIT_KURZ || {});
+  const KP = (pid) => KZ.personen[pid] || null;
+  const KS = (sid) => KZ.szenen[sid] || {};
+  const KO = (code) => KZ.orte[code] || {};
+  const MOD = window.LAHNREIT_MODELLE || {};
+  // Requisiten: Karten, Ansichtskarten, Handouts
+  const REQ_GRUPPEN = window.LAHNREIT_REQUISITEN || [];
+  const RQ = Object.fromEntries(REQ_GRUPPEN.flatMap((g) => g.stuecke.map((r) => [r.id, Object.assign({ gruppe: g.titel }, r)])));
+  const reqFuer = (art, code) => Object.values(RQ).filter((r) => (r[art] || []).includes(code));
+  const reqId = (ort) => (/^R-/.test(ort || '') && RQ[ort.slice(2)] ? ort.slice(2) : null);
 
   // ---------- Zustand, nur in diesem Browser gespeichert ----------
   const KEY = 'lahnreit-spielleitung-v1';
@@ -54,7 +65,7 @@
   const sichern = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* egal */ } };
 
   // Was nur für diesen Augenblick gilt
-  const T = { frage: '', thema: null, alleThemen: false, medien: {}, plan: {}, oeffne: null, resetFrage: false, overlay: null };
+  const T = { frage: '', thema: null, alleThemen: false, medien: {}, plan: {}, oeffne: null, resetFrage: false, overlay: null, reqSl: {}, zeigen: null };
 
   // ---------- Hilfen ----------
   const $ = (sel, el = document) => el.querySelector(sel);
@@ -150,6 +161,12 @@
     if (b[1]) h += `<p class="fuehrt"><span class="etikett">Wohin es führt</span> ${inline(b[1].trim())}</p>`;
     return h;
   }
+  // Kurzfassung zum Antippen: dann kommt der ganze Text als Kontextfenster
+  const tipp = (key, html, cls = '') => `<div class="tippbar ${cls}" data-voll="${esc(key)}" role="button" tabindex="0" title="Antippen für den ganzen Text">${html}</div>`;
+  const stich = (arr) => (arr && arr.length ? `<ul class="stich">${arr.map((x) => `<li>${inline(x)}</li>`).join('')}</ul>` : '');
+  const reihe = (arr) => (arr || []).map(inline).join(' <span class="trenner">·</span> ');
+  const modellKnopf = (key) => (key && MOD[key] ? `<button type="button" class="knopf klein modell-knopf" data-modell="${esc(key)}" title="Figur in 3D zeigen">3D</button>` : '');
+  const modellNeben = (wer) => Object.keys(MOD).find((k) => MOD[k].neben && wer.includes(MOD[k].neben));
   const klapp = (html, zeilen = 2) => `<div class="klapp z${zeilen}"><div class="kt">${html}</div><button type="button" class="kk" data-klapp>mehr</button></div>`;
   function markiere(el, q) {
     if (!q || !el) return;
@@ -278,10 +295,19 @@
 
   // ---------- Bilder ----------
   const ENDUNGEN = ['png', 'jpg', 'webp'];
+  const BILDTEXT = {};
+  // Solange ein Bild fehlt: erster Satz und »Worauf du zeigst«, der Rest beim Antippen
+  function bildKurz(text) {
+    const t = flach(text || '');
+    const erst = saetze(t, 1);
+    const zeig = (t.match(/Worauf du zeigst:.*$/) || [''])[0];
+    return zeig && !erst.includes(zeig) ? `${erst} ${zeig}` : erst;
+  }
   function bildBox(code, text, titel) {
+    BILDTEXT[code] = { text: text || '', titel: titel || '' };
     return `<figure class="bildbox">
       <img src="bilder/szenen/${esc(code)}.png" alt="${esc(titel || 'Bild ' + code)}" data-code="${esc(code)}" data-versuch="0">
-      <div class="bild-fehlt" hidden><div class="bf-kopf">Bild ${esc(code)} fehlt noch. Darauf zu sehen:</div><div class="bf-text">${inline(text || '')}</div></div>
+      <div class="bild-fehlt" hidden><div class="bf-kopf">Bild ${esc(code)} fehlt noch</div>${tipp(`b|${code}`, `<div class="bf-text">${inline(bildKurz(text))}</div>`, 'bf-tipp')}</div>
     </figure>`;
   }
   function bildFehler(img) {
@@ -484,11 +510,11 @@
     if (f.handout) h += `<span class="tag tag-h">${esc(f.handout)}</span>`;
     return h + '</span>';
   }
-  function fundZeile(f, id, sid) {
+  function fundZeile(f, id, sid, kurz) {
     const fid = `${sid}:${f.titel}`;
     const hat = !!S.gefunden[fid];
-    return `<div class="fund${hat ? ' gefunden' : ''}"><details class="zeile" id="${id}"><summary><span class="zt">${esc(f.titel)}</span>${tagsHTML(f)}<span class="vorschau">${esc(f.wo)}</span></summary>
-      <div class="inhalt">${fundText(f.md)}</div></details>
+    return `<div class="fund${hat ? ' gefunden' : ''}"><details class="zeile" id="${id}"><summary><span class="zt">${esc(f.titel)}</span>${tagsHTML(f)}<span class="vorschau ganz">${esc(f.wo)}</span></summary>
+      <div class="inhalt">${kurz ? `<p class="fund-kurz">${inline(kurz)}</p>` : ''}${fundText(f.md)}</div></details>
       <button type="button" class="haken" data-haken="${esc(fid)}" aria-pressed="${hat}" title="${hat ? 'gefunden' : 'als gefunden abhaken'}" aria-label="${esc(f.titel)} gefunden">✓</button></div>`;
   }
   const zeile = (id, titel, vorschau, inhalt, cls = '') => `<details class="zeile ${cls}" id="${id}"><summary><span class="zt">${titel}</span>${vorschau ? `<span class="vorschau">${esc(vorschau)}</span>` : ''}</summary><div class="inhalt">${inhalt}</div></details>`;
@@ -510,8 +536,15 @@
 
   // ---------- Seitenleiste ----------
   function rail() {
-    let h = `<div class="rail-tabs" role="group" aria-label="Liste"><button type="button" data-rail="szenen" aria-pressed="${S.rail === 'szenen'}">Ablauf</button><button type="button" data-rail="orte" aria-pressed="${S.rail === 'orte'}">Orte</button></div><nav class="rail-liste">`;
-    if (S.rail === 'orte') {
+    let h = `<div class="rail-tabs" role="group" aria-label="Liste"><button type="button" data-rail="szenen" aria-pressed="${S.rail === 'szenen'}">Ablauf</button><button type="button" data-rail="orte" aria-pressed="${S.rail === 'orte'}">Orte</button><button type="button" data-rail="requisiten" aria-pressed="${S.rail === 'requisiten'}">Requisiten</button></div><nav class="rail-liste">`;
+    if (S.rail === 'requisiten') {
+      for (const g of REQ_GRUPPEN) {
+        h += `<h3><span>${esc(g.titel)}</span></h3>`;
+        for (const r of g.stuecke) {
+          h += `<a class="item" href="#R-${r.id}" aria-current="${S.ort === 'R-' + r.id}"><span class="code">${r.seite ? esc(String(r.seite).split('–')[0]) : ''}</span><span class="nm">${esc(r.titel)}</span><span></span></a>`;
+        }
+      }
+    } else if (S.rail === 'orte') {
       const gruppe = (titel, codes, zaehlen) => {
         h += `<h3><span>${titel}</span></h3>`;
         for (const c of codes) {
@@ -532,6 +565,84 @@
     return h + '</nav>';
   }
 
+  // ---------- Requisiten ----------
+  function reqZeile(liste) {
+    if (!liste.length) return '';
+    return `<div class="req-zeile"><span class="etikett">Zum Zeigen</span>${liste.map((r) => `<button type="button" class="req-chip" data-req="${r.id}">${esc(r.titel)}</button>`).join('')}</div>`;
+  }
+  function reqInhalt(r) {
+    let h = tipp(`r|${r.id}`, `<span class="etikett">Wann</span> ${inline(r.wann)}`, 'anfang');
+    const sl = !!(r.sl && T.reqSl[r.id]);
+    h += `<div class="knopfzeile req-knoepfe"><button type="button" class="knopf haupt" data-zeigen="${r.id}|0|spieler">Den Spielern zeigen</button>${r.sl ? `<span class="req-fassung" role="group" aria-label="Fassung"><button type="button" data-req-sl="${r.id}|0" aria-pressed="${!sl}">Für die Spieler</button><button type="button" data-req-sl="${r.id}|1" aria-pressed="${sl}">Deine, ${esc(r.slName)}</button></span>` : ''}</div>`;
+    const liste = sl ? r.sl : r.bilder;
+    h += `<div class="req-bilder${liste.length > 1 ? ' mehrere' : ''}">${liste.map((src, i) => `<figure class="req-bild"><button type="button" class="req-zeig" data-zeigen="${r.id}|${i}" title="Groß zeigen"><img src="${esc(src)}" alt="${esc(r.titel)}" data-req-bild="${esc(src)}" data-versuch="0"></button><div class="bild-fehlt" hidden><div class="bf-kopf">Bild fehlt noch</div><div class="bf-text">Leg es als <code>${esc(src)}</code> ab, gern auch als .png oder .webp.</div></div>${r.unter && r.unter[i] && !sl ? `<figcaption>${inline(r.unter[i])}</figcaption>` : ''}</figure>`).join('')}</div>`;
+    const wo = [...(r.szenen || []).filter((s) => SZ[s]).map((s) => `<a class="ref" href="#${s}" title="${esc(SZ[s].titel)}">${s}</a>`),
+      ...(r.orte || []).filter((c) => ORTE[c]).map((c) => `<a class="ref ort" href="#${c}" title="${esc(ORTE[c].name)}">${c}</a>`)];
+    const fuss = [wo.length ? `Kommt vor in ${wo.join(' ')}` : '', r.druck ? `Druck auf ${esc(r.druck)}` : '', r.seite ? `Handout-Seite ${esc(String(r.seite))}` : ''].filter(Boolean);
+    if (fuss.length) h += `<p class="klein-text req-fuss">${fuss.join(' · ')}</p>`;
+    return h;
+  }
+  const reqUeber = (r) => [r.gruppe, ...(r.codes || [])].map(esc).join(' · ');
+  function reqSeite(id) {
+    const r = RQ[id];
+    return `<article class="seite" data-view="R-${id}"><header class="kopf"><div><div class="ueber">${reqUeber(r)}</div><h1>${esc(r.titel)}</h1></div></header>${reqInhalt(r)}</article>`;
+  }
+  function reqOverlay(id) {
+    const r = RQ[id];
+    return olKopf(reqUeber(r), esc(r.titel)) + `<div class="ol-inhalt">${reqInhalt(r)}</div>`;
+  }
+  const REQ_ENDUNGEN = ['jpg', 'png', 'webp'];
+  function reqBildFehler(img) {
+    const n = Number(img.dataset.versuch) + 1;
+    const basis = img.dataset.reqBild.replace(/\.[a-z]+$/, '');
+    const eigene = (img.dataset.reqBild.match(/\.([a-z]+)$/) || [])[1];
+    const rest = REQ_ENDUNGEN.filter((e) => e !== eigene);
+    if (n <= rest.length) { img.dataset.versuch = n; img.src = `${basis}.${rest[n - 1]}`; return; }
+    const fig = img.closest('figure');
+    img.closest('button').hidden = true;
+    fig.querySelector('.bild-fehlt').hidden = false;
+    fig.classList.add('fehlt');
+    // Nichts da zum Zeigen: dann auch keinen Knopf dafür
+    const box = fig.closest('.req-bilder');
+    if (box && !box.querySelector('figure:not(.fehlt)')) box.parentElement.querySelectorAll('.knopf.haupt[data-zeigen]').forEach((k) => { k.hidden = true; });
+  }
+  // Vollbild für die Spieler: nur das Papier, antippen vergrößert
+  function zeige(id, i, nurSpieler) {
+    const r = RQ[id];
+    const sl = !nurSpieler && !!(r.sl && T.reqSl[id]);
+    const liste = sl ? r.sl : r.bilder;
+    const img = $(`.req-bild img[data-req-bild="${CSS.escape(liste[i] || '')}"]`);
+    if (img && img.closest('figure').classList.contains('fehlt')) return;
+    T.zeigen = { id, i: Math.max(0, Math.min(i, liste.length - 1)), sl, liste: liste.map((src) => {
+      const x = $(`.req-bild img[data-req-bild="${CSS.escape(src)}"]`);
+      return x && x.getAttribute('src') ? x.getAttribute('src') : src;
+    }) };
+    zeichneZeigen();
+    const z = $('#zeigen');
+    const f = z.requestFullscreen || z.webkitRequestFullscreen;
+    if (f && !document.fullscreenElement) { try { const pr = f.call(z); if (pr && pr.catch) pr.catch(() => {}); } catch (e) { /* Vollbild nicht erlaubt: bleibt als Ebene */ } }
+  }
+  function zeichneZeigen() {
+    const z = $('#zeigen');
+    if (!T.zeigen) { z.hidden = true; z.innerHTML = ''; document.body.classList.remove('mit-zeigen'); return; }
+    const { id, i, sl, liste } = T.zeigen;
+    z.hidden = false;
+    document.body.classList.add('mit-zeigen');
+    z.innerHTML = `<div class="zg-buehne" data-zg-zoom><img src="${esc(liste[i])}" alt="${esc(RQ[id].titel)}"></div>
+      <div class="zg-leiste">${sl ? '<span class="zg-warn">Deine Fassung, nicht für die Spieler</span>' : ''}${liste.length > 1 ? `<button type="button" class="zg-knopf" data-zg="-1" aria-label="Vorheriges">‹</button><span class="zg-n">${i + 1} / ${liste.length}</span><button type="button" class="zg-knopf" data-zg="1" aria-label="Nächstes">›</button>` : ''}<button type="button" class="zg-knopf" data-zg="zu" aria-label="Schließen">×</button></div>`;
+  }
+  function schliesseZeigen() {
+    T.zeigen = null;
+    if (document.fullscreenElement) { const pr = document.exitFullscreen(); if (pr && pr.catch) pr.catch(() => {}); }
+    zeichneZeigen();
+  }
+  function zeigenBlaettern(d) {
+    const z = T.zeigen;
+    if (!z || z.liste.length < 2) return;
+    z.i = (z.i + d + z.liste.length) % z.liste.length;
+    zeichneZeigen();
+  }
+
   // ---------- Szene ----------
   function szeneSeite(sid) {
     const s = SZ[sid], e = s.ebenen;
@@ -542,10 +653,12 @@
     let h = `<article class="seite" data-view="${sid}">
       <header class="kopf"><div><div class="ueber">${sid} · ${esc(teil.titel)}</div><h1>${esc(s.titel)}</h1><div class="eck">${eck}</div></div>
       <div class="blaettern">${vor ? `<a class="knopf" href="#${vor.id}" title="${esc(vor.titel)}">‹ ${vor.id}</a>` : ''}${nach ? `<a class="knopf" href="#${nach.id}" title="${esc(nach.titel)}">${nach.id} ›</a>` : ''}</div></header>`;
-    if (s.worum) h += `<div class="worum">${klapp(inline(s.worum), 2)}</div>`;
+    const ks = KS(sid);
+    if (s.worum) h += ks.worum ? tipp(`s|${sid}|worum`, inline(ks.worum), 'worum') : `<div class="worum">${klapp(inline(s.worum), 2)}</div>`;
 
     const bilder = s.bilder.map((b) => ({ code: b.code, text: b.text }));
     h += `<div class="buehne">${medienHTML(sid, bilder, planFuer(sid), sid)}<aside class="leute-box"><h2>${sid === 'S9' ? `Im Dorf · ${uhrName()}` : 'Wer ist da'}</h2>${leuteBox(s)}</aside></div>`;
+    h += reqZeile(reqFuer('szenen', sid));
 
     if (e.vorlesen.length) {
       h += `<section class="block"><h2>Vorlesen</h2>${e.vorlesen.map((v, k) => zeile(`${sid}-v${k}`, esc(v.titel), saetze(flach(v.md).replace(/^Lies das, bevor du das Bild ansiehst: /, ''), 1), md(v.md), 'vorlesen')).join('')}</section>`;
@@ -553,42 +666,46 @@
     if (sid === 'S9') h += dorfRaster();
     if (e.ablauf.length || e.ablauf_md || e.hinweise.length) {
       h += `<section class="block"><h2>Ablauf</h2>`;
-      if (e.ablauf_md) h += `<div class="ablauf-text">${klapp(md(e.ablauf_md), 3)}</div>`;
+      if (e.ablauf_md) h += ks.ablauf_text && ks.ablauf_text.length ? tipp(`s|${sid}|ablauf`, stich(ks.ablauf_text), 'ablauf-text') : `<div class="ablauf-text">${klapp(md(e.ablauf_md), 3)}</div>`;
       if (e.ablauf.length) {
         h += `<ol class="ablauf">${e.ablauf.map((a, k) => {
-          const kurz = a.kurz || saetze(flach(a.md), 1);
-          const rest = a.kurz ? saetze(flach(a.md), 1) : '';
-          return `<li>${zeile(`${sid}-a${k}`, esc(kurz), rest, md(a.md))}</li>`;
+          const kk = (ks.ablauf || [])[k];
+          const kurz = a.kurz || kk || saetze(flach(a.md), 1);
+          const rest = a.kurz ? (kk || saetze(flach(a.md), 1)) : '';
+          return `<li>${zeile(`${sid}-a${k}`, esc(kurz), rest, md(a.md), kk ? 'mit-kurz' : '')}</li>`;
         }).join('')}</ol>`;
       }
-      if (e.hinweise.length) h += `<div class="hinweise">${e.hinweise.map((x, k) => zeile(`${sid}-h${k}`, esc(x.titel), saetze(flach(x.md), 1), md(x.md), 'hinweis')).join('')}</div>`;
+      if (e.hinweise.length) h += `<div class="hinweise">${e.hinweise.map((x, k) => { const kk = (ks.hinweise || [])[k]; return zeile(`${sid}-h${k}`, esc(x.titel), kk || saetze(flach(x.md), 1), md(x.md), kk ? 'hinweis mit-kurz' : 'hinweis'); }).join('')}</div>`;
       h += `</section>`;
     }
     if (e.funde.length) {
       const n = e.funde.filter((f) => S.gefunden[`${sid}:${f.titel}`]).length;
-      h += `<section class="block"><h2>Was man finden kann <span class="zaehler">${n} von ${e.funde.length} gefunden</span></h2>${e.funde.map((f, k) => fundZeile(f, `${sid}-f${k}`, sid)).join('')}</section>`;
+      h += `<section class="block"><h2>Was man finden kann <span class="zaehler">${n} von ${e.funde.length} gefunden</span></h2>${e.funde.map((f, k) => fundZeile(f, `${sid}-f${k}`, sid, (ks.funde || [])[k])).join('')}</section>`;
     }
     if (e.haeuser.length) {
       h += `<section class="block"><h2>Die Häuser</h2>${e.haeuser.map((hs, j) => {
-        const info = Object.entries(hs.info).map(([k, v]) => `<p class="haus-info"><span class="etikett">${esc(k)}</span> ${inline(v)}</p>`).join('');
-        const funde = hs.funde.map((f, k) => fundZeile(f, `${sid}-hs${j}-f${k}`, sid)).join('');
-        const liegt = hs.liegt ? `<p class="haus-info"><span class="etikett">Was dort liegt</span> ${inline(hs.liegt)}</p>` : '';
+        const kh = (ks.haeuser || [])[j];
+        const info = kh
+          ? tipp(`s|${sid}|haus|${j}`, `<p class="haus-info"><span class="etikett">Hinein</span> ${inline(kh.hinein || '')}</p><p class="haus-info"><span class="etikett">Erwischt</span> ${inline(kh.erwischt || '')}</p>`, 'haus-kurz')
+          : Object.entries(hs.info).map(([k, v]) => `<p class="haus-info"><span class="etikett">${esc(k)}</span> ${inline(v)}</p>`).join('');
+        const funde = hs.funde.map((f, k) => fundZeile(f, `${sid}-hs${j}-f${k}`, sid, kh && (kh.funde || [])[k])).join('');
+        const liegt = hs.liegt && !kh ? `<p class="haus-info"><span class="etikett">Was dort liegt</span> ${inline(hs.liegt)}</p>` : '';
         const planKnopf = PL[hs.ort] ? `<button type="button" class="knopf klein" data-planol="${hs.ort}">Grundriss ${hs.ort} zeigen</button>` : '';
-        return zeile(`${sid}-hs${j}`, `<span class="code">${hs.ort}</span> ${esc(hs.titel)}`, flach(hs.info['Wer zurückgeblieben ist'] || ''), `${planKnopf}${info}${liegt}${funde}`, 'haus');
+        return zeile(`${sid}-hs${j}`, `<span class="code">${hs.ort}</span> ${esc(hs.titel)}`, (kh && kh.wer) || flach(hs.info['Wer zurückgeblieben ist'] || ''), `${planKnopf}${info}${liegt}${funde}`, kh ? 'haus mit-kurz' : 'haus');
       }).join('')}</section>`;
     }
     if (e.proben.length) {
-      h += `<section class="block"><h2>Proben</h2>${e.proben.map((p, k) => zeile(`${sid}-p${k}`, inline(p.probe), '', `<dl class="probe">
-        <div><dt>Erfolg</dt><dd>${inline(p.erfolg)}</dd></div><div><dt>Kritischer Erfolg</dt><dd>${inline(p.krit)}</dd></div><div><dt>Patzer</dt><dd>${inline(p.patzer)}</dd></div></dl>`, 'probe-zeile')).join('')}${e.proben_md ? `<div class="klein-text">${md(e.proben_md)}</div>` : ''}</section>`;
+      h += `<section class="block"><h2>Proben</h2>${e.proben.map((p, k) => { const kp = (ks.proben || [])[k]; return kp ? zeile(`${sid}-p${k}`, inline(p.probe), kp.erfolg ? `Erfolg: ${kp.erfolg}` : '', probeKurz(sid, k, kp), 'probe-zeile mit-kurz') : zeile(`${sid}-p${k}`, inline(p.probe), '', `<dl class="probe">
+        <div><dt>Erfolg</dt><dd>${inline(p.erfolg)}</dd></div><div><dt>Kritischer Erfolg</dt><dd>${inline(p.krit)}</dd></div><div><dt>Patzer</dt><dd>${inline(p.patzer)}</dd></div></dl>`, 'probe-zeile'); }).join('')}${e.proben_md ? `<div class="klein-text">${md(e.proben_md)}</div>` : ''}</section>`;
     }
     if (e.gespraeche.length) {
-      h += `<section class="block"><h2>Gespräche zum Abspielen</h2>${e.gespraeche.map((g, k) => zeile(`${sid}-m${k}`, `<span class="tok">${g.code}</span> ${esc(g.titel)}`, saetze(flach(g.md), 1), md(g.md))).join('')}</section>`;
+      h += `<section class="block"><h2>Gespräche zum Abspielen</h2>${e.gespraeche.map((g, k) => { const kk = (ks.gespraeche || [])[k]; return zeile(`${sid}-m${k}`, `<span class="tok">${g.code}</span> ${esc(g.titel)}`, kk || saetze(flach(g.md), 1), md(g.md), kk ? 'mit-kurz' : ''); }).join('')}</section>`;
     }
-    const mehr = e.mehr.filter((x) => !(sid === 'S9' && x.titel === 'Wohin sie gehen können'));
+    const mehr = e.mehr.map((x, k) => ({ x, k })).filter(({ x }) => !(sid === 'S9' && x.titel === 'Wohin sie gehen können'));
     if (mehr.length || e.haengt) {
-      h += `<section class="block"><h2>Mehr zur Szene</h2>${e.haengt ? zeile(`${sid}-haengt`, 'Wenn es hängt', saetze(flach(e.haengt), 1), md(e.haengt), 'haengt') : ''}${mehr.map((x, k) => zeile(`${sid}-x${k}`, esc(x.titel), saetze(flach(x.md), 1), md(x.md))).join('')}</section>`;
+      h += `<section class="block"><h2>Mehr zur Szene</h2>${e.haengt ? zeile(`${sid}-haengt`, 'Wenn es hängt', ks.haengt || saetze(flach(e.haengt), 1), md(e.haengt), ks.haengt ? 'haengt mit-kurz' : 'haengt') : ''}${mehr.map(({ x, k }) => { const kk = (ks.mehr || [])[k]; return zeile(`${sid}-x${k}`, esc(x.titel), kk || saetze(flach(x.md), 1), md(x.md), kk ? 'mit-kurz' : ''); }).join('')}</section>`;
     }
-    if (e.weiter) h += `<div class="weiter"><span class="etikett">Weiter</span> ${inline(e.weiter)}</div>`;
+    if (e.weiter) h += ks.weiter ? tipp(`s|${sid}|weiter`, `<span class="etikett">Weiter</span> ${inline(ks.weiter)}`, 'weiter') : `<div class="weiter"><span class="etikett">Weiter</span> ${inline(e.weiter)}</div>`;
     return h + '</article>';
   }
   function leuteBox(s) {
@@ -596,9 +713,10 @@
       return `<p class="klein-text">Im offenen Dorf ist jeder dort, wo er um diese Zeit ist. Stell oben die Tageszeit ein. Wer wo ist, zeigt jede Karte unter »Wohin sie gehen können«.</p>`;
     }
     if (!s.leute.length) return `<p class="klein-text">Niemand außer den Ermittlern.</p>`;
-    return `<ul class="leute">${s.leute.map((l) => {
-      const tut = `<div class="tut">${klapp(inline(l.tut), 2)}</div>`;
-      if (l.personen.length) return `<li data-tut="${esc(flach(l.tut))}">${l.personen.map((pid) => personKnopf(pid)).join('')}${tut}</li>`;
+    return `<ul class="leute">${s.leute.map((l, i) => {
+      const kurz = (KS(s.id).leute || [])[i];
+      const tut = kurz ? tipp(`s|${s.id}|leute|${i}`, inline(kurz), 'tut') : `<div class="tut">${klapp(inline(l.tut), 2)}</div>`;
+      if (l.personen.length) return `<li data-tut="${esc(flach(kurz || l.tut))}">${l.personen.map((pid) => personKnopf(pid)).join('')}${tut}</li>`;
       return `<li class="neben"><span class="neben-name">${inline(l.wer)}</span>${tut}</li>`;
     }).join('')}</ul>`;
   }
@@ -610,7 +728,7 @@
       const anfang = (o.dorf && o.dorf.anfang) || o.anfang;
       return `<a class="ortkarte" href="#${c}"><span class="ok-kopf"><span class="code">${c}</span> ${esc(o.name.replace(/^(Der|Die|Das) /, ''))}${PL[c] ? ' <span class="plan-zeichen" title="mit Grundriss">▦</span>' : ''}</span>
         <span class="ok-leute">${leute.length ? leute.map((l) => `<span class="ok-p"><span class="dot st-${stufe(l.pid, S.wer)}"></span>${esc(kurzName(P[l.pid]))}</span>`).join('') : '<span class="leer">niemand von den 22</span>'}</span>
-        <span class="ok-anfang">${esc(flach(anfang))}</span></a>`;
+        <span class="ok-anfang">${esc(KO(c).anfang || flach(anfang))}</span></a>`;
     }).join('')}</div></section>`;
   }
 
@@ -620,31 +738,35 @@
     const szenen = SZENEN.filter((s) => new RegExp(`\\b${code}\\b`).test(s.meta['Wo'] || '')).map((s) => `<a class="ref" href="#${s.id}" title="${esc(s.titel)}">${s.id}</a>`);
     let h = `<article class="seite" data-view="${code}">
       <header class="kopf"><div><div class="ueber">${code} · ${o.berg ? 'Am Berg' : 'Im Dorf'}</div><h1>${esc(o.name)}</h1>
-      <div class="eck">${szenen.length ? `Szenen hier: ${szenen.join(' ')}` : ''}</div></div></header>`;
+      <div class="eck">${szenen.length ? `Szenen hier: ${szenen.join(' ')}` : ''}</div>${KO(code).kurz ? (o.beschreibung ? tipp(`o|${code}|kurz`, inline(KO(code).kurz), 'ort-kurz') : `<div class="ort-kurz">${inline(KO(code).kurz)}</div>`) : ''}</div></header>`;
     const bilder = o.bild ? [{ code: o.bild, text: o.bild_md || `Siehe ${o.bild}.`, titel: o.name }] : [];
     const jetzt = leuteAmOrt(code), neben = nebenAmOrt(code);
     let box = '';
     if (o.berg) box += `<div class="klein-text">${klapp(inline(o.felder['Wer hier ist'] || ''), 6)}</div>`;
     else {
-      box += jetzt.length ? `<ul class="leute">${jetzt.map((l) => `<li>${personKnopf(l.pid)}<div class="tut">${klapp(inline(l.text), 1)}</div></li>`).join('')}</ul>` : `<p class="klein-text">Um diese Zeit ist hier niemand von den 22.</p>`;
-      if (neben.length) box += `<div class="nebenliste"><div class="etikett">Außerdem</div>${neben.map((x) => `<div class="nb">${klapp(`<b>${esc(x.wer)}</b>, ${inline(x.wo)}. ${inline(x.wozu)}`, 1)}</div>`).join('')}</div>`;
+      box += jetzt.length ? `<ul class="leute">${jetzt.map((l) => `<li>${personKnopf(l.pid)}<div class="tut">${inline(l.text)}</div></li>`).join('')}</ul>` : `<p class="klein-text">Um diese Zeit ist hier niemand von den 22.</p>`;
+      if (neben.length) box += `<div class="nebenliste"><div class="etikett">Außerdem</div>${neben.map((x) => {
+        const i = SONST.indexOf(x), kn = KZ.nebenfiguren[i], mk = modellKnopf(modellNeben(x.wer));
+        return kn ? tipp(`n|${i}`, `<b>${esc(kurzNeben(x.wer))}</b> ${inline(kn)}${mk}`, 'nb') : `<div class="nb">${klapp(`<b>${esc(x.wer)}</b>, ${inline(x.wo)}. ${inline(x.wozu)}`, 1)}${mk}</div>`;
+      }).join('')}</div>`;
     }
     const planCode = PL[code] ? code : null;
     if (planCode && !T.medien[code]) T.medien[code] = 'plan';
     h += `<div class="buehne">${medienHTML(code, bilder, planCode, null)}<aside class="leute-box"><h2>${o.berg ? 'Wer hier ist' : `Jetzt hier · ${uhrName()}`}</h2>${box}</aside></div>`;
-    if (o.anfang) h += `<div class="anfang"><span class="etikett">So fängt es an</span> ${inline(o.anfang)}</div>`;
+    h += reqZeile(reqFuer('orte', code));
+    if (o.anfang) h += KO(code).anfang ? tipp(`o|${code}|anfang`, `<span class="etikett">So fängt es an</span> ${inline(KO(code).anfang)}`, 'anfang') : `<div class="anfang"><span class="etikett">So fängt es an</span> ${inline(o.anfang)}</div>`;
     if (o.gibt.length || o.gibt_md) {
-      h += `<section class="block"><h2>Was es hier gibt</h2>${o.gibt_md ? `<p>${inline(o.gibt_md)}</p>` : ''}${o.gibt.map((g, k) => zeile(`${code}-g${k}`, esc(g.titel), saetze(flach(g.md), 1), md(g.md))).join('')}</section>`;
+      h += `<section class="block"><h2>Was es hier gibt</h2>${o.gibt_md ? `<p>${inline(o.gibt_md)}</p>` : ''}${o.gibt.map((g, k) => { const kk = (KO(code).gibt || [])[k]; return zeile(`${code}-g${k}`, esc(g.titel), kk || saetze(flach(g.md), 1), md(g.md), kk ? 'mit-kurz' : ''); }).join('')}</section>`;
     }
     const mehr = [];
-    if (o.dorf) mehr.push(['Was die Gruppe hier bekommen kann', `<p>${inline(o.dorf.bekommt)}</p><p><span class="etikett">Führt zu</span> ${inline(o.dorf.fuehrt)}</p>`]);
+    if (o.dorf) mehr.push(['Was die Gruppe hier bekommen kann', `<p>${inline(o.dorf.bekommt)}</p><p><span class="etikett">Führt zu</span> ${inline(o.dorf.fuehrt)}</p>`, KO(code).bekommt]);
     if (o.beschreibung) mehr.push(['Wie es hier aussieht', md(o.beschreibung)]);
     for (const [k, v] of Object.entries(o.felder)) {
       if (k === 'Tabelle' || (k === 'Wer hier ist' && o.berg)) continue;
       mehr.push([k, md(v)]);
     }
     if (o.felder.Tabelle) mehr.push(['Tabelle', md(o.felder.Tabelle)]);
-    if (mehr.length) h += `<section class="block"><h2>Mehr zum Ort</h2>${mehr.map(([t, v], k) => zeile(`${code}-x${k}`, esc(t), '', v)).join('')}</section>`;
+    if (mehr.length) h += `<section class="block"><h2>Mehr zum Ort</h2>${mehr.map(([t, v, kk], k) => zeile(`${code}-x${k}`, esc(t), kk || '', v, kk ? 'mit-kurz' : '')).join('')}</section>`;
     return h + '</article>';
   }
 
@@ -657,13 +779,15 @@
     const pr = probeVon(pid, k);
     const leiter = p.leiter.find((z) => z.stufe === STUFEN[st]);
     const kontext = S.kontext && S.kontext.pid === pid ? S.kontext : null;
-    let h = `<div class="g-kopf"><div><div class="ueber">${pid} · Gespräch</div><h2>${esc(p.name)}</h2></div><button type="button" class="zu-knopf" data-schliessen aria-label="Gespräch schließen">×</button></div>`;
+    const kp = KP(pid);
+    const leiterText = leiter ? ((kp && kp.leiter && kp.leiter[leiter.stufe]) || leiter.text) : '';
+    let h = `<div class="g-kopf"><div><div class="ueber">${pid} · Gespräch</div><h2>${esc(p.name)}${modellKnopf(pid)}</h2></div><button type="button" class="zu-knopf" data-schliessen aria-label="Gespräch schließen">×</button></div>`;
     if (kontext && kontext.tut) h += `<div class="g-hier"><span class="etikett">Hier</span> ${inline(kontext.tut)}</div>`;
     h += `<div class="g-wer" role="group" aria-label="Wer redet">${ERM.map((e) => {
       const i = stufe(pid, e.k);
       return `<button type="button" data-wer="${e.k}" aria-pressed="${k === e.k}"><span class="gw-name">${e.name}</span><span class="gw-stufe st-t-${i}">${STUFEN[i]}</span></button>`;
     }).join('')}</div>`;
-    h += `<div class="g-haltung st-b-${st}"><div class="gh-zeile"><span class="gh-stufe">${STUFEN[st]}</span><span class="gh-wuerfel">${wuerfel(st)}</span></div>${leiter ? `<p class="gh-leiter">${inline(leiter.text)}</p>` : ''}</div>`;
+    h += `<div class="g-haltung st-b-${st}"><div class="gh-zeile"><span class="gh-stufe">${STUFEN[st]}</span><span class="gh-wuerfel">${wuerfel(st)}</span></div>${leiterText ? `<p class="gh-leiter">${inline(leiterText)}</p>` : ''}</div>`;
 
     // Spielmechanik
     const tat = S.tat[pid] || 0;
@@ -680,12 +804,19 @@
     if (pid === 'P5') h += `<label class="gs-check"><input type="checkbox" data-ausnahme ${S.ausnahme.P5 ? 'checked' : ''}> Maxi ist am Berg gestorben (S17)</label>`;
     if (pr === 'ein') h += `<p class="gs-hinweis">${Pron(p)} redet jetzt eine Stufe höher. Wenn das Gespräch endet, fällt ${er} dauerhaft eine Stufe${g === 0 ? `. ${Pron(p)} ist schon feindselig, also gilt »Wenn es kippt«` : ''}.</p>`;
     const steigt = feld(p, /steigt und fällt/);
-    if (steigt) h += `<details class="gs-mehr"><summary>Wodurch ${er} steigt und fällt</summary><p>${inline(steigt)}</p><p class="klein-text">Eine Tat gilt dauerhaft und für alle drei, höchstens eine Stufe weg vom Start. Eine gelungene Probe gilt nur für dieses Gespräch.</p></details>`;
+    if (kp && (kp.steigt || kp.faellt)) {
+      h += tipp(`p|${pid}|steigt`, `<div class="gb-z"><span class="gb-pf hoch" title="steigt">▲</span><span>${reihe(kp.steigt)}</span></div><div class="gb-z"><span class="gb-pf runter" title="fällt">▼</span><span>${reihe(kp.faellt)}</span></div>${kp.kippt ? `<div class="gb-z kippt"><span class="gb-pf" title="kippt">!</span><span>${inline(kp.kippt)}</span></div>` : ''}`, 'g-bewegt');
+    } else if (steigt) h += `<details class="gs-mehr"><summary>Wodurch ${er} steigt und fällt</summary><p>${inline(steigt)}</p><p class="klein-text">Eine Tat gilt dauerhaft und für alle drei, höchstens eine Stufe weg vom Start. Eine gelungene Probe gilt nur für dieses Gespräch.</p></details>`;
     h += `</div>`;
 
     // Kurzüberblick
-    const kurz = [['Wer', saetze(feld(p, /^Wer /), 2)], ['Will', feld(p, /^Was .* will/)], ['Redet', feld(p, /^So redet/)], ['Lügt', feld(p, /^Worüber/)], ['Schloss', feld(p, /Schloss/)]];
-    h += `<dl class="g-kurz">${kurz.filter(([, v]) => v).map(([t, v]) => `<div><dt>${t}</dt><dd>${klapp(inline(v), 2)}</dd></div>`).join('')}</dl>`;
+    if (kp) {
+      const zeilen = [['Wer', 'wer', inline(kp.wer || '')], ['Will', 'will', inline(kp.will || '')], ['Redet', 'redet', inline(kp.redet || '')],
+        ['Lügt', 'luegt', reihe(kp.luegt)], ['Schloss', 'schloss', kp.schloss ? inline(kp.schloss) : ''], ['Wichtig', 'wichtig', reihe(kp.wichtig)]];
+      h += `<div class="g-kurz">${zeilen.filter(([, , v]) => v).map(([t, k, v]) => tipp(`p|${pid}|${k}`, `<span class="gk-t">${t}</span><span class="gk-v">${v}</span>`, 'gk')).join('')}</div>`;
+    }
+    const kurz = kp ? [] : [['Wer', saetze(feld(p, /^Wer /), 2)], ['Will', feld(p, /^Was .* will/)], ['Redet', feld(p, /^So redet/)], ['Lügt', feld(p, /^Worüber/)], ['Schloss', feld(p, /Schloss/)]];
+    if (!kp) h += `<dl class="g-kurz">${kurz.filter(([, v]) => v).map(([t, v]) => `<div><dt>${t}</dt><dd>${klapp(inline(v), 2)}</dd></div>`).join('')}</dl>`;
 
     // Fragen
     const gruppen = themenGruppen(p);
@@ -721,7 +852,7 @@
       const g = themenGruppen(p).find(([t]) => t === T.thema);
       return antwortKarte(p, T.thema, g ? g[1] : [], k);
     }
-    return `<p class="klein-text">Stichwort eintippen oder antippen. Gezeigt wird nur, was ${esc(kurzName(p))} ${ERM.find((e) => e.k === k).name} jetzt sagt.</p>`;
+    return `<p class="klein-text">Stichwort eintippen oder antippen. Gezeigt wird nur, was ${esc(p.name.replace(/^(Der|Die|Das) /, (m) => m.toLowerCase()))} jetzt zu ${ERM.find((e) => e.k === k).name} sagt.</p>`;
   }
   function oeffneGespraech(pid, tut) {
     if (S.gespraech && S.gespraech !== pid) beendeGespraech(S.gespraech);
@@ -747,7 +878,7 @@
   const olKopf = (ueber, titel) => `<div class="ol-kopf"><div><div class="ueber">${ueber}</div><h2>${titel}</h2></div><button type="button" class="zu-knopf" data-ol-zu aria-label="Schließen">×</button></div>`;
   function allesUeber(pid) {
     const p = P[pid], k = S.wer, er = pron(p);
-    let h = olKopf(`${pid} · alles zur Person`, esc(p.name)) + '<div class="ol-inhalt">';
+    let h = olKopf(`${pid} · alles zur Person`, esc(p.name) + modellKnopf(pid)) + '<div class="ol-inhalt">';
     for (const [kk, v] of Object.entries(p.felder)) {
       if (/^Haltung zu Beginn/.test(kk)) continue;
       h += `<p class="feld"><b>${esc(kk)}.</b> ${inline(v)}</p>`;
@@ -832,30 +963,135 @@
     if (!pers.length && !hits.length) h += `<p>Nichts gefunden.</p>`;
     return h + '</div>';
   }
+  function modellOverlay(key) {
+    const m = MOD[key] || { name: key };
+    return olKopf(`3D · ${P[key] ? key : 'Nebenfigur'}`, esc(m.name)) + `<div class="ol-inhalt"><div class="modell-buehne"><div class="mb-status">Lädt die Figur …</div></div>
+      <div class="knopfzeile modell-knoepfe"><button type="button" class="knopf" data-m="umdrehen">Umdrehen</button><button type="button" class="knopf" data-m="hinten">Von hinten</button><button type="button" class="knopf" data-m="langsam" aria-pressed="false">Langsam drehen</button><button type="button" class="knopf" data-m="voll">Vollbild</button></div>
+      <p class="klein-text">Ziehen dreht die Figur, Mausrad oder zwei Finger zoomen. Im Vollbild kannst du sie den Spielern zeigen.</p></div>`;
+  }
   function zeigeOverlay(art, arg) {
+    if (window.LahnreitModell) window.LahnreitModell.stopp();
     T.overlay = { art, arg };
     zeichneOverlay();
   }
-  function schliesseOverlay() { T.overlay = null; T.resetFrage = false; zeichneOverlay(); }
+  function schliesseOverlay() { if (window.LahnreitModell) window.LahnreitModell.stopp(); T.overlay = null; T.resetFrage = false; zeichneOverlay(); }
   function zeichneOverlay() {
     const ol = $('#overlay');
     if (!T.overlay) { ol.hidden = true; ol.innerHTML = ''; document.body.classList.remove('mit-overlay'); return; }
     const { art, arg } = T.overlay;
+    if (art === 'modell' && $('.modell-buehne', ol)) return;
     let inner = '';
     if (art === 'alles') inner = allesUeber(arg);
     else if (art === 'personen') inner = personenListe();
     else if (art === 'teil') inner = teilUeberblick(arg);
     else if (art === 'plan') inner = planOverlay(arg);
     else if (art === 'suche') inner = suchErgebnisse(arg);
-    ol.innerHTML = `<div class="ol-box${art === 'plan' ? ' breit' : ''}" role="dialog" aria-modal="true">${inner}</div>`;
+    else if (art === 'modell') inner = modellOverlay(arg);
+    else if (art === 'req') inner = reqOverlay(arg);
+    ol.innerHTML = `<div class="ol-box${art === 'plan' || art === 'req' ? ' breit' : ''}" role="dialog" aria-modal="true">${inner}</div>`;
     ol.hidden = false;
     document.body.classList.add('mit-overlay');
     if (art === 'suche') markiere($('.ol-inhalt', ol), arg);
+    if (art === 'modell' && window.LahnreitModell) window.LahnreitModell.zeige($('.modell-buehne', ol), arg);
     nachZeichnen(ol);
+  }
+
+  // ---------- Kontextfenster: der ganze Text hinter einer Kurzfassung ----------
+  function vollText(key) {
+    const [art, id, was, nr] = key.split('|');
+    if (art === 'p') {
+      const p = P[id];
+      if (!p) return null;
+      const name = kurzName(p);
+      if (was === 'wichtig') {
+        const std = /^(Wer |Haltung zu Beginn|So redet|Was .* will|Was .* weiß|Wie .* steigt|Worüber|Wo du|.*Schloss)/;
+        const rest = Object.entries(p.felder).filter(([k]) => !std.test(k));
+        return { titel: `${name} · Wichtig`, html: rest.map(([k, v]) => `<p><b>${esc(k)}.</b> ${inline(v)}</p>`).join('') };
+      }
+      const re = { wer: /^Wer /, will: /^Was .* will/, redet: /^So redet/, luegt: /^Worüber/, schloss: /Schloss/, steigt: /steigt und fällt/ }[was];
+      if (!re) return null;
+      let html = md(feld(p, re));
+      if (was === 'steigt') html += `<p class="klein-text">Eine Tat gilt dauerhaft und für alle drei, höchstens eine Stufe weg vom Start. Eine gelungene Probe gilt nur für dieses Gespräch.</p>`;
+      return { titel: `${name} · ${feldName(p, re)}`, html };
+    }
+    if (art === 's') {
+      const s = SZ[id];
+      if (!s) return null;
+      const e = s.ebenen;
+      if (was === 'worum') return { titel: `${id} · ${s.titel}`, html: md(s.worum) };
+      if (was === 'leute') { const l = s.leute[Number(nr)]; return l ? { titel: `${id} · ${flach(l.wer)}`, html: md(l.tut) } : null; }
+      if (was === 'ablauf') return { titel: `${id} · Ablauf`, html: md(e.ablauf_md) };
+      if (was === 'weiter') return { titel: `${id} · Weiter`, html: md(e.weiter) };
+      if (was === 'haus') {
+        const hs = e.haeuser[Number(nr)];
+        return hs ? { titel: `${hs.ort} · ${hs.titel}`, html: Object.entries(hs.info).map(([k, v]) => `<p><b>${esc(k)}.</b> ${inline(v)}</p>`).join('') + (hs.liegt ? `<p><b>Was dort liegt.</b> ${inline(hs.liegt)}</p>` : '') } : null;
+      }
+      if (was === 'probe') {
+        const [i, f] = nr.split('.');
+        const pr = e.proben[Number(i)];
+        const N = { erfolg: 'Erfolg', krit: 'Kritischer Erfolg', patzer: 'Patzer' };
+        return pr ? { titel: `${flach(pr.probe)} · ${N[f]}`, html: md(pr[f]) } : null;
+      }
+    }
+    if (art === 'o') {
+      const o = ORTE[id];
+      if (!o) return null;
+      if (was === 'kurz') return { titel: `${id} · ${o.name}`, html: md(o.beschreibung || '') };
+      if (was === 'anfang') return { titel: `${id} · So fängt es an`, html: md(o.anfang) };
+    }
+    if (art === 'r') {
+      const r = RQ[id];
+      return r ? { titel: r.titel, html: md(r.hinweis) } : null;
+    }
+    if (art === 'b') {
+      const b = BILDTEXT[id];
+      return b ? { titel: `Bild ${id}${b.titel ? ' · ' + flach(b.titel) : ''}`, html: md(b.text) } : null;
+    }
+    if (art === 'n') {
+      const x = SONST[Number(id)];
+      return x ? { titel: flach(x.wer), html: `<p>${inline(x.wo)}.</p><p>${inline(x.wozu)}</p>` } : null;
+    }
+    return null;
+  }
+  function zeigeKontext(el) {
+    const pop = $('#kontext');
+    const key = el.dataset.voll;
+    if (!pop.hidden && pop.dataset.key === key) { schliesseKontext(); return; }
+    const v = vollText(key);
+    if (!v) return;
+    pop.dataset.key = key;
+    pop.innerHTML = `<div class="kx-kopf"><b>${esc(v.titel)}</b><button type="button" class="zu-knopf klein" data-kontext-zu aria-label="Schließen">×</button></div><div class="kx-text">${v.html}</div>`;
+    pop.hidden = false;
+    const r = el.getBoundingClientRect();
+    const W = Math.min(460, window.innerWidth - 24);
+    pop.style.width = W + 'px';
+    pop.style.maxHeight = Math.round(window.innerHeight * 0.7) + 'px';
+    let x = r.left;
+    if (x + W > window.innerWidth - 12) x = window.innerWidth - 12 - W;
+    pop.style.left = Math.max(12, x) + 'px';
+    const hh = pop.offsetHeight;
+    let y = r.bottom + 6;
+    if (y + hh > window.innerHeight - 12) y = r.top - 6 - hh;
+    pop.style.top = Math.max(12, y) + 'px';
+  }
+  function schliesseKontext() {
+    const pop = $('#kontext');
+    if (!pop || pop.hidden) return;
+    pop.hidden = true;
+    pop.innerHTML = '';
+    delete pop.dataset.key;
+  }
+  function probeKurz(sid, k, kp) {
+    const N = [['erfolg', 'Erfolg'], ['krit', 'Kritisch'], ['patzer', 'Patzer']];
+    return `<div class="probe-kurz">${N.filter(([f]) => kp[f]).map(([f, t]) => tipp(`s|${sid}|probe|${k}.${f}`, `<span class="pk-t">${t}</span><span>${inline(kp[f])}</span>`, 'pk-z')).join('')}</div>`;
   }
 
   // ---------- Zeichnen ----------
   function nachZeichnen(root) {
+    $$('img[data-req-bild]', root).forEach((img) => {
+      img.addEventListener('error', () => reqBildFehler(img));
+      if (img.complete && img.naturalWidth === 0 && img.getAttribute('src')) reqBildFehler(img);
+    });
     $$('img[data-code]', root).forEach((img) => {
       img.addEventListener('error', () => bildFehler(img));
       if (img.complete && img.naturalWidth === 0 && img.getAttribute('src')) bildFehler(img);
@@ -869,6 +1105,7 @@
     });
   }
   function aktuelleAnsicht() {
+    if (reqId(S.ort)) return reqSeite(reqId(S.ort));
     if (SZ[S.ort]) return szeneSeite(S.ort);
     if (ORTE[S.ort]) return ortSeite(S.ort);
     S.ort = 'S1';
@@ -930,11 +1167,11 @@
       oeffneGespraech(h);
       return;
     }
-    if (SZ[h] || ORTE[h]) {
+    if (SZ[h] || ORTE[h] || reqId(h)) {
       if (S.ort !== h) {
         S.ort = h;
         if (SZENEN_UHR[h]) S.uhr = SZENEN_UHR[h];
-        S.rail = SZ[h] ? 'szenen' : 'orte';
+        S.rail = SZ[h] ? 'szenen' : ORTE[h] ? 'orte' : 'requisiten';
       }
       T.overlay = null;
       sichern();
@@ -955,6 +1192,31 @@
   document.addEventListener('click', (ev) => {
     const t = ev.target;
     let el;
+    if (t.closest('[data-kontext-zu]')) { schliesseKontext(); return; }
+    if ((el = t.closest('[data-modell]'))) { schliesseKontext(); zeigeOverlay('modell', el.dataset.modell); return; }
+    if ((el = t.closest('[data-m]'))) {
+      const M = window.LahnreitModell;
+      const was = el.dataset.m;
+      if (!M) return;
+      if (was === 'umdrehen') M.umdrehen();
+      else if (was === 'hinten') M.vonHinten();
+      else if (was === 'langsam') { const an = el.getAttribute('aria-pressed') !== 'true'; el.setAttribute('aria-pressed', String(an)); M.langsam(an); }
+      else if (was === 'voll') { const b = $('.modell-buehne'); const f = b && (b.requestFullscreen || b.webkitRequestFullscreen); if (f) f.call(b); }
+      return;
+    }
+    if ((el = t.closest('[data-zg]'))) { const d = el.dataset.zg; if (d === 'zu') schliesseZeigen(); else zeigenBlaettern(Number(d)); return; }
+    if ((el = t.closest('[data-zg-zoom]'))) {
+      const img = $('img', el), r = img.getBoundingClientRect();
+      const fx = (ev.clientX - r.left) / r.width, fy = (ev.clientY - r.top) / r.height;
+      el.classList.toggle('gross');
+      if (el.classList.contains('gross')) { el.scrollLeft = fx * img.offsetWidth - el.clientWidth / 2; el.scrollTop = fy * img.offsetHeight - el.clientHeight / 2; }
+      return;
+    }
+    if ((el = t.closest('[data-zeigen]'))) { const [id, i, nur] = el.dataset.zeigen.split('|'); zeige(id, Number(i), nur === 'spieler'); return; }
+    if ((el = t.closest('[data-req-sl]'))) { const [id, v] = el.dataset.reqSl.split('|'); T.reqSl[id] = v === '1'; if (T.overlay) zeichneOverlay(); else zeichneHaupt(); return; }
+    if ((el = t.closest('[data-req]'))) { zeigeOverlay('req', el.dataset.req); return; }
+    if ((el = t.closest('[data-voll]')) && !t.closest('a, [data-pid], button')) { zeigeKontext(el); return; }
+    if (!t.closest('#kontext')) schliesseKontext();
     if ((el = t.closest('[data-klapp]'))) {
       const k = el.closest('.klapp'); k.classList.toggle('offen');
       el.textContent = k.classList.contains('offen') ? 'weniger' : 'mehr'; return;
@@ -1036,12 +1298,20 @@
     }
   });
   document.addEventListener('keydown', (ev) => {
+    if (T.zeigen) {
+      if (ev.key === 'Escape') { schliesseZeigen(); return; }
+      if (ev.key === 'ArrowRight') { zeigenBlaettern(1); return; }
+      if (ev.key === 'ArrowLeft') { zeigenBlaettern(-1); return; }
+    }
     if (ev.key === 'Escape') {
+      const pop = $('#kontext');
+      if (pop && !pop.hidden) { schliesseKontext(); return; }
       if (T.overlay) { schliesseOverlay(); return; }
       if (document.body.classList.contains('rail-offen')) { document.body.classList.remove('rail-offen'); return; }
       if (S.gespraech) schliesseGespraech();
       return;
     }
+    if ((ev.key === 'Enter' || ev.key === ' ') && ev.target.matches && ev.target.matches('[data-voll]')) { ev.preventDefault(); zeigeKontext(ev.target); return; }
     if ((ev.key === 'Enter' || ev.key === ' ') && ev.target.matches && ev.target.matches('g[role="button"]')) {
       ev.preventDefault();
       ev.target.dispatchEvent(new MouseEvent('click', { bubbles: true }));
@@ -1057,6 +1327,7 @@
   $('.uhr').innerHTML = UHR.map((u) => `<button type="button" data-uhr="${u.k}" aria-pressed="${S.uhr === u.k}">${u.name}</button>`).join('');
 
   window.addEventListener('hashchange', route);
+  document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement && T.zeigen) schliesseZeigen(); });
   document.documentElement.dataset.theme = S.theme;
   route();
 })();

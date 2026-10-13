@@ -1,0 +1,222 @@
+{
+  "orte": {
+    "D1": {
+      "kurz": "Dorfmitte mit Kriegerdenkmal und Maibaumwache; Hinweis auf Gschwendtner (H14), Spur zum Wimmer-Sepp (N4).",
+      "anfang": "Martl am Feuer: »Mir lassen uns nimmer bestehln. Heuer ned.«",
+      "gibt": [
+        "Wimmer steht als vermisst, ist aber zurück. Wer fragt: N4.",
+        "Schorsch, ohne Martl: Gschwendtner Donnerstag halb acht aus Wald (H14).",
+        "Nach dem Berg, Mitternacht: Hinterreiter Burschen wollen Maibaum stehlen (N8)."
+      ],
+      "bekommt": "Schorsch ohne Martl, Martl auf Vorhalt: Gschwendtner Donnerstag aus Wald (H14). Denkmal: N4."
+    },
+    "D2": {
+      "kurz": "Barockkirche mit Sterbeglöckerl; Votivtafel 1929, Erklärung fürs Glöckerl, Leni beim Rosenkranz.",
+      "anfang": "Mesner: »Des Glöckerl schlagt, wenn oaner stirbt.«",
+      "gibt": [
+        "Hang, weiße Welle, Messlatte: »Johann Kögl, Geometer, 14. März 1929«",
+        "Klettern: offene Schallladen erklären Glöckerl. Patzer: 1W3 TP, Pfarrer hört.",
+        "Nach Rosenkranz: Leni allein hinter dem Friedhof (D3), dort ansprechbar."
+      ],
+      "bekommt": "Votivtafel 1929, Dachreiter mit offenen Schallladen, Leni beim Rosenkranz."
+    },
+    "D3": {
+      "kurz": "Friedhof mit Leichenhaus für Fremde; Lindner liegt dort nach dem Berg, Leni wartet dahinter.",
+      "anfang": "Mesner: »Der Berliner kriagt koa Grab bei uns. Der is evangelisch.«",
+      "gibt": [
+        "Lindner nach dem Abstieg auf dem Steintisch (S19).",
+        "Nach Rosenkranz wartet Leni kurz hier; traf hier abends Lindner."
+      ],
+      "bekommt": "Leni hinter der Mauer nach Rosenkranz; nach dem Berg Lindner im Leichenhaus (S19)."
+    },
+    "D4": {
+      "kurz": "Pfarrhaus mit Kirchenbüchern; Sterbebuch 1929, Klatsch der Zenzi über Leni, Pfarrer schweigt zur Beichte.",
+      "anfang": "Zenzi an der Tür: »Mögen's an Kaffee? An echtn.«",
+      "gibt": [
+        "1929: Kögl von der Lahn verschüttet. Nur bei kooperativem Pfarrer.",
+        "Brief ans Landratsamt gegen das Hotel; Pfarrer zeigt ihn gern.",
+        "Klatsch (H11); Leni Samstag fünf verweint gebeichtet; Alibi Pfarrer, Mesner.",
+        "Pfarrer schweigt zu Lenis Beichte, deutet nur an (Einführung)."
+      ],
+      "bekommt": "Sterbebuch 1929; Zenzi beim Kaffee: Klatsch (H11), Lenis Beichte Samstag fünf. Pfarrer deutet an."
+    },
+    "D5": {
+      "kurz": "Gasthof und Quartier der Ermittler; Lindners Zimmer (S3), Sterbebilder (S4), Rosls Wissen (H11).",
+      "anfang": "Wirtin: »Zimmer zwoa, drei, vier. Frühstück um siebn, Brotzeit auf Wunsch.«",
+      "gibt": [
+        "An der Theke: »Lindner, Rolf, Dipl.-Ing., Berlin, 7.4.56. Zweck: Erholung.«",
+        "Lindners Zimmer 1, siehe S3.",
+        "Rosl, erst mit offenem Schloss: Lindner wollte Leni mitnehmen (H11).",
+        "Sterbebilder hinter dem Kreuz im Herrgottswinkel (S4).",
+        "Hausknecht: Lindners Bergschuhe standen Freitag früh nicht vor der Tür."
+      ],
+      "bekommt": "Fremdenbuch, Lindners Zimmer (S3); Rosl mit offenem Schloss: Lindner wollte Leni mitnehmen (H11)."
+    },
+    "D6": {
+      "kurz": "Kanzlei und Post mit einzigem Telefon; Gesprächszettel (H24), Brandreste (H20), Vorvertrag über Daxer-Wiese.",
+      "anfang": "Traudl: »Nach München? Des dauert, bis i durchkomm.«",
+      "gibt": [
+        "Haslberger: München, dann Landpolizei (H24). Nur nach Brandls Versprechen (N2).",
+        "Verborgenes erkennen in der Asche: Fetzen aus Lindners Notizbuch (H20).",
+        "Abgesperrte Lade, Schließtechnik: Bergbahn-Vorvertrag über Daxer-Wiese, 24. März 1956.",
+        "Telefonieren siehe S22; Traudl hört mit."
+      ],
+      "bekommt": "Telefon (S22); nach N2 Zettel (H24), Vater heizte Samstag ein; Ottilie, Ofen (H20, S8)."
+    },
+    "D7": {
+      "kurz": "Schule und Ilses Wohnung, nur hier redet sie; Tonis Aufsatz (H12), Treffpunkt Leni.",
+      "anfang": "Ilse, leise: »Fragen Sie den Herrn Pfarrer nicht nach mir.«",
+      "gibt": [
+        "Sagenheft: Herkunft jedes Spuks. Wer es ernst nimmt, hebt Ilse.",
+        "Tonis Aufsatz: Donnerstag Licht vom Gschwendtner-Hof zur Alm hinauf (H12).",
+        "Ilse bittet Hagedorn, Kindern den Spuk angstfrei zu erklären (N3).",
+        "Ilse freundlich: holt Leni nach Rosenkranz her, hier fragt keiner."
+      ],
+      "bekommt": "Sagenheft; Tonis Aufsatz (H12); Bitte um Spukerklärung für Kinder (N3). Ilse redet nur hier."
+    },
+    "D8": {
+      "kurz": "Laden und Dorfklatsch; Lindner kaufte Brotzeit für zwei (H8), Toni sah ihn hinaufgehen.",
+      "anfang": "Kramerin: »Für zwei, hab i mir no denkt.«",
+      "gibt": [
+        "Lindner Donnerstag zehn: je zwei Semmeln, Regensburger, Äpfel; Schokolade (H8).",
+        "Leni und Berliner (H11); Unfall an der Lahnkehre, übertrieben (G8).",
+        "Toni: Lindner Donnerstag halb zwei hinauf; zeigt Ammonit, Studentenzettel (G9).",
+        "Frauengespräch gegen Mittag: M4 in S9."
+      ],
+      "bekommt": "Brotzeit für zwei (H8), Klatsch (H11, G8), M4; Toni: Lindner hinauf, Ammonit (G9)."
+    },
+    "D9": {
+      "kurz": "Schusterwerkstatt; Xare kennt jede Nagelung, belastet Gschwendtner (H13, H2), nagelt Halbschuhe für den Berg.",
+      "anfang": "Xare, ohne aufzuschauen: »Zoagn's amal Eahnane Schuah her.«",
+      "gibt": [
+        "Zeigt jedem (H13): Freitag 7 Uhr, Gschwendtners linke Sohle abgerissen.",
+        "Nagelbild (H2): seine Nagelung, auch Gschwendtners Rechter; Tricouni nur Berliner.",
+        "Sohlenfetzen von der Felsstufe? »Vom Gschwendtner seim Linken.«",
+        "Freundlich: nagelt Halbschuhe (Brandl, Hagedorn), 12 Mark; Strafwürfel entfällt."
+      ],
+      "bekommt": "Reparaturheft (H13); nach dem Berg erkennt er das Nagelbild (H2); nagelt Halbschuhe."
+    },
+    "D10": {
+      "kurz": "Hof von Gschwendtner und Leni: Joppe (H15), Atelierbilder (H16), Kamera (H18), Lenis Ansichtskarte.",
+      "anfang": "Gschwendtner schaut kurz auf: »Grüß Gott.« Und spaltet weiter.",
+      "gibt": [],
+      "bekommt": "Joppe am Zaunpfosten (H15), Atelierbilder (H16), Schuhe, Tenne (H18); siehe S20."
+    },
+    "D11": {
+      "kurz": "Ältester Hof, Moar-Kaspar im Austrag; Geschichten von 1893 und 1929, Larven vom Spuk.",
+      "anfang": "Moar-Kaspar klopft auf die Bank: »Setzn's Eahna her, wenn's was lerna wolln.«",
+      "gibt": [
+        "Haberfeldtreiben 1893, Geometer 1929. Wer ganz zuhört, hebt ihn.",
+        "Haberfeld-Larven, bei genauem Blick frischer Ruß: Burschen vor Lindners Fenster."
+      ],
+      "bekommt": "Geschichten vom Haberfeld 1893 und von 1929; im Kasten Larven mit frischem Ruß."
+    },
+    "D12": {
+      "kurz": "Sägewerk mit Flüchtlingskammern und E-Werk; Wolffs Alibi, Riegelbalken für die Tenne, Licht um zwei.",
+      "anfang": "Wolff, Mütze in der Hand: »Ich war im Sägewerk. Den ganzen Tag.«",
+      "gibt": [
+        "Wolff Donnerstag ganztags an der Säge; Säger bestätigt ungern.",
+        "Säger hetzt gegen Wimmer, heiratete 1953 dessen Frau Agnes (G11).",
+        "Gschwendtner holte Samstag Riegelbalken für Tenne; Wolff freundlich, Säger gefragt.",
+        "Ist Wolff freundlich: Seile und Sturmlaterne für den Berg.",
+        "Wärter: Stromausfall durch Äste; um zwei Licht vom Berg (H12)."
+      ],
+      "bekommt": "Wolffs Alibi; Säger gegen Wimmer (G11); Riegelbalken; Seile, Laterne; Licht um zwei (H12, G7)."
+    },
+    "D13": {
+      "kurz": "Häusl am Waldrand, Kerze im Fenster; Wimmer-Sepp sah Gschwendtner hinaufgehen und das Licht (H14).",
+      "anfang": "Lange nichts. Dann: »Sie san der Doktor.«",
+      "gibt": [
+        "Gschwendtner hinauf, Licht an Kaser (H14). Ab kooperativ oder Vaterfrage.",
+        "Fragt Hagedorn als Vater, nicht Arzt: erzählt vom Lager (N4)."
+      ],
+      "bekommt": "Was er Donnerstag sah (H14), der Heimkehrer (N4)."
+    },
+    "D14": {
+      "kurz": "Jäger und Maxi; Revierbuch (H21), Lüge über ersten Anruf (H24), Schlüssel zur Jagdhütte (B6).",
+      "anfang": "Der Jäger: »Mei Hund hat'n gfundn, ned i.«",
+      "gibt": [
+        "Höflich gefragt: Donnerstag 16.10 Schuss Grubenwand, Samstag 11.30 Toter (H21).",
+        "Schlüssel zur Jagdhütte (B6): freiwillig gibt er ihn nur Hias.",
+        "»Glei d'Polizei hab i angrufen.« Gelogen: zuerst Direktor (H24)."
+      ],
+      "bekommt": "Revierbuch (H21) auf höfliche Frage; Lüge über ersten Anruf (H24); Jagdhüttenschlüssel."
+    },
+    "D15": {
+      "kurz": "Milchhäusl am Platz, um sieben Leni allein; Milchwart sah Lindner und Leni reden.",
+      "anfang": "Milchwart: »Dreimal ham's do gredt, der Berliner und d'Leni.«",
+      "gibt": [
+        "Lindner, Leni dreimal reden gesehen; 11. April fotografierte er sie.",
+        "Nur hier und hinterm Friedhof (D3) Leni ohne Vater."
+      ],
+      "bekommt": "Milchwart sah Lindner und Leni dreimal reden; Leni allein."
+    },
+    "B1": {
+      "kurz": "Holzweg ab D13 zur Holzknechthütte, ungefährlich; Jäger kommt entgegen (S11), Maxi folgt (N6).",
+      "anfang": null,
+      "gibt": [
+        "Jäger erzählt vom Fund, lügt über ersten Anruf (S11).",
+        "Holzknechte an Dorftagen: Fremder, Schuss, »Russe« (G9, G10, G11).",
+        "Wimmer-Sepp arbeitet hier; sah Gschwendtner hinaufgehen (H14), siehe D13.",
+        "Maxis Spur ab hier zwanzig Meter neben dem Weg (S12)."
+      ],
+      "bekommt": null
+    },
+    "B2": {
+      "kurz": "Marterl des Geometers 1929, frisch geritzter Spruch; Eis im Bach (S12); Ende 3: S25.",
+      "anfang": null,
+      "gibt": [
+        "Von Martl, zeitgleich mit Larvenspuk. Auf Vorhalt gesteht er beides.",
+        "Zweite Spur im Wald: Maxi mit Hund (S12).",
+        "Marterl passt zu Votivtafel (D2) und Sterbebuch (D4)."
+      ],
+      "bekommt": null
+    },
+    "B3": {
+      "kurz": "Leere Almhütten, Pause, Blick auf die Lahn (B4); Naturkunde: Hang trägt bis gegen elf.",
+      "anfang": null,
+      "gibt": [],
+      "bekommt": null
+    },
+    "B4": {
+      "kurz": "Lawinenhang als Uhr: vormittags Klettern oder Geschick (S13), nachmittags Patzer: Lawine; Flucht (S24).",
+      "anfang": null,
+      "gibt": [],
+      "bekommt": null
+    },
+    "B5": {
+      "kurz": "Zwei Becher (H9), Haarband, Korbis Versteck (H22, N7), bei Kritisch R und L (S14).",
+      "anfang": null,
+      "gibt": [],
+      "bekommt": null
+    },
+    "B6": {
+      "kurz": "Seefrieds Hütte, verschlossen: Jägerschlüssel (D14, S11), Ersatzschlüssel (Hias' Blatt), Gewalt; Hüttenbuch (H23).",
+      "anfang": null,
+      "gibt": [
+        "Mitte März Seefried, Lindner, Hias; September 1955 Kriminalrat Wiesinger (H23).",
+        "Nacht hier wärmer als in Kaser; Spuren dort (H9, H22)."
+      ],
+      "bekommt": null
+    },
+    "B7": {
+      "kurz": "Lindner unter der Felsstufe, Funde H1 bis H8 (S15); Wechten; Sturm ab Mittag (S16).",
+      "anfang": null,
+      "gibt": [],
+      "bekommt": null
+    }
+  },
+  "nebenfiguren": [
+    "Sah den Bürgermeister Samstag Papier in den kalten Ofen stecken (H20).",
+    "Lindners Bergschuhe standen Freitag früh nicht vor der Tür: nicht heimgekommen.",
+    "Sah Lindner und Leni dreimal miteinander reden.",
+    "Erklärt Stromausfall (Äste im Rechen); sah um zwei Licht vom Berg (H12).",
+    "Sah um zwei ebenfalls das Licht (H12).",
+    "Anna gab Leni Freitag Ersatzknopf (H15); Franz hörte nachts am Brunnen Schuhwaschen.",
+    "Erkennt den fremden Knopf an der Joppe (H15); Lenis Brautkleid-Anprobe abgesagt.",
+    "Weiß, dass Leni Donnerstagabend nicht daheim war.",
+    "Erzählt alles, aber nur ohne den Martl (H14).",
+    "Bestätigt ungern Wolffs Alibi; hetzt gegen Wimmer aus Angst um Agnes.",
+    "Holen mit Rauch den Toten auf dem Hörnerschlitten (S18)."
+  ]
+}

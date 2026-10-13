@@ -1,0 +1,306 @@
+{
+  "P12": {
+    "wer": "Mesner und Totengräber, 66, Schlüssel zu Turm und Leichenhaus. Ließ Schallladen offen: Glöckerl schlug um zwei.",
+    "will": "Dass der Pfarrer nichts von den offenen Laden erfährt.",
+    "redet": "Leise, langsam, mit Pausen. »Der Herr Pfarrer derf des ned wissn.«",
+    "luegt": ["Glöckerl: »Des schlagt, wenn oaner stirbt.«"],
+    "schloss": "Wahrheit übers Glöckerl. Pfarrer außer Hörweite und Schweigeversprechen: dann gibt er alles zu.",
+    "steigt": ["Respekt vor den Toten", "Leichenhaus: beim Umdrehen anfassen lassen"],
+    "faellt": ["Pfarrer erfährt, was er sagte"],
+    "kippt": "Sperrt das Leichenhaus zu, Schlüssel bekommt nur noch Rauch.",
+    "weiss": [
+      "Wahrheit übers Glöckerl (offene Schallladen)",
+      "Leni: Samstag um fünf lange Beichte, verweint",
+      "Alibi des Pfarrers: war selbst dabei",
+      "Um vier fiel ein Schuss",
+      "Darf er im Leichenhaus mit anfassen: Griffspuren an Armen"
+    ],
+    "wichtig": [],
+    "wo": "Morgens Kirche (D2), nachmittags Friedhof (D3), abends Stammtisch (D5). Georgivormittag: läutet, ministriert.",
+    "leiter": {
+      "feindselig": "»I hab z'tun.« Holt den Pfarrer.",
+      "skeptisch": "Redet über Gräber und Wetter.",
+      "neutral": "Sagt, was er sah, wenn genau gefragt.",
+      "kooperativ": "Lässt in Turm und Leichenhaus.",
+      "freundlich": "Bringt Kirchenneuigkeiten: wer beichten war, wer betet."
+    }
+  },
+  "P13": {
+    "wer": "Dorfältester, 84, im Austrag. Schrie Lindner vor allen an, lieh den Burschen seine Larven.",
+    "will": "Alles wie es war, kein Hotel, solange er lebt. Gehört werden.",
+    "redet": "Laut, langsam, altes Bairisch. »Der Berg holt sich, wer ihn aufreißt.«",
+    "luegt": [
+      "Larven: »De liegn im Kastn, seit dreianeunzge.«",
+      "Frischer Ruß an Larve oder Schorschs Aussage: gesteht stolz"
+    ],
+    "schloss": null,
+    "steigt": ["Geschichten bis zum Ende anhören", "Nach Haberfeldtreiben 1893 fragen"],
+    "faellt": ["Lachen über den Aberglauben"],
+    "kippt": "Erzählt am Stammtisch, die Münchner lachten ihn aus. Ab nächster Szene weiß es das Dorf.",
+    "weiss": [
+      "Kasermandl, 1929 mit Namen und Jahr",
+      "1929 grub er Geometer Kögl aus dem Schnee",
+      "Larven vor Lindners Fenster waren seine eigenen",
+      "Zum Fall nur Wahrheit hinter zwei Spuks"
+    ],
+    "wichtig": [],
+    "wo": "Bei Sonne Bank vorm Moar-Hof (D11), abends Stammtisch (D5), Georgivormittag vorn in der Kirche.",
+    "leiter": {
+      "feindselig": "Erzählt trotzdem vom Kasermandl, aber zum Raum.",
+      "skeptisch": "Erzählt Geschichten. Nichts über Leute.",
+      "neutral": "Erzählt von 1893 und 1929, mit Namen und Jahren.",
+      "kooperativ": "Zeigt die Larve im Kasten (D11).",
+      "freundlich": "Nimmt mit an den Stammtisch: »Mit dem könnt's redn.«"
+    }
+  },
+  "P14": {
+    "wer": "Pfarrer, 61, gegen das Hotel. Hieß Lindner vor Zeugen gehen. Hörte Lenis Beichte, darf nichts sagen.",
+    "will": "Sein Dorf behüten. Beichtgeheimnis halten, auch wenn ein Mord dranhängt.",
+    "redet": "Kanzel-Hochdeutsch, Bairisch nur im Zorn. »Wer Schuld trägt, soll sie bekennen.«",
+    "luegt": [
+      "Lügt nie. Vorhalte prallen ab.",
+      "Kann andeuten: wer war Samstag um fünf in Kirche?",
+      "Auf freundlich ungefragt. Antwort bei Mesner, Zenzi"
+    ],
+    "schloss": null,
+    "steigt": ["Zur Georgimesse, bis zum Segen"],
+    "faellt": ["Spott über den Glauben", "Jede Frage nach der Beichte, sofort"],
+    "kippt": "Predigt am nächsten Morgen gegen die Münchner. Zenzi: kein Kaffee mehr. Mesner schweigt.",
+    "weiss": [
+      "Was Leni gebeichtet hat (Beichtgeheimnis)",
+      "Alibi: Donnerstagnachmittag bis Nacht bei sterbender Hinterbergerin",
+      "Bestätigen: Mesner, Schwester Benedikta, Zenzi"
+    ],
+    "wichtig": [],
+    "wo": "Morgens Kirche (D2), Dienstag Religionsstunde im Schulhaus (D7), sonst Pfarrhof (D4). Georgivormittag: Messe, Pferdesegen.",
+    "leiter": {
+      "feindselig": "»Ich habe Ihnen nichts zu sagen.« Lässt warten.",
+      "skeptisch": "Redet über Gott, Ordnung und das Hotel.",
+      "neutral": "Sagt, was er selbst tat, wenn genau gefragt.",
+      "kooperativ": "Zeigt Sterbebuch 1929, Zenzi bringt Kaffee.",
+      "freundlich": "Deutet an, ohne gefragt zu werden."
+    }
+  },
+  "P15": {
+    "wer": "Polizeihauptwachtmeister, 47, wichtigste Nebenfigur. Verbandelt mit Wirtin und Bürgermeister. Meldete Bergunfall, um niemanden hineinzuziehen.",
+    "will": "Ruhe im Tal, Gesicht vor Städtern. Begreift er Mord: sauberer Abschluss.",
+    "redet": "Ruhig, kollegial, mit Hausnamen. »Der is halt gfalln.«",
+    "luegt": [
+      "Lässt weg: Hotel, Stammtischdrohung, Lärm vor Lindners Fenster",
+      "Direktor: »Was der sonst macht, woaß i ned genau.«",
+      "Weggelassenes anderswo gefunden: gibt er's zu"
+    ],
+    "schloss": null,
+    "steigt": ["Protokoll führen lassen", "Vorher nach Meinung fragen", "Zur Leichenschau mitnehmen", "»Herr Hauptwachtmeister«"],
+    "faellt": ["Verhaftung über seinen Kopf", "Bürgermeister bloßgestellt", "Weggeschickt, wenn's spannend wird", "Erfährt von einem Einbruch"],
+    "kippt": "Sagt am Stammtisch »Sagt's nix«. Alle skeptischen Dorfleute werden feindselig.",
+    "weiss": [
+      "Alibi Bürgermeister: sah ihn selbst in Miesbach",
+      "Unfallanzeige Lahnkehre, Name und Anschrift (G8)",
+      "Korbi wildert (G10)",
+      "Jäger rief Samstag zuerst München an; schmeckt ihm nicht"
+    ],
+    "wichtig": [
+      "Dabei, als Kollege behandelt: skeptische Dorfleute reden wie neutrale",
+      "Hofdurchsuchung nur mit ihm und Grund: H13 plus H15 oder H16",
+      "Beim Geständnis dabei: nimmt Täter mit, keine Flucht"
+    ],
+    "wo": "Sonntagabend bis acht beim Lahnwirt (D5), dann Talort, kommt auf Ruf. Georgivormittag Dorfplatz. Ab Bergabstieg: wohnt beim Lahnwirt.",
+    "leiter": {
+      "feindselig": "Tut genau, was man ihm sagt, nicht mehr.",
+      "skeptisch": "Höflich, kurz, Dienst nach Vorschrift.",
+      "neutral": "Kollegial, vorsichtig. Antwortet auf Fragen.",
+      "kooperativ": "Holt Martl vom Maibaum, geht mit zum Gschwendtner.",
+      "freundlich": "Erzählt ungefragt, was er weiß, erinnert sich an Dinge."
+    }
+  },
+  "P16": {
+    "wer": "Kellnerin beim Lahnwirt, 19, Lenis Freundin. Sagte Zenzi, Lindner wolle Leni mitnehmen; so erfuhr's Lenis Vater.",
+    "will": "Dass Leni nichts passiert. Niemand soll sie eine Tratschen nennen.",
+    "redet": "Schnell, laut; leise, wenn Wirtin in Hörweite. »Bleiben's bis zum erstn Mai?«",
+    "luegt": ["Lindners Zimmer, auf Befehl der Wirtin: »Niemand war drin.«"],
+    "schloss": "Redet frei heraus, sobald einer sagt: Das Gerede ist nicht ihre Schuld. Vorher windet sie sich.",
+    "steigt": ["Trinkgeld", "Ihr die Schuld abnehmen"],
+    "faellt": ["Als Tratschen hingestellt"],
+    "kippt": "Läuft in die Küche, weint. Danach bedient die Wirtin den Tisch selbst.",
+    "weiss": [
+      "H11: Lindner wollte Leni mitnehmen; sie sagte es Zenzi",
+      "Daxer war Samstag in Lindners Zimmer",
+      "Larven vorm Fenster, Größter mit Martls Schultern",
+      "Die Drohung vom 17.",
+      "Lindners Abend nach dem Unfall an der Lahnkehre (G8)"
+    ],
+    "wichtig": [],
+    "wo": "Frühstück, tagsüber, abends in der Gaststube (D5). Allein nur in Küche oder am Hintereingang.",
+    "leiter": {
+      "feindselig": "Stellt das Essen hin und geht.",
+      "skeptisch": "Essen, Zimmer, Wetter.",
+      "neutral": "Erzählt Gaststubengerede, wenn allein gefragt.",
+      "kooperativ": "Erzählt von Stammtisch, Larven, Unfall an der Lahnkehre.",
+      "freundlich": "Steckt einem in der Küche zu, was sie hörte."
+    }
+  },
+  "P17": {
+    "wer": "Schuhmacher, 59, flickt jeden Bergschuh. Sein Heft mit Tag, Uhrzeit, Name macht den Fall auf.",
+    "will": "Nichts. Hat nichts zu verbergen, zeigt sein Heft jedem.",
+    "redet": "Langsam, Nägel im Mundwinkel, lieber über Schuhe. »Zoagn's amal Eahnane Schuah her.«",
+    "luegt": [],
+    "schloss": null,
+    "steigt": ["Handwerk ernst nehmen", "Nagelbild vom Berg mitbringen"],
+    "faellt": ["Halbschuhe", "Eile"],
+    "kippt": "Werkstatt zu, Zettel »Bin auf der Stör.« Am Kartentisch kein Wort mehr.",
+    "weiss": [
+      "H13: Freitag sieben Uhr früh, Gschwendtner brachte linken Bergschuh",
+      "Sohle halb weg, angeblich vom Holzziehen",
+      "Rechten Schuh nicht gebracht: noch alte Nagelung",
+      "Kennt jede Nagelung: Lindners Tricouni, Korbis Ankernägel"
+    ],
+    "wichtig": [
+      "Freundlich: nagelt Halbschuhe über Nacht, zwölf Mark",
+      "Wer annimmt: am Berg kein Halbschuh-Strafwürfel (S10)"
+    ],
+    "wo": "Tagsüber Werkstatt (D9), abends Kartentisch (D5). Georgivormittag zu, öffnet aber auf Klopfen.",
+    "leiter": {
+      "feindselig": "»I hab z'tun.« Hämmert weiter.",
+      "skeptisch": "Leder und Preise. Heft zeigt er trotzdem auf Frage.",
+      "neutral": "Erzählt, was im Heft steht, wer es brachte.",
+      "kooperativ": "Erklärt jede Nagelung, vergleicht ein Nagelbild.",
+      "freundlich": "Nagelt Halbschuhe über Nacht für den Berg."
+    }
+  },
+  "P18": {
+    "wer": "Schüler, 10, Ministrant, Enkel der Kramerin. Sah in der Föhnnacht Lichter, schrieb Schulaufsatz darüber.",
+    "will": "Ernst genommen werden. Dienstmarke, Kamera oder Eispickel gezeigt bekommen.",
+    "redet": "Schnell, begeistert, viele Ausrufe; schaut, ob Oma zuhört.",
+    "luegt": ["Föhnnacht: »I hab gschlafa.«"],
+    "schloss": "Angst vor Großmutter und Kasermandl. Redet, wenn Ilse dabei ist oder Spukerklärung die Angst nimmt (N3).",
+    "steigt": ["Ammoniten bewundern", "Ihm etwas zeigen"],
+    "faellt": ["Bei der Großmutter verpetzt"],
+    "kippt": "Läuft weg.",
+    "weiss": [
+      "H12: Um acht Licht vom Gschwendtner-Hof zur Alm hinauf",
+      "Um zwei Licht herunter, genau beim Glöckerlschlag",
+      "Hielt es fürs Kasermandl, darum der Aufsatz",
+      "Zettel: Adresse des Studenten, der den Ammoniten schenkte (G9)"
+    ],
+    "wichtig": [],
+    "wo": "Vormittags Schule (D7), nachmittags vorm Kramerladen (D8), abends daheim, nachts Dachfenster. Georgivormittag ministriert.",
+    "leiter": {
+      "feindselig": "Läuft weg.",
+      "skeptisch": "»Des derf i ned sagn.«",
+      "neutral": "Zeigt seinen Ammoniten.",
+      "kooperativ": "Erzählt alles, was er bei Tag sah.",
+      "freundlich": "Läuft mit, zeigt Abkürzungen, erzählt Erwachsenengerede."
+    }
+  },
+  "P19": {
+    "wer": "Bürgermeisterstochter, 23, Post und Kanzlei. Hört am einzigen Telefon alles mit, Zettel in Zigarrenkiste.",
+    "will": "Weg nach München, am liebsten Donnerstag im Wagen mit (N2).",
+    "redet": "Flink, halb Hochdeutsch, städtisch. »Nach München? Des dauert, bis i durchkomm.«",
+    "luegt": [
+      "Vater: »nix mit dem Berliner zum doa ghabt«",
+      "Brandreste vorgehalten: wird blass, sagt die Wahrheit",
+      "Vom Vorvertrag weiß sie nichts"
+    ],
+    "schloss": null,
+    "steigt": ["Münchenfahrt versprechen (N2)"],
+    "faellt": ["Ihrem Vater zu nahe kommen", "Merkt, Versprechen gilt nicht: sofort", "Merkt, Brandl wirbt um andere: sofort"],
+    "kippt": "Verbindet weiter, aber was sie hört, weiß abends ihr Vater.",
+    "weiss": [
+      "H24 Zettel: Jäger rief Samstag zuerst München an",
+      "Polizei erst acht Minuten später",
+      "H20: Vater heizte Samstag Kanzleiofen, steckte Papier hinein",
+      "Jedes Ferngespräch im Dorf",
+      "Vater kam Donnerstag mit dem Abendbus heim (G3)"
+    ],
+    "wichtig": ["Erst nach Fahrtversprechen (N2): zeigt Zettel, erzählt vom Ofen"],
+    "wo": "Werktags 8 bis 12, 14 bis 18 Poststelle (D6), ab 19 Uhr Klappenschrank. Georgivormittag Post zu bis 14.",
+    "leiter": {
+      "feindselig": "Verbindet, hört mit, erzählt es dem Vater.",
+      "skeptisch": "Verkauft Marken, verbindet Gespräche.",
+      "neutral": "Redet von München, Kino, Stadt.",
+      "kooperativ": "Sagt auf Frage, wer telefonierte. Ohne Zettel, ohne Uhrzeit.",
+      "freundlich": "Bittet um Fahrt (N2), läuft mit Neuigkeiten nach."
+    }
+  },
+  "P20": {
+    "wer": "Spätheimkehrer, 41, Holzknecht, elf Jahre Lager. Für tot erklärt, Frau heiratete den Säger. Sah Donnerstag Entscheidendes.",
+    "will": "Nichts von niemandem. Traut keinem, mit gutem Grund.",
+    "redet": "Kaum, kurze Sätze, lange Pausen: stehen lassen. »Sie san der Doktor.«",
+    "luegt": ["Lügt nicht."],
+    "schloss": "Nur draußen. Fragt Hagedorn als Vater nach dem eigenen vermissten Sohn (N4): erzählt Lager, dann H14.",
+    "steigt": ["Nach N4", "Draußen mit ihm schweigen"],
+    "faellt": ["»Russ« sagen", "In eine Stube bitten", "Ausfragen wie einen Patienten"],
+    "kippt": "Steht auf, geht in den Wald. Danach sieht man nur seine Laterne.",
+    "weiss": [
+      "H14: Donnerstag halb drei Gschwendtner durch Bergwald hinauf",
+      "Schnell und ohne Werkzeug",
+      "Nachts um eins Licht an der Kaser, dann hinunter",
+      "Licht war eine Frau, am Tragen der Laterne erkannt"
+    ],
+    "wichtig": [],
+    "wo": "Tagsüber Holzknechtpartie im Bergwald (B1), abends Hackstock vorm Häusl (D13), nachts im Wald. Nie in der Kirche.",
+    "leiter": {
+      "feindselig": "Geht in den Wald.",
+      "skeptisch": "Raucht, schweigt. Nickt oder schüttelt den Kopf.",
+      "neutral": "Antwortet mit einem Satz, draußen.",
+      "kooperativ": "Sagt, was er Donnerstag sah (H14).",
+      "freundlich": "Erzählt vom Lager, zeigt seinen Nachtsteig im Bergwald."
+    }
+  },
+  "P21": {
+    "wer": "Sägewerksarbeiter, 44, Vertriebener. Unschuldig: Donnerstag im Sägewerk, Säger bestätigt ungern. Bequemer Verdächtiger, weil fremd.",
+    "will": "Nichts. Rechnet trotzdem mit dem Schlimmsten. Achtet darauf, wer zuhört.",
+    "redet": "Steif, korrektes Hochdeutsch. Ungefragt: »Ich war im Sägewerk. Den ganzen Tag.«",
+    "luegt": [],
+    "schloss": "Angst vor Verdacht, keine Probe hilft. Fürsprache vor Dorfleuten oder Säger bestätigt Alibi: steigt, Riegelbalken.",
+    "steigt": ["Vor anderen in Schutz nehmen", "Säger bestätigt Alibi vor Ermittlern"],
+    "faellt": ["Verhör vor Dorfleuten"],
+    "kippt": "Fährt mit nächstem Postbus fort. Dorf hält ihn für Täter: Neutrale werden skeptisch.",
+    "weiss": [
+      "Samstag: Gschwendtner holte Eichen-Riegelbalken, angeblich Tenne (S8, H18)",
+      "Wundert ihn: Tenne zusperren im April",
+      "Säger will Hotelholz liefern, hofft auf mehr Lohn",
+      "Säger hetzt gegen Wimmer-Sepp, fürchtet um Agnes (G11)",
+      "Bürgermeister wies Vertriebenen Kammern zu, lässt es spüren"
+    ],
+    "wichtig": [
+      "Verhör vor Dorfleuten schließt ihn den ganzen Abend zu",
+      "Sein Name fällt mehrmals; im Dorfgespräch eigene Spur (Riegelbalken)"
+    ],
+    "wo": "Tagsüber Sägegatter (D12), mittags auf Bretterstapel, abends Kammer darüber. Georgivormittag Kirche, ganz hinten.",
+    "leiter": {
+      "feindselig": "»Ich habe nichts gesehen.« Arbeitet weiter.",
+      "skeptisch": "Sagt sein Alibi auf, sonst nichts.",
+      "neutral": "Redet über Arbeit und alte Heimat.",
+      "kooperativ": "Erzählt, was er im Sägewerk sieht und hört.",
+      "freundlich": "Bietet Seile und Sturmlaterne für den Berg an."
+    }
+  },
+  "P22": {
+    "wer": "Pfarrköchin, 57, weiß alles aus dem Pfarrhof. Trug Lenis Geheimnis von der Rosl ins Dorf.",
+    "will": "Dass man gut über den Herrn Pfarrer denkt. Einen Zuhörer.",
+    "redet": "Breit, warm, endlos, Kaffeekanne in der Hand. »Mögen's an Kaffee? An echtn.«",
+    "luegt": ["Lügt nicht, aber übertreibt", "Aus langem Pierrotkostüm werden kurze Hosen"],
+    "schloss": null,
+    "steigt": ["Kaffee annehmen", "Zuhören"],
+    "faellt": ["Spott über den Pfarrer"],
+    "kippt": "Erzählt dem Pfarrer alle Fragen der drei. Pfarrhof zu, auch die Küchentür.",
+    "weiss": [
+      "H11 von der Rosl: Lindner wollte Leni mitnehmen",
+      "Leni: Samstag um fünf lange Beichte, verweint",
+      "Alibi des Pfarrers für Donnerstag",
+      "Lehrerin im Fasching (G6), stark übertrieben",
+      "Von der Daxerin: Märzreise ihres Mannes nach München (G3)"
+    ],
+    "wichtig": [],
+    "wo": "Morgens und abends Pfarrhof (D4), gegen Mittag Kramerladen (D8).",
+    "leiter": {
+      "feindselig": "»Der Herr Pfarrer is ned da.« Tür zu.",
+      "skeptisch": "Wetter und Kirche.",
+      "neutral": "Bringt Kaffee, erzählt vom Pfarrhof.",
+      "kooperativ": "Erzählt Klatsch, mit Übertreibungen.",
+      "freundlich": "In der Küche: sagt, was sie nicht sagen darf."
+    }
+  }
+}

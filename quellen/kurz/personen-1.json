@@ -1,0 +1,222 @@
+{
+  "P1": {
+    "wer": "Gemeindeschwester, 50, Ordensfrau, seit 1934 im Dorf. Ahnt, was mit Leni ist. Sauberster Weg zu Leni.",
+    "will": "Leni helfen, nicht sie vorführen.",
+    "redet": "Ruhig, kurz, ohne Dialekt. »Der Herrgott sieht's. Und ich seh's auch.«",
+    "luegt": ["Lügt nie. Schweigt, wo sie nicht reden darf"],
+    "schloss": null,
+    "steigt": ["Ehrlich sagen, was man vorhat", "Erkennbar Leni helfen wollen"],
+    "faellt": ["Leni bloßstellen", "Spott über die Kirche"],
+    "kippt": "Sagt Leni, sie soll mit keinem der drei reden. Lenis Schloss bleibt für den Verursacher zu.",
+    "weiss": ["Leni weint seit dem 16. April", "Montag darauf: blauer Fleck am Handgelenk, wie Handabdruck", "Alibi Pfarrer, Mesner: Donnerstag mit ihr auf Einöd"],
+    "wichtig": [],
+    "wo": "Morgens Krankenbesuche im Dorf (Rad), nachmittags Pfarrhof (D4), abends daheim. Georgivormittag: Messe.",
+    "leiter": {
+      "feindselig": "»Ich hab Kranke.« Steigt aufs Rad.",
+      "skeptisch": "Redet über Kranke und Wetter.",
+      "neutral": "Sagt Selbstgesehenes, wenn man genau fragt.",
+      "kooperativ": "Erzählt von Lenis Kummer, nennt keinen Grund.",
+      "freundlich": "Bringt Leni zum Reden, bleibt dabei."
+    }
+  },
+  "P2": {
+    "wer": "Georg Daxenberger (Daxer), 58, Bürgermeister. Geheimer Vorvertrag: Wiese an Hotelgesellschaft. Verbrannte Lindners Notizbuchseiten. Unschuldig, wirkt schuldig.",
+    "will": "Vorvertrag geheim. Keiner fragt nach den Seiten. Traudl redet nicht mit Kommissar.",
+    "redet": "Laut, jovial; unter vier Augen scharf. »A Unglück is a Unglück.«",
+    "luegt": ["Über das Hotel und die zwei Notizbuchseiten", "Brandreste oder Magd Ottilie vorgehalten: »Gemeindesachen.«", "Gesteht alles erst mit dem Vorvertrag in der Hand"],
+    "schloss": null,
+    "steigt": ["Seinem Buben beim Georgiritt helfen (N5)", "Rauch als Kollegen behandeln"],
+    "faellt": ["Vor Leuten bloßstellen", "Kanzlei durchsuchen"],
+    "kippt": "Beschwert sich bei Rauch, droht mit dem Landrat. Abends weiß es der Stammtisch.",
+    "weiss": ["H20: Brandreste im Kanzleiofen", "Was auf den zwei verbrannten Seiten stand", "Alibi Donnerstag: elf Uhr Landratsamt Miesbach, Rauch sah ihn", "Heim mit dem Abendbus (G3)"],
+    "wichtig": [],
+    "wo": "Vormittags Kanzlei (D6), nachmittags Hof oder Kanzlei, abends Stammtisch (D5). Georgivormittag: führt den Ritt an.",
+    "leiter": {
+      "feindselig": "»Wenden's Eahna an'n Rauch.« Lässt einen stehen.",
+      "skeptisch": "Wasserleitung, Gemeinde, Georgi. Nichts vom Toten.",
+      "neutral": "Sagt, wo er Donnerstag war; Lindner war ihm zuwider.",
+      "kooperativ": "Lässt Gemeindeprotokoll sehen, nennt die anderen Stammtischdroher.",
+      "freundlich": "Holt Gruppe an den Stammtisch; man redet mit ihr."
+    }
+  },
+  "P3": {
+    "wer": "Sebastian Gschwendtner, 52, Bauer, Witwer, Lenis Vater, Rechtler. Höflich, still, nie gedroht. Der Täter.",
+    "will": "Leni bleibt, heiratet Martl im Oktober. Keine Fragen zum Donnerstag. Kein Hotel.",
+    "redet": "Kurz, ruhig, höflich, arbeitet weiter. »Is recht.« Nie über zwölf Wörter.",
+    "luegt": ["Über Donnerstag, Schuh und Knopf", "Weicht aus, arbeitet weiter, nie laut"],
+    "schloss": null,
+    "steigt": ["Mit anpacken, Holz aufschichten", "Mit ihm übers Vieh reden", "Rauch dabei: redet eine Stufe höher"],
+    "faellt": ["Ohne Rauch auf seinen Hof kommen", "Leni nachstellen", "Ein Einbruch fliegt auf"],
+    "kippt": "»Runter von meim Hof.« Macht den Hund los.",
+    "weiss": ["Stieß Lindner Donnerstag halb sechs über die Felsstufe", "Sohle dabei aufgerissen (H13)", "Knopf blieb in der Faust des Toten (H15, H16)", "Lindners Kamera liegt in seiner Tenne im Heu (H18)", "Weiß nicht: Lindner lebte noch; Leni war droben"],
+    "wichtig": ["Zu viele Fragen: schickt Leni per Postbus nach Miesbach (S21)", "Stufenweise H13, H14, H15 oder H16: Schweigen. H17 oder H19: Geständnis (S23)", "Gestellt ohne Rauch oder Leni im Haus: geht auf den Berg (S24)"],
+    "wo": "7 Uhr Milchsammelstelle (D15), dann Stall, nachmittags Holzspalten im Hof (D10), abends daheim. Georgivormittag: Messe, Pferdesegen.",
+    "leiter": {
+      "feindselig": "»Runter von meim Hof.« Hund wird losgemacht.",
+      "skeptisch": "Grüßt, arbeitet weiter, antwortet einsilbig.",
+      "neutral": "Vieh, Wetter, Alm. Leni: »Die heirat im Herbst.«",
+      "kooperativ": "Bittet in die Stube, Most. Atelierbilder hängen dort (H16).",
+      "freundlich": "Zeigt Stall, erzählt von seiner Frau. Weiter nie."
+    }
+  },
+  "P4": {
+    "wer": "Ilse Reichl, 25, Lehrerin, Egerländer Vertriebene. Sagenheft erklärt jeden Spuk. Redet nur im Schulhaus.",
+    "will": "Bleiben dürfen. Ernst genommen werden, als Lehrerin und Mensch.",
+    "redet": "Hochdeutsch, trocken, spöttisch. »Fragen Sie den Herrn Pfarrer nach dem Wetter.«",
+    "luegt": [],
+    "schloss": null,
+    "steigt": ["Sagenheft ernst nehmen", "Kindern Spuk angstfrei erklären (N3)"],
+    "faellt": ["Auf der Gasse angesprochen", "Wenn Brandl Charme ausspielt"],
+    "kippt": "Höflich und kühl, sagt nur noch »Guten Tag«.",
+    "weiss": ["H12: Tonis Aufsatz über die Föhnnacht, aufbewahrt", "Sagenheft erklärt jeden Spuk im Dorf", "Leni lieh Bücher, zuletzt Stadtplan von München", "Fürchtet um ihre Stelle: Pfarrer schrieb an Schulrat"],
+    "wichtig": [],
+    "wo": "Vormittags Schule (D7), nachmittags und abends Schulhaus. Georgivormittag: an der Orgel.",
+    "leiter": {
+      "feindselig": "»Ich habe Unterricht.«",
+      "skeptisch": "Höflich, über Schule und Wetter.",
+      "neutral": "Erzählt aus dem Sagenheft, was das Dorf glaubt.",
+      "kooperativ": "Zeigt Heft und Aufsätze, auch Tonis (H12).",
+      "freundlich": "Holt Leni ins Schulhaus, wenn einer sie sprechen will."
+    }
+  },
+  "P5": {
+    "wer": "Ludwig Haslberger, 49, Berufsjäger des Direktors Seefried, Maxis Vater. Fand die Leiche, rief zuerst München an.",
+    "will": "Revier geachtet. Keine Fragen nach dem Direktor, seinem Dienstherrn.",
+    "redet": "Ruhig, vier, fünf Wörter, dann Pause. »Waidmannsheil.« Zu Hias kollegial.",
+    "luegt": ["Anruf: »Glei d'Polizei hab i angrufen.« H24 widerlegt", "Maxi am Berg: Gamszählen. Gesteht bei Maxis Aussage, beschämt", "Alles andere stimmt bis auf die Minute"],
+    "schloss": null,
+    "steigt": ["Leise sein im Revier", "Nicht quer über Äsungsflächen", "Nicht ungefragt ins Revier", "Hund Hasso loben"],
+    "faellt": ["Nach dem Direktor bohren, ohne Vorhalt", "Maxi bedrohen"],
+    "kippt": "»Mei Revier is für Eahna zua.« Dann Schweigen. Kein Hüttenschlüssel, Maxi gewarnt.",
+    "weiss": ["Fund Samstag 11.30 am Sattel; nichts angerührt, alles gemerkt", "H21 Revierbuch: Donnerstag 16.10 Uhr Schuss Grubenwand, Wilderer?", "Korbi wildert, bisher unerwischt. Wimmer-Sepp nachts harmlos unterwegs", "H23: März, Direktor mit Lindner und Hias in Jagdhütte", "Hüttenschlüssel am Schlüsselbrett, mit Holzanhänger"],
+    "wichtig": ["Stirbt Maxi (S17): feindselig zu allen drei, redet nur mit Rauch"],
+    "wo": "Tagsüber Revier, Bergtag unterwegs zur Gruppe oder am Sattel. Abends Jägerhaus (D14), Revierbuch auf Schreibtisch.",
+    "leiter": {
+      "feindselig": "»Im Revier hat koaner was verlorn.« Geht.",
+      "skeptisch": "Wetter, Wild, Schnee, sonst nichts.",
+      "neutral": "Erzählt den Fund, genau und von sich aus.",
+      "kooperativ": "Zeigt Revierbuch (H21), Weg zum Sattel, wo Schnee hält.",
+      "freundlich": "Gibt Hüttenschlüssel. Warnt: Lahn morgens ja, nachmittags nicht."
+    }
+  },
+  "P6": {
+    "wer": "Korbinian Strasser (Korbi), 27, Holzknecht und Wilderer. Drohte Lindner mit der Axt. Einziger Augenzeuge der Tat.",
+    "will": "Versteck geheim, Wildern unbewiesen. Mit dem Mord nichts zu tun.",
+    "redet": "Gar nicht oder grob. »Was wuist?«",
+    "luegt": ["Über Donnerstag: »Im Holz war i.«"],
+    "schloss": null,
+    "steigt": ["Vom Wildern wissen und schweigen"],
+    "faellt": ["Vor anderen nach dem Schuss fragen"],
+    "kippt": "Schlägt einmal zu (1W3 Trefferpunkte) und geht. Nachts räumt er sein Versteck (N7).",
+    "weiss": ["H22: Versteck unter dem Kaserboden", "Schoss Donnerstag 16.10 Gams an Grubenwand (G10)", "Halb sechs am Sattel: einer packt den anderen", "Weit weg, Föhnsicht; hielt es für Rauferei", "Redet erst, wenn er begreift: Mord, nicht Gämsen"],
+    "wichtig": [],
+    "wo": "Tagsüber Holzknechtpartie im Bergwald (B1), abends Stammtisch (D5), nachts im Revier. Georgivormittag: hinten in der Kirche.",
+    "leiter": {
+      "feindselig": "Schweigt, schaut weg, geht.",
+      "skeptisch": "»Im Holz war i.« Mehr nicht.",
+      "neutral": "Redet über Arbeit und Wetter.",
+      "kooperativ": "Stammtisch: »Gredt hab i. Gmoant ned.«",
+      "freundlich": "Warnt: »Der Jagersbua geht eich nach. Mit'm Gwehr.«"
+    }
+  },
+  "P7": {
+    "wer": "Theres Mayr, die Kramerin, 63, Tonis Großmutter. Weiß, wer was kaufte. Übertreibt, lügt nicht.",
+    "will": "Erzählen. Und dass man bei ihr kauft.",
+    "redet": "Schnell, viel, mit den Händen. »Für zwei, hab i mir no denkt.«",
+    "luegt": ["Isabella (G8): fragte nach Lahnwirt, nicht nach Lindner", "Rote Fingernägel der Dame: übertrieben", "Spielern nie sagen, was übertrieben ist"],
+    "schloss": null,
+    "steigt": ["Etwas kaufen und zuhören"],
+    "faellt": ["Ihr Gerede widerlegen"],
+    "kippt": "Erzählt jedem, die Münchner hätten keine Manieren. Ab nächster Szene weiß es das Dorf.",
+    "weiss": ["H8: Lindner kaufte Donnerstag zehn Uhr Brotzeit für zwei", "H11: 11. April, Lindner fotografierte Leni an der Milch", "Lindner stieg um halb zwei hinauf", "Isabella an der Lahnkehre (G8), aufgebauscht"],
+    "wichtig": [],
+    "wo": "Den ganzen Tag im Laden (D8), bis sieben Uhr abends.",
+    "leiter": {
+      "feindselig": "»Mir ham zua.«",
+      "skeptisch": "Wetter und Preise.",
+      "neutral": "Wer was gekauft hat.",
+      "kooperativ": "Der ganze Klatsch, mit Übertreibungen.",
+      "freundlich": "Holt Toni und Nachbarinnen, bringt Neuigkeiten."
+    }
+  },
+  "P8": {
+    "wer": "Maria Hallmaier, Lahnwirtin, 46, Kriegerwitwe, Rechtlerin. Haus verschuldet. Ließ Samstag den Bürgermeister in Lindners Zimmer.",
+    "will": "Kein Ärger im Haus, Rechnung bezahlt. Keiner erfährt, wen sie hineinließ.",
+    "redet": "Knapp, rechnend, freundlich ohne Wärme. »Drei Hektoliter san bestellt.«",
+    "luegt": ["Zimmer: »Seit Samstag war koaner drin.«", "Vorhalt: Rauchs Meldung, Schlüssel lag bei ihr", "Oder Zigarrenstumpen aus Zimmer 1, Gerede im Laden"],
+    "schloss": null,
+    "steigt": ["Gute Gäste: bezahlen, Essen loben", "Bergschuhe ihres Mannes annehmen, danken (S10)"],
+    "faellt": ["Ärger im Haus", "Rauch gegen sie aufbringen"],
+    "kippt": "Rechnung teurer, Essen kälter. Rosl darf nicht mehr mit den dreien reden.",
+    "weiss": ["Das Fremdenbuch", "Lindner ging Donnerstag mit Rucksack; Freitag Bett unberührt", "Lärm vor seinem Fenster, Nacht zum Donnerstag", "Den Stammtisch am 17.", "Bürgermeister Samstag in Lindners Zimmer"],
+    "wichtig": [],
+    "wo": "Morgens Küche (D5), tagsüber im Haus, abends Gaststube an der Schenke.",
+    "leiter": {
+      "feindselig": "»D'Zimmer san zahlt bis Donnerstag. Mehr ned.«",
+      "skeptisch": "Essen, Zimmer, Preise.",
+      "neutral": "Sagt, was im Haus geschah, wenn man genau fragt.",
+      "kooperativ": "Erzählt: Stammtisch am 17., Lärm vorm Fenster.",
+      "freundlich": "Bringt Neuigkeiten, holt Leute an den Tisch."
+    }
+  },
+  "P9": {
+    "wer": "Magdalena (Leni), 21, Gschwendtners einzige Tochter. Liebte Lindner, der sie mitnehmen wollte. Schlüsselzeugin.",
+    "will": "Ihr Wissen geheim halten. Dem Vater soll nichts geschehen.",
+    "redet": "Leise, kurz, schaut weg. Vor anderen sagt sie nichts. »Ned do.«",
+    "luegt": ["Über Lindner und Donnerstag, solange Schloss zu"],
+    "schloss": "Dahinter H17, H18. Öffnet: Zusicherung, nicht allein zu stehen; am besten mit Benedikta oder Ilse.",
+    "steigt": ["Allein mit ihr reden", "Ihr Geheimnis wahren", "Briefe aus Lindners Koffer zurückgeben (N1)"],
+    "faellt": ["Vor anderen fragen", "Lindners Namen laut im Dorf"],
+    "kippt": "Läuft heim, sagt dem Vater, man fragt nach ihr. Dann nächster Postbus (S21).",
+    "weiss": ["H17: Donnerstag acht bis eins in der Kaser gewartet", "Vater kam halb acht heim: »Der kimmt nimmer.«", "H18: Freitag Vaters linker Schuh zerrissen", "Knopf von Franz Hübls alter Joppe an seine genäht", "Tenne seit Samstag gesperrt; weiß, wo die Kamera liegt"],
+    "wichtig": ["Nur unbeobachtet: hinter Friedhof, Schulhaus, Milchweg, Tante in Miesbach", "Vorhalte (Haarband, Briefe, Tonis Licht): Tränen, kein Reden. Druck: Schloss heute zu.", "Hört sie beim Geständnis, Lindner lebte noch: »I war doch droben.« Geht."],
+    "wo": "7 Uhr Milchsammelstelle (D15), tags Hof (D10), 18 Uhr Rosenkranz (D2), danach hinterm Friedhof. Georgivormittag: Messe, hinten.",
+    "leiter": {
+      "feindselig": "Geht weg, ohne ein Wort.",
+      "skeptisch": "»I woaß nix.«",
+      "neutral": "Redet über Milch, Alm und Wetter.",
+      "kooperativ": "Sagt, sie mochte ihn. Mehr erst bei offenem Schloss.",
+      "freundlich": "Bittet um Hilfe (N1), kommt zum heimlichen Treffen."
+    }
+  },
+  "P10": {
+    "wer": "Martin Obermüller (Martl), 24, Burschenvorstand, soll Leni heiraten. Drohte Lindner. Sah Gschwendtner halb acht (H14).",
+    "will": "Hochzeit sichern. Verbergen, wie wenig Leni von ihm hält. Maibaum halten.",
+    "redet": "Laut, prahlerisch; allein leiser und ehrlicher. »Mir lassen uns nimmer bestehln.«",
+    "luegt": ["Über den Donnerstagabend", "Über Larvenspuk und Schrift am Marterl", "Alibi Nachmittag stimmt: mit allen Burschen am Baum"],
+    "schloss": null,
+    "steigt": ["Gruppe rettet nachts Maibaum (N8)", "Dann redet er über halb acht"],
+    "faellt": ["Sich um Leni bemühen", "Spott über die Burschen"],
+    "kippt": "Schlägerei an der Blechtonne (1W3 Trefferpunkte). Danach warnt er Gschwendtner: löst S21 aus.",
+    "weiss": ["H14: Gschwendtner halb acht am Waldrand", "Sagt das nicht freiwillig: künftiger Schwiegervater", "Larvenspuk mit zwei anderen, Nacht zum Donnerstag", "Ritzte die Schrift am Marterl selbst", "Wer nachts an der Wache vorbeikam"],
+    "wichtig": [],
+    "wo": "Vormittags Obermüller-Hof, nachmittags und abends Maibaum (D1), nachts Wache. Georgiritt: trägt die Fahne.",
+    "leiter": {
+      "feindselig": "»Schleich di.«",
+      "skeptisch": "Prahlt mit Maibaum und Wache.",
+      "neutral": "Erzählt vom Austreiben und von der Wache.",
+      "kooperativ": "Gibt den Larvenspuk lachend zu.",
+      "freundlich": "Erzählt, wer nachts vorbeikam, außer Gschwendtner."
+    }
+  },
+  "P11": {
+    "wer": "Maxi Haslberger, 20, Jägersohn, folgt der Gruppe mit Gewehr. Sein Schicksal entscheidet, ob der Jäger redet.",
+    "will": "Auftrag erfüllen, unbemerkt, kein Dummer sein. Nur nicht ausgelacht werden.",
+    "redet": "Wenig, trotzig, unsicher. »Mi hat koaner gschickt.« Freundlichkeit macht verlegen.",
+    "luegt": ["Warum er am Berg ist: »Gamszähln.«", "Gesteht bei Vorhalt Fernglas auf Menschen oder Sturmrettung", "Schuss Donnerstag: lügt nicht, weicht aus, schont Korbi"],
+    "schloss": null,
+    "steigt": ["Im Sturm hereinholen (N6)", "Dann erzählt er vom Auftrag"],
+    "faellt": ["Anschreien oder bedrohen", "Auslachen: für diesen Abend vorbei"],
+    "kippt": "Am Berg: Lauf hebt sich (S17), Warnschuss sicher, Toter möglich. Im Dorf: geht, sagt Vater alles.",
+    "weiss": ["Vater schickte ihn, auf Wunsch des Direktors", "Direktor ruft seit Samstag jeden Abend beim Vater an", "Sah Korbi Donnerstag um vier schießen (G10)", "März: Lindner mit Direktor da, Maxi trug Ski", "Gehört: Hinterreiter holen nachts nach Bergtag den Maibaum"],
+    "wichtig": ["ST 70, KO 75, GE 65, Trefferpunkte 14 (auch in S17)", "Gewehr 60 %, Schaden 2W6+4. Handgemenge 55 %, Heimlichkeit 60 %", "Sturmrettung (N6): Jäger schämt sich, wird zu Hias freundlich"],
+    "wo": "Bergtag: hinter der Gruppe, unsichtbar, nie weg. Abends Maibaumwache (D1), tags Werkstatt im Jägerhaus (D14). Vorbeischleichen: Heimlichkeit.",
+    "leiter": {
+      "feindselig": "Schaut weg, geht. Am Berg hebt sich der Lauf.",
+      "skeptisch": "»Gamszähln.« Mehr nicht.",
+      "neutral": "Redet über Wetter, Wild und Weg.",
+      "kooperativ": "Erzählt vom Auftrag, wenn ihn keiner auslacht.",
+      "freundlich": "Führt die Gruppe sicher hinunter, warnt vor dem Hang."
+    }
+  }
+}

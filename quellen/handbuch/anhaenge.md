@@ -329,7 +329,7 @@ Diese Dinge kommen im Abenteuer vor. Du kannst sie abschreiben, am Rechner setze
 | Wann | Was | Wie es aussehen soll |
 | --- | --- | --- |
 | S2, Sonntagabend | **Rauchs Meldung** an die Landpolizei-Inspektion Miesbach. Der Text steht unten vollständig. | Ein Bogen Durchschlagpapier, mit Bleistift geschrieben, unten eine Unterschrift. Der Tippfehler im Namen ist Absicht. |
-| S3 | **Das Fremdenbuch des Gasthofs,** die Seite mit Lindners Eintrag vom 7. April: Rolf Lindner, Dipl.-Ing., Berlin-Steglitz, Zimmer 3, die Spalte Abreise leer. | Eine Doppelseite in Schreibschrift, drei andere Gäste darüber und darunter, alle vom Sommer. |
+| S3 | **Das Fremdenbuch des Gasthofs,** die Seite mit Lindners Eintrag vom 7. April: Rolf Lindner, Dipl.-Ing., Berlin-Steglitz, Zimmer 1, die Spalte Abreise leer. | Eine Doppelseite in Schreibschrift, drei andere Gäste darüber und darunter, alle vom Sommer. |
 | S3, H10 | **Lindners Notizbuch,** zwei Seiten: Uhrzeiten mit einem L. dahinter, der Eintrag »Quelle Lahn 12.4. ca. 4 l/s, reicht nicht«, und zuletzt »Do., Kaser, nach Dunkelwerden«. Zwei Seiten sind herausgerissen. | Kleinformat, enge Bleistiftschrift, am Rand eine Skizze der Felsstufe. Die Reißkante an der richtigen Stelle einreißen. |
 | N1 | **Lenis zwei Briefe,** mit dem Satz »Der Vater darf nix wissen. Wenn er's erfährt, bringt er mich um.« | Linierter Briefbogen, runde Mädchenschrift, ohne Anrede mit Namen. |
 | H12 | **Tonis Aufsatz** über die Föhnnacht, mit dem Licht, das hinaufging und um zwei herunterkam. | Schulheft mit Lineatur, Bleistift, Rechtschreibfehler, eine rote Anmerkung der Lehrerin am Rand. |

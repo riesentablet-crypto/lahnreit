@@ -141,7 +141,7 @@ Mehr als eine Stufe gibt es nicht, auch wenn alle drei helfen. Hilft keiner, hol
 
 | Wer | B · Hd · Hs | Was er hier tut | Personen |
 | --- | --- | --- | --- |
-| der Pfarrer | feindselig · feindselig · skeptisch | predigt gegen den Drachen mit der Aktentasche und von Schuld. Wer bis zum Segen bleibt, hebt ihn. | P14 |
+| der Pfarrer | feindselig · feindselig · skeptisch | predigt gegen den Drachen mit der Aktentasche und von Schuld. Geht keiner der drei vor dem Segen hinaus, steigt er. | P14 |
 | Leni | neutral · feindselig · skeptisch | ganz hinten in der letzten Bank, weint ohne Ton | P9 |
 | der Gschwendtner | skeptisch · skeptisch · neutral | auf der Männerseite, schaut zu seiner Tochter, führt sein Ross zum Segen | P3 |
 | der Bürgermeister | feindselig · feindselig · skeptisch | vorn in der Kirche, reitet den Umritt an. Nach dem Sturz kniet er bei seinem Buben. | P2 |
@@ -177,7 +177,7 @@ Außerdem in der Kirche: der Moar-Kaspar vorn, der Korbi und Wolff ganz hinten, 
 3. **Der Platz.** Bis halb neun ist der Dorfplatz leer. Ab halb neun steht dort das ganze Dorf mit den Rössern, und Rauch, der um acht heraufgekommen ist, hält die Leute zurück. Wer dann über den Platz geht, wird gesehen. Alle Häuser außer der Vordertür der Kanzlei erreicht man aber auch hinten herum, über die Gassen und Obstgärten.
 4. **Ein Haus betreten.** Jedes Haus unten hat einen Weg hinein, meist eine Probe auf Heimlichkeit, und einen, der zurückgeblieben ist. Was im Haus offen daliegt, findet man ohne Probe. Was versteckt ist, braucht die Probe, die dort steht. Ein Misserfolg heißt: nicht hineingekommen, oder nichts gefunden, und die halbe Stunde ist trotzdem um.
 5. **Rauch.** Bittet einer Rauch, mitzukommen, schüttelt er den Kopf: »In a Haus ohne Beschluss geh i ned. Und gfragt ham's mi ned, verstanden?« Er schaut weg, aber er hilft nicht.
-6. **Erwischt.** Ein Patzer heißt: Der, der zurückgeblieben ist, steht in der Tür. Was er dann tut, steht bei jedem Haus. Für alle gilt die Regel aus der Einführung: Wer die Gruppe erwischt, fällt dauerhaft eine Stufe, und ab der nächsten Szene weiß es das Dorf.
+6. **Erwischt.** Ein Patzer heißt: Der, der zurückgeblieben ist, steht in der Tür. Was er dann tut, steht bei jedem Haus. Für alle gilt die Regel aus der Einführung: Wer die Gruppe erwischt, fällt dauerhaft eine Stufe, und ab der nächsten Szene weiß es das Dorf. Wo es anders kommt, steht es beim Haus.
 7. **Die Funde später benutzen.** Ein Fund aus einem fremden Haus verrät, woher er kommt. Wer ihn später jemandem vorhält, gesteht damit, dass er drin war. Der Betroffene beschwert sich bei Rauch, und Rauch fällt eine Stufe. Das gilt nicht, wenn die Gruppe denselben Hinweis auch auf ehrlichem Weg hat: Wer die Brandreste gefunden und Ottilies Satz gehört hat, beruft sich auf Ottilie.
 
 ### Die Kanzlei (D6)
@@ -204,7 +204,7 @@ Außerdem in der Kirche: der Moar-Kaspar vorn, der Korbi und Wolff ganz hinten, 
 
 **Was dort liegt.** Alles aus S3, und diesmal steht keine Wirtin in der Tür. Was die Gruppe in S3 übersehen hat, darf sie hier noch einmal suchen, mit einem Bonuswürfel, weil sie Zeit hat und keiner zuschaut: die Skizzen, Lenis Briefe hinter dem Kofferfutter, den Virginia-Stumpen, den Durchdruck. Neues gibt es hier nicht. Das Zimmer lohnt sich nur für den, dem in S3 etwas entgangen ist.
 
-**Wer euch erwischt.** Rosl. Sie bleibt in der Tür stehen, die Hand vor dem Mund, und sagt nichts. Dann fängt sie an zu weinen, denn sie glaubt, die Herren suchen nach dem, was sie der Zenzi über Leni erzählt hat. Sie fällt dauerhaft eine Stufe. Aber sie sagt es keinem, nicht einmal der Wirtin. Das ist die einzige Ausnahme von der Regel: Diesmal erfährt es das Dorf nicht.
+**Wer euch erwischt.** Rosl. Sie bleibt in der Tür stehen, die Hand vor dem Mund, und sagt nichts. Dann fängt sie an zu weinen, denn sie glaubt, die Herren suchen nach dem, was sie der Zenzi über Leni erzählt hat. Sie fällt dauerhaft eine Stufe. Aber sie sagt es keinem, nicht einmal der Wirtin. Anders als sonst erfährt es diesmal das Dorf nicht.
 
 ### Der Gschwendtner-Hof (D10)
 

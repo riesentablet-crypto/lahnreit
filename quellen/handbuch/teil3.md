@@ -328,7 +328,7 @@ Der Weg durch die Rinne ist sicher, kostet aber eine halbe Stunde. Die fehlt am 
 
 **Das leere Kameraetui (H4 Leeres Kameraetui).** An Lindners Gürtel, ohne Probe. Ein braunes Lederetui, wie es zu einer Kodak Retina gehört, die Klappe offen, das Etui leer. Wer beim Durchsuchen Verborgenes erkennen kritisch schafft, sieht dazu, dass der Tragriemen der Kamera nicht aufgeschnallt, sondern abgerissen ist. Der Rest hängt noch in der Schnalle. *Was es heißt:* Jemand hat ihm die Kamera genommen. Geldbörse und Uhr hat er ihm gelassen. Wer so etwas tut, will nicht das Geld, sondern die Bilder. *Wohin es führt:* zu Schluss A und Schluss E. Dass Lindner eine Kamera hatte, weiß, wer in seinem Zimmer den leeren Filmkarton gefunden hat (S3).
 
-**Die Uhr (zu Schluss B).** An Lindners linkem Handgelenk, ohne Probe. Das Glas ist gesprungen, die Zeiger stehen auf 17.34 Uhr. *Was es heißt:* Um diese Zeit ist er gestürzt, am Donnerstag, im letzten Tageslicht. *Wohin es führt:* zusammen mit H7 zu Schluss B: Er lag fast zwölf Stunden hier, bevor er starb.
+**Die Uhr (zu Schluss B).** An Lindners linkem Handgelenk, ohne Probe. Das Glas ist gesprungen, die Zeiger stehen auf 17.34 Uhr. *Was es heißt:* Um diese Zeit ist er gestürzt, am Donnerstag, bei hellem Tag. *Wohin es führt:* zusammen mit H7 zu Schluss B: Er lag fast zwölf Stunden hier, bevor er starb.
 
 **Die Kriechspur (H5 Kriechspur).** Im Schnee zwischen der Felsstufe und der Mulde, Spurensuche, am ehesten Hias. Unter dem Neuschnee liegt im Altschnee eine gefrorene Rinne, breit wie ein Körper, mit Abdrücken von Knien und Händen, dreißig Meter lang, von der Felsstufe bis zu der Stelle, an der er jetzt liegt. Bei einem kritischen Erfolg sieht der Suchende, wohin sie zeigt: hinunter zur Alm, zur Kaser. *Was es heißt:* Lindner ist nach dem Sturz zu sich gekommen und gekrochen, solange er konnte, auf die Kaser zu, in der in dieser Nacht Leni auf ihn wartete. Er war am Leben und wollte Hilfe. *Wohin es führt:* zu Schluss B.
 
@@ -451,7 +451,7 @@ Ein Misserfolg bei Orientierung heißt: Die Gruppe irrt eine Stunde im Weiß umh
 
 ### Was das Bild nicht zeigt
 
-> Um vier ist es Nacht. Der Sturm drückt gegen die Wände, dass die Balken knacken, und manchmal drückt er den Rauch durch den Herd zurück in die Stube, bis die Augen tränen. Draußen ist nichts mehr, keine Alm und kein Berg, nur Brausen.
+> Um vier ist es draußen dunkel wie in der Nacht. Der Sturm drückt gegen die Wände, dass die Balken knacken, und manchmal drückt er den Rauch durch den Herd zurück in die Stube, bis die Augen tränen. Draußen ist nichts mehr, keine Alm und kein Berg, nur Brausen.
 
 ### Was hier geschieht
 
@@ -467,7 +467,7 @@ Ein Misserfolg bei Orientierung heißt: Die Gruppe irrt eine Stunde im Weiß umh
 
 | Wann | Was geschieht | Was es kostet |
 | --- | --- | --- |
-| 16 Uhr | Es wird Nacht. Feuer, Schnee schmelzen, Brotzeit, reden. | – |
+| 16 Uhr | Der Sturm macht den Nachmittag dunkel wie die Nacht. Feuer, Schnee schmelzen, Brotzeit, reden. | – |
 | 18 Uhr | Ein Hund heult, ganz nah, dann weiter weg, dann wieder nah. Es ist Lump, Maxis Hund. | Stabilität 0/1W3 für alle, die es hören |
 | 20 Uhr | Schritte im Schnee ums Haus, dann ein Klopfen an der Wand, dreimal, dumpf. Dann nur noch Sturm. Es ist Maxi. Er hat sich an der Wand entlang zur Stalltür getastet (an der Jagdhütte: zum Holzschuppen), die ist zugeweht, und mit dem Gewehrkolben hat er versucht, sie freizuschlagen. An die Stubentür traut er sich nicht. Er sollte ja heimlich hinter den Herren her sein, und er schämt sich. Wer die Drohung der Burschen gehört hat (M3), denkt vielleicht an sie. Die sitzen aber unten im Tal. | Horchen, siehe unten |
 | 22 Uhr | Ist bis jetzt keiner hinausgegangen, kratzt der Hund an der Tür und winselt. Öffnet einer, läuft der Hund ein paar Schritte in den Sturm, kommt zurück und läuft wieder hin. Zwanzig Meter weiter liegt Maxi unter einer Wetterfichte im Schnee. | – |

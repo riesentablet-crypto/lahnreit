@@ -63,7 +63,7 @@ Diese zwei Seiten sind die wichtigsten des Reiters. Lies sie vor dem Spiel. Alle
 
 **Was er will.** Dass seine Tochter im Dorf bleibt und im Oktober den Martl heiratet. Dass niemand nach dem Donnerstag fragt. Dass kein Hotel auf seine Weide kommt und keine Quelle angezapft wird. In dieser Reihenfolge. Was er getan hat, bereut er; dass Lindner noch gelebt hat, als er ging, weiß er nicht und will er nicht wissen.
 
-**Was er weiß.** Alles. Er weiß, dass er Lindner am Donnerstag um halb sechs über die Felsstufe gestoßen hat, dass ihm dabei die Sohle aufriss (H13) und ein Knopf in der Faust des Toten blieb (H15, H16), und dass Lindners Kamera in seiner Tenne im Heu liegt (H18). Er weiß nicht, dass Leni in dieser Nacht droben war.
+**Was er weiß.** Alles. Er weiß, dass er Lindner am Donnerstag um halb sechs über die Felsstufe gestoßen hat, dass ihm dabei die Sohle aufriss (H13) und ein Knopf in der Faust des Toten blieb (H15, H16), und dass Lindners Kamera in seiner Tenne im Heu liegt (H18). Er weiß, dass Leni trotz seines »Der kimmt nimmer« zur Kaser hinaufgegangen ist. Dass sie dort bis ein Uhr gewartet hat, weiß er nicht.
 
 **Wie er steigt und fällt.** Er steigt dauerhaft eine Stufe, wenn einer mit anpackt, Holz aufschichtet oder mit ihm übers Vieh redet. Er fällt dauerhaft eine Stufe, wenn die Gruppe ohne Rauch auf seinen Hof kommt, wenn einer seiner Tochter nachstellt oder wenn ein Einbruch auffliegt. Ist Rauch dabei, redet er, als stünde er eine Stufe höher. Kippt er, sagt er: »Runter von meim Hof«, und macht den Hund los. Mehr als eine Stufe geht es in keine Richtung.
 
@@ -108,7 +108,7 @@ Diese zwei Seiten sind die wichtigsten des Reiters. Lies sie vor dem Spiel. Alle
 
 ### P9 · Leni
 
-**Wer sie ist.** Magdalena Gschwendtner, die Leni, 21, die einzige Tochter vom Gschwendtner-Hof. Im Sommer ist sie Sennerin auf der Hochalm, den Rest des Jahres führt sie dem Vater den Haushalt und den Stall. Ein stilles Madl mit dunkelblondem Zopf und Kopftuch, das wegschaut, wenn man es anredet. Jeden Morgen um sieben steht sie mit den Kannen an der Milchsammelstelle, jeden Abend um sechs ist sie beim Rosenkranz. Dort hat sie Lindner kennengelernt, am 11. April, und ab dem 13. hat sie sich mit ihm in der Kaser getroffen. Er wollte sie am Samstag mitnehmen, nach München und dann nach Berlin.
+**Wer sie ist.** Magdalena Gschwendtner, die Leni, 21, die einzige Tochter vom Gschwendtner-Hof. Im Sommer ist sie Sennerin auf der Hochalm, den Rest des Jahres führt sie dem Vater den Haushalt und den Stall. Ein stilles Madl mit dunkelblondem Zopf und Kopftuch, das wegschaut, wenn man es anredet. Jeden Morgen um sieben steht sie mit den Kannen an der Milchsammelstelle, jeden Abend um sechs ist sie beim Rosenkranz. An der Milch hat sie Lindner kennengelernt, am 11. April, und ab dem 13. hat sie sich mit ihm in der Kaser getroffen. Er wollte sie am Samstag mitnehmen, nach München und dann nach Berlin.
 
 **Haltung zu Beginn:** Brandl neutral · Hagedorn feindselig · Hias skeptisch.
 
@@ -219,7 +219,7 @@ Diese fünf haben gedroht, gelärmt oder gelogen, und keiner von ihnen war es. S
 
 **Was er weiß.** Was Leni gebeichtet hat. Dazu sein eigenes Alibi: Am Donnerstagnachmittag war er mit dem Mesner bei der sterbenden alten Hinterbergerin auf der Einöd, bis in die Nacht. Das bestätigen der Mesner, Schwester Benedikta und die Zenzi.
 
-**Wie er steigt und fällt.** Er steigt, wenn einer zur Georgimesse kommt und bis zum Segen bleibt. Er fällt, wenn einer über den Glauben spottet, und er fällt sofort eine Stufe, wenn einer ihn nach der Beichte fragt. Kippt er, predigt er am nächsten Morgen gegen die Münchner, die Zenzi bringt keinen Kaffee mehr, und der Mesner redet nicht mehr.
+**Wie er steigt und fällt.** Er steigt, wenn die Ermittler zur Georgimesse kommen und keiner vor dem Segen hinausgeht. Er fällt, wenn einer über den Glauben spottet, und er fällt sofort eine Stufe, wenn einer ihn nach der Beichte fragt. Kippt er, predigt er am nächsten Morgen gegen die Münchner, die Zenzi bringt keinen Kaffee mehr, und der Mesner redet nicht mehr.
 
 **Worüber er lügt.** Über nichts, nie. Jeder Vorhalt prallt an ihm ab. Aber er kann andeuten, und auf freundlich tut er es von selbst: »Fragen Sie nicht mich. Schauen Sie, wer am Samstag um fünf in der Kirche war.« Wer das hört, geht zum Mesner oder zur Zenzi, und dort steht die Antwort.
 
@@ -311,7 +311,7 @@ Diese fünf haben gedroht, gelärmt oder gelogen, und keiner von ihnen war es. S
 
 **Was er weiß.** H22, das Versteck unter dem Kaserboden, und den Schuss (G10). Und das Wichtigste: Beim Abstieg hat er um halb sechs zwei Männer am Sattel gesehen, weit weg, bei Föhnsicht. Einer hat den anderen gepackt. Er hat gedacht, die raufen. Das ist der einzige Augenzeuge der Tat, und er gibt es erst her, wenn er begreift, dass es um Mord geht und nicht um Gämsen.
 
-**Wie er steigt und fällt.** Er steigt, wenn einer vom Wildern weiß und darüber schweigt. Er fällt, wenn einer vor anderen nach dem Schuss fragt. Kippt er, schlägt er einmal zu, 1W3 Trefferpunkte, und geht. In der Nacht räumt er dann sein Versteck (N7).
+**Wie er steigt und fällt.** Er steigt, wenn einer vom Wildern weiß und darüber schweigt, oder wenn einer ihn vor dem Jäger in Schutz nimmt. Er fällt, wenn einer vor anderen nach dem Schuss fragt oder wenn einer zusammen mit dem Jäger zu ihm kommt. Kippt er, schlägt er einmal zu, 1W3 Trefferpunkte, und geht. In der Nacht räumt er dann sein Versteck (N7).
 
 **Worüber er lügt.** Über den Donnerstag: »Im Holz war i.«
 
@@ -454,7 +454,7 @@ Zwölf Figuren, die den Ermittlern weiterhelfen, wenn man sie richtig anfasst. H
 
 **Was sie will.** Dass dem Mädchen geholfen wird, nicht dass es vorgeführt wird.
 
-**Was sie weiß.** Dass Leni seit dem 16. April weint, und dass sie am Montag darauf einen blauen Fleck am Handgelenk hatte, wie von einer Hand. Dazu das Alibi von Pfarrer und Mesner für den Donnerstag, denn sie war mit ihnen auf der Einöd.
+**Was sie weiß.** Dass Leni seit dem 16. April weint, und dass sie am selben Montag einen blauen Fleck am Handgelenk hatte, wie von einer Hand. Dazu das Alibi von Pfarrer und Mesner für den Donnerstag, denn sie war mit ihnen auf der Einöd.
 
 **Wie sie steigt und fällt.** Sie steigt dauerhaft eine Stufe, wenn einer ihr ehrlich sagt, was er vorhat, und wenn man erkennbar Leni helfen will. Sie fällt, wenn Leni bloßgestellt wird oder wenn über die Kirche gespottet wird. Kippt sie, sagt sie Leni, sie solle mit keinem der drei reden. Dann bleibt Lenis Schloss für den zu, der es verdorben hat.
 
@@ -632,7 +632,7 @@ Zwölf Figuren, die den Ermittlern weiterhelfen, wenn man sie richtig anfasst. H
 
 **Was sie weiß.** H8: Lindner hat am Donnerstag um zehn eine Brotzeit für zwei gekauft. H11: Sie hat Leni und den Berliner am 11. April zum ersten Mal an der Milch gesehen, und er hat sie fotografiert. Dazu, dass Lindner um halb zwei hinaufgegangen ist, und die Geschichte von der Isabella an der Lahnkehre (G8), die sie größer macht, als sie war.
 
-**Wie sie steigt und fällt.** Sie steigt, wenn man etwas kauft und zuhört. Sie fällt, wenn man ihr Gerede widerlegt. Kippt sie, erzählt sie jedem im Laden, die Münchner hätten keine Manieren, und ab der nächsten Szene weiß es das Dorf.
+**Wie sie steigt und fällt.** Sie steigt, wenn man etwas kauft und zuhört, oder wenn einer ihr eine Neuigkeit mitbringt. Die weiß dann ab der nächsten Szene aber auch das Dorf. Sie fällt, wenn man ihr Gerede widerlegt oder sie vor der Kundschaft eine Ratschkathl nennt. Kippt sie, erzählt sie jedem im Laden, die Münchner hätten keine Manieren, und ab der nächsten Szene weiß es das Dorf.
 
 **Worüber sie lügt.** Über nichts, aber sie übertreibt. Bei der Isabella wird aus einer Frage nach dem Lahnwirt eine Frage nach Lindner, und aus einer Dame eine Dame mit roten Fingernägeln. Prüf jede ihrer Geschichten an einer zweiten Quelle, und sag den Spielern nie, welche übertrieben ist.
 

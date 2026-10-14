@@ -232,7 +232,7 @@ window.LAHNREIT_REQUISITEN = [
     ],
     "wann": "An der Theke, aufgeschlagen bei Lindners Eintrag.",
     "druck": "kräftig, gelblich",
-    "hinweis": "Das Fremdenbuch liegt an der Theke, aufgeschlagen bei Lindners Eintrag. Jeder Gast schreibt selbst, die Wirtin trägt Nummer, Zimmer und Abreise ein. Bei Lindner fehlt die Abreise. Die Filmleute vom Juli 1955 hatten dasselbe Zimmer 3 (Gerücht G5). In die leeren Zeilen dürfen sich die Ermittler selbst eintragen.",
+    "hinweis": "Das Fremdenbuch liegt an der Theke, aufgeschlagen bei Lindners Eintrag. Jeder Gast schreibt selbst, die Wirtin trägt Nummer, Zimmer und Abreise ein. Bei Lindner fehlt die Abreise. Die Schauspielerin Gisela Arnold vom Juli 1955 hatte dasselbe Zimmer 1, das gute mit dem Balkon (Gerücht G5). In die leeren Zeilen dürfen sich die Ermittler selbst eintragen.",
     "bilder": [
      "requisiten/handouts/fremdenbuch.webp"
     ],

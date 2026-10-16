@@ -29,7 +29,7 @@ Oben stehen nur Stichpunkte. Wer den ganzen Text braucht, tippt den Stichpunkt a
 - `bilder/szenen/` Szenenbilder, benannt nach dem Code aus dem Reiter Bildprompts, also `S7a.jpg` oder `S23.png`. Fehlt ein Bild, zeigt die App dessen Beschreibung.
 - `modelle/` die 3D-Figuren: die ZIPs mit dem Original (OBJ), daraus verkleinert je eine `.glb` und eine `.js` mit demselben Inhalt, damit die App sie auch ohne Server laden kann. `data/modelle.js` sagt, welche Figur und welches Porträt zu wem gehört. `lib/` enthält three.js (r147) zum Anzeigen.
 - `requisiten/karten/`, `requisiten/handouts/` die Bilder für den Bereich Requisiten. Die Handouts sind aus den Druckvorlagen geschnitten, ohne die grauen Hinweise für die Spielleitung.
-- `requisiten/ansichtskarten/` hier kommen die fertigen Ansichtskarten hin: `mandlkopf.jpg`, `dorf.jpg`, `lahnwirt.jpg` und `kudamm.jpg` (auch `.png` oder `.webp`). Bis dahin zeigt die App, dass sie fehlen.
+- `requisiten/ansichtskarten/` die vier Ansichtskarten als `.webp`: `mandlkopf`, `dorf`, `lahnwirt`, `kudamm` und dazu `kudamm-rueckseite` mit Lindners »Für L. Bald. R.«.
 - `data/requisiten.js` welche Requisiten es gibt, wann man sie herausgibt und in welchen Szenen und Orten sie vorkommen.
 - `quellen/kurz/` die Stichpunkte der obersten Ebene, eine Datei pro Teil. `python3 tools/kurz.py` prüft, ob sie noch zum Handbuch passen, und schreibt `data/kurz.js`.
 - `quellen/handbuch/` die Reiter des Spielleiterhandbuchs als Markdown.

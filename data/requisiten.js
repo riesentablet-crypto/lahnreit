@@ -47,9 +47,10 @@ window.LAHNREIT_REQUISITEN = [
     "id": "ak-mandlkopf",
     "titel": "Lahnreit gegen Mandlkopf",
     "wann": "Liegt beim Kramer im Regal (D8). Gut als Stimmung, schon beim Ankommen auf dem Tisch.",
-    "hinweis": "Eine farbige Ansichtskarte von 1955, wie sie der Kramer an die Sommerfrischler verkauft. Der Prompt steht im Dokument »Das Dorf«, Reiter »Bildprompts Dorf«, Abschnitt Ansichtskarten.",
+    "druck": "festen Karton, Kartenbogen Seite 3",
+    "hinweis": "Eine farbige Ansichtskarte von 1955, wie sie der Kramer an die Sommerfrischler verkauft. Zum Drucken: Kartenbogen in requisiten/ansichtskarten, auf festen Karton, an den Marken ausschneiden.",
     "bilder": [
-     "requisiten/ansichtskarten/mandlkopf.jpg"
+     "requisiten/ansichtskarten/mandlkopf.webp"
     ],
     "szenen": [],
     "orte": [
@@ -61,9 +62,10 @@ window.LAHNREIT_REQUISITEN = [
     "id": "ak-dorf",
     "titel": "Sommerfrische Lahnreit",
     "wann": "Liegt beim Kramer im Regal (D8). Gut als Stimmung, schon beim Ankommen auf dem Tisch.",
-    "hinweis": "Eine farbige Ansichtskarte von 1955, wie sie der Kramer an die Sommerfrischler verkauft. Der Prompt steht im Dokument »Das Dorf«, Reiter »Bildprompts Dorf«, Abschnitt Ansichtskarten.",
+    "druck": "festen Karton, Kartenbogen Seite 3",
+    "hinweis": "Eine farbige Ansichtskarte von 1955, wie sie der Kramer an die Sommerfrischler verkauft. Zum Drucken: Kartenbogen in requisiten/ansichtskarten, auf festen Karton, an den Marken ausschneiden.",
     "bilder": [
-     "requisiten/ansichtskarten/dorf.jpg"
+     "requisiten/ansichtskarten/dorf.webp"
     ],
     "szenen": [],
     "orte": [
@@ -75,9 +77,10 @@ window.LAHNREIT_REQUISITEN = [
     "id": "ak-lahnwirt",
     "titel": "Gasthof Beim Lahnwirt",
     "wann": "Liegt beim Kramer im Regal (D8). Gut als Stimmung, schon beim Ankommen auf dem Tisch.",
-    "hinweis": "Eine farbige Ansichtskarte von 1955, wie sie der Kramer an die Sommerfrischler verkauft. Der Prompt steht im Dokument »Das Dorf«, Reiter »Bildprompts Dorf«, Abschnitt Ansichtskarten.",
+    "druck": "festen Karton, Kartenbogen Seite 1",
+    "hinweis": "Eine farbige Ansichtskarte von 1955, wie sie der Kramer an die Sommerfrischler verkauft. Zum Drucken: Kartenbogen in requisiten/ansichtskarten, auf festen Karton, an den Marken ausschneiden.",
     "bilder": [
-     "requisiten/ansichtskarten/lahnwirt.jpg"
+     "requisiten/ansichtskarten/lahnwirt.webp"
     ],
     "szenen": [],
     "orte": [
@@ -92,9 +95,15 @@ window.LAHNREIT_REQUISITEN = [
      "S8"
     ],
     "wann": "In Lenis Kammer unter dem Kopfkissen, Verborgenes erkennen (S8).",
-    "hinweis": "Eine Ansichtskarte vom Kurfürstendamm in Berlin, bei Nacht, mit Leuchtreklamen. Auf der Rückseite in Lindners kleiner Schrift: »Für L. Bald. R.« Keine Briefmarke, kein Stempel, er hat sie ihr in die Hand gegeben.",
+    "druck": "festen Karton, Kartenbogen Seite 1 und 2 beidseitig",
+    "hinweis": "Eine Ansichtskarte vom Kurfürstendamm in Berlin, bei Nacht, mit Leuchtreklamen. Auf der Rückseite in Lindners kleiner Schrift: »Für L. Bald. R.« Keine Briefmarke, kein Stempel, er hat sie ihr in die Hand gegeben.\n\nZum Drucken: Kartenbogen Seite 1 und 2 beidseitig, Wenden an der langen Kante. Oder beide Seiten einzeln drucken und Rücken an Rücken kleben. Zeig zuerst nur die Vorderseite; die Rückseite erst, wenn einer die Karte umdreht.",
     "bilder": [
-     "requisiten/ansichtskarten/kudamm.jpg"
+     "requisiten/ansichtskarten/kudamm.webp",
+     "requisiten/ansichtskarten/kudamm-rueckseite.webp"
+    ],
+    "unter": [
+     "Vorderseite",
+     "Rückseite, in Lindners Schrift"
     ],
     "szenen": [
      "S8",

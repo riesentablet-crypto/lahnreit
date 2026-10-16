@@ -54,7 +54,7 @@
 
   // ---------- Zustand, nur in diesem Browser gespeichert ----------
   const KEY = 'lahnreit-spielleitung-v1';
-  const leer = () => ({ wer: 'B', tat: {}, probe: {}, schloss: {}, ausnahme: {}, uhr: 'abends', ort: 'S1',
+  const leer = () => ({ wer: 'B', tat: {}, probe: {}, schloss: {}, ausnahme: {}, treffen: {}, uhr: 'abends', ort: 'S1',
     gespraech: null, kontext: null, gefunden: {}, theme: 'dark', rail: 'szenen' });
   let S = leer();
   try {
@@ -69,7 +69,7 @@
   const sichern = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* egal */ } };
 
   // Was nur für diesen Augenblick gilt
-  const T = { frage: '', thema: null, alleThemen: false, medien: {}, plan: {}, oeffne: null, resetFrage: false, overlay: null, reqSl: {}, zeigen: null };
+  const T = { frage: '', thema: null, alleThemen: false, medien: {}, plan: {}, oeffne: null, resetFrage: false, overlay: null, reqSl: {}, zeigen: null, treffenWahl: null };
 
   // ---------- Hilfen ----------
   const $ = (sel, el = document) => el.querySelector(sel);
@@ -286,13 +286,43 @@
   }
 
   // ---------- Wo ist wer ----------
+  // Verabredungen sind die Ausnahme: Die Spielleitung holt eine Person für diese Tageszeit an einen anderen Ort.
+  // Sie gelten nur zur Tageszeit, zu der sie eingetragen wurden; danach ist die Person wieder nach Plan unterwegs.
+  const treffenJetzt = () => (S.treffen && S.treffen[S.uhr]) || {};
+  const ortKurz = (c) => (ORTE[c] ? ORTE[c].name.replace(/^(Der|Die|Das) /, '') : c);
   function leuteAmOrt(code) {
+    const tr = treffenJetzt();
     const out = [];
     for (const p of PERSONEN) {
+      if (tr[p.id]) { if (tr[p.id] === code) out.push({ pid: p.id, text: '', treffen: true }); continue; }
       const w = WO[p.id] && WO[p.id][S.uhr];
       if (w && w.orte.includes(code)) out.push({ pid: p.id, text: w.text });
     }
     return out;
+  }
+  // Wer laut Plan hier wäre, aber gerade woanders verabredet ist
+  const wegVerabredet = (code) => Object.entries(treffenJetzt())
+    .filter(([pid, ziel]) => ziel !== code && P[pid] && WO[pid] && WO[pid][S.uhr] && WO[pid][S.uhr].orte.includes(code));
+  function treffenHTML(code) {
+    const da = new Set(leuteAmOrt(code).map((l) => l.pid));
+    let h = '';
+    const weg = wegVerabredet(code);
+    if (weg.length) h += `<p class="treffen-weg">Laut Plan auch hier, aber verabredet: ${weg.map(([pid, ziel]) => `${esc(kurzName(P[pid]))} (<a class="ref" href="#${ziel}">${ziel}</a>)`).join(', ')}</p>`;
+    if (T.treffenWahl !== code) return h + `<button type="button" class="leise klein treffen-auf" data-treffen-auf="${code}">+ Verabredung hier</button>`;
+    const tr = treffenJetzt();
+    const wahl = PERSONEN.filter((p) => !da.has(p.id)).map((p) => {
+      const w = WO[p.id] && WO[p.id][S.uhr];
+      const jetzt = tr[p.id] ? `verabredet in ${ortKurz(tr[p.id])}` : (w && w.orte.length ? w.orte.map(ortKurz).join(' / ') : 'daheim');
+      return `<option value="${p.id}">${esc(kurzName(p))} (jetzt: ${esc(jetzt)})</option>`;
+    }).join('');
+    return h + `<div class="treffen-wahl"><label for="treffen-wahl">Wer ist hier verabredet? Gilt nur am ${esc(uhrName())}.</label>
+      <select id="treffen-wahl" data-ort="${code}"><option value="">Person wählen …</option>${wahl}</select>
+      <button type="button" class="leise klein" data-treffen-zu>Abbrechen</button></div>`;
+  }
+  function treffenZeile(l) {
+    const w = WO[l.pid] && WO[l.pid][S.uhr];
+    const sonst = w && w.text ? `Sonst um diese Zeit: ${inline(w.text)}` : 'Sonst um diese Zeit daheim.';
+    return `<li class="treffen-li" data-tut="Verabredet, nur am ${esc(uhrName())}.">${personKnopf(l.pid)}<div class="tut"><span class="treffen-marke">verabredet</span> ${sonst} <button type="button" class="leise klein treffen-loesen" data-treffen-weg="${l.pid}">Lösen</button></div></li>`;
   }
   const nebenAmOrt = (code) => SONST.filter((x) => x.orte.includes(code));
   const kurzNeben = (wer) => wer.split(',')[0].replace(/^(der|die) /, '');
@@ -734,7 +764,7 @@
       const leute = leuteAmOrt(c);
       const anfang = (o.dorf && o.dorf.anfang) || o.anfang;
       return `<a class="ortkarte" href="#${c}"><span class="ok-kopf"><span class="code">${c}</span> ${esc(o.name.replace(/^(Der|Die|Das) /, ''))}${PL[c] ? ' <span class="plan-zeichen" title="mit Grundriss">▦</span>' : ''}</span>
-        <span class="ok-leute">${leute.length ? leute.map((l) => `<span class="ok-p"><span class="dot st-${stufe(l.pid, S.wer)}"></span>${esc(kurzName(P[l.pid]))}</span>`).join('') : '<span class="leer">niemand von den 22</span>'}</span>
+        <span class="ok-leute">${leute.length ? leute.map((l) => `<span class="ok-p${l.treffen ? ' treffen' : ''}"${l.treffen ? ' title="verabredet"' : ''}><span class="dot st-${stufe(l.pid, S.wer)}"></span>${esc(kurzName(P[l.pid]))}</span>`).join('') : '<span class="leer">niemand von den 22</span>'}</span>
         <span class="ok-anfang">${esc(KO(c).anfang || flach(anfang))}</span></a>`;
     }).join('')}</div></section>`;
   }
@@ -749,9 +779,13 @@
     const bilder = o.bild ? [{ code: o.bild, text: o.bild_md || `Siehe ${o.bild}.`, titel: o.name }] : [];
     const jetzt = leuteAmOrt(code), neben = nebenAmOrt(code);
     let box = '';
-    if (o.berg) box += `<div class="klein-text">${klapp(inline(o.felder['Wer hier ist'] || ''), 6)}</div>`;
-    else {
-      box += jetzt.length ? `<ul class="leute">${jetzt.map((l) => `<li>${personKnopf(l.pid)}<div class="tut">${inline(l.text)}</div></li>`).join('')}</ul>` : `<p class="klein-text">Um diese Zeit ist hier niemand von den 22.</p>`;
+    if (o.berg) {
+      box += `<div class="klein-text">${klapp(inline(o.felder['Wer hier ist'] || ''), 6)}</div>`;
+      if (jetzt.length) box += `<ul class="leute">${jetzt.map((l) => (l.treffen ? treffenZeile(l) : `<li>${personKnopf(l.pid)}<div class="tut">${inline(l.text)}</div></li>`)).join('')}</ul>`;
+      box += treffenHTML(code);
+    } else {
+      box += jetzt.length ? `<ul class="leute">${jetzt.map((l) => (l.treffen ? treffenZeile(l) : `<li>${personKnopf(l.pid)}<div class="tut">${inline(l.text)}</div></li>`)).join('')}</ul>` : `<p class="klein-text">Um diese Zeit ist hier niemand von den 22.</p>`;
+      box += treffenHTML(code);
       if (neben.length) box += `<div class="nebenliste"><div class="etikett">Außerdem</div>${neben.map((x) => {
         const i = SONST.indexOf(x), kn = KZ.nebenfiguren[i], mk = modellKnopf(modellNeben(x.wer));
         const nk = kopfBild(modellNeben(x.wer), 'klein');
@@ -921,7 +955,9 @@
       h += `<h3>${esc(gname)}</h3>`;
       for (const p of drin) {
         const w = WO[p.id] && WO[p.id][S.uhr];
-        h += `<button type="button" class="pzeile" data-pid="${p.id}"><span class="code">${p.id}</span><span class="pz-name">${kopfBild(p.id, 'klein')}${esc(p.name)}</span><span class="pk-punkte">${punkte(p.id)}</span><span class="pz-wo">${w && w.text ? esc(flach(w.text)) : '<span class="leer">daheim</span>'}</span></button>`;
+        const tr = treffenJetzt()[p.id];
+        const wo = tr ? `<span class="treffen-marke">verabredet</span> ${esc(ortKurz(tr))} (${tr})` : (w && w.text ? esc(flach(w.text)) : '<span class="leer">daheim</span>');
+        h += `<button type="button" class="pzeile" data-pid="${p.id}"><span class="code">${p.id}</span><span class="pz-name">${kopfBild(p.id, 'klein')}${esc(p.name)}</span><span class="pk-punkte">${punkte(p.id)}</span><span class="pz-wo">${wo}</span></button>`;
       }
     }
     h += `</div><h3>Neuer Abend</h3><p class="klein-text">Setzt alle Haltungen, Schlösser und Funde auf den Anfang.</p>
@@ -1233,6 +1269,16 @@
       const k = el.closest('.klapp'); k.classList.toggle('offen');
       el.textContent = k.classList.contains('offen') ? 'weniger' : 'mehr'; return;
     }
+    if ((el = t.closest('[data-treffen-auf]'))) {
+      T.treffenWahl = el.dataset.treffenAuf; zeichneHaupt();
+      const sel = $('#treffen-wahl'); if (sel) sel.focus();
+      return;
+    }
+    if (t.closest('[data-treffen-zu]')) { T.treffenWahl = null; zeichneHaupt(); return; }
+    if ((el = t.closest('[data-treffen-weg]'))) {
+      const tr = S.treffen[S.uhr]; if (tr) delete tr[el.dataset.treffenWeg];
+      sichern(); zeichne(); return;
+    }
     const pidEl = t.closest('[data-pid]');
     if (pidEl) {
       ev.preventDefault();
@@ -1301,6 +1347,10 @@
   });
   document.addEventListener('change', (ev) => {
     if (ev.target.matches('[data-ausnahme]')) { S.ausnahme.P5 = ev.target.checked; sichern(); zeichneGespraech(); zeichneHaupt(); }
+    if (ev.target.id === 'treffen-wahl' && ev.target.value) {
+      S.treffen[S.uhr] = Object.assign({}, S.treffen[S.uhr], { [ev.target.value]: ev.target.dataset.ort });
+      T.treffenWahl = null; sichern(); zeichne();
+    }
   });
   document.addEventListener('input', (ev) => {
     if (ev.target.id === 'g-frage') {

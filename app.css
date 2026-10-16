@@ -578,3 +578,16 @@ img.kopf.klein { width: 26px; height: 26px; display: inline-block; vertical-alig
 .au-figur { display: inline-flex; align-items: center; gap: 0.3rem; margin-right: 0.8rem; }
 .nebenliste .nb img.kopf.klein { margin-right: 0.35rem; }
 @media (max-width: 560px) { .au-bild { width: 110px; } }
+
+/* ---------- Verabredungen (Ausnahme) ---------- */
+.treffen-auf { margin-top: 0.7rem; font-size: 0.82rem; color: var(--muted); border-style: dashed; }
+.treffen-li { border-left: 2px dashed var(--accent); padding-left: 0.45rem; }
+.treffen-marke { display: inline-block; font: 500 0.72rem var(--font-display); text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); margin-right: 0.25rem; }
+.treffen-loesen { min-height: 28px; margin-left: 0.3rem; font-size: 0.8rem; }
+.treffen-weg { font-size: 0.85rem; color: var(--muted); margin: 0.6rem 0 0; }
+.treffen-wahl { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.4rem; margin-top: 0.7rem; padding-top: 0.6rem; border-top: 1px dashed var(--line); }
+.treffen-wahl label { font-size: 0.85rem; color: var(--muted); }
+.treffen-wahl select { min-height: 40px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); padding: 0 0.5rem; font: 0.95rem var(--font-display); width: 100%; min-width: 0; }
+.treffen-wahl .leise { justify-self: start; }
+.ok-p.treffen { font-style: italic; }
+.pz-wo .treffen-marke { font-size: 0.68rem; }

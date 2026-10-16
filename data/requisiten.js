@@ -47,10 +47,15 @@ window.LAHNREIT_REQUISITEN = [
     "id": "ak-mandlkopf",
     "titel": "Lahnreit gegen Mandlkopf",
     "wann": "Liegt beim Kramer im Regal (D8). Gut als Stimmung, schon beim Ankommen auf dem Tisch.",
-    "druck": "festen Karton, Kartenbogen Seite 3",
-    "hinweis": "Eine farbige Ansichtskarte von 1955, wie sie der Kramer an die Sommerfrischler verkauft. Zum Drucken: Kartenbogen in requisiten/ansichtskarten, auf festen Karton, an den Marken ausschneiden.",
+    "druck": "festen Karton, Kartenbogen Seite 3 und 4 beidseitig",
+    "hinweis": "Eine farbige Ansichtskarte von 1955, wie sie der Kramer an die Sommerfrischler verkauft. Auf der Rückseite steht nur der Verlag, Atelier Hölzl in Miesbach. Zum Drucken: Kartenbogen in requisiten/ansichtskarten, auf festen Karton, beidseitig mit Wenden an der langen Kante, an den Marken ausschneiden.",
     "bilder": [
-     "requisiten/ansichtskarten/mandlkopf.webp"
+     "requisiten/ansichtskarten/mandlkopf.webp",
+     "requisiten/ansichtskarten/mandlkopf-rueckseite.webp"
+    ],
+    "unter": [
+     "Vorderseite",
+     "Rückseite"
     ],
     "szenen": [],
     "orte": [
@@ -62,10 +67,15 @@ window.LAHNREIT_REQUISITEN = [
     "id": "ak-dorf",
     "titel": "Sommerfrische Lahnreit",
     "wann": "Liegt beim Kramer im Regal (D8). Gut als Stimmung, schon beim Ankommen auf dem Tisch.",
-    "druck": "festen Karton, Kartenbogen Seite 3",
-    "hinweis": "Eine farbige Ansichtskarte von 1955, wie sie der Kramer an die Sommerfrischler verkauft. Zum Drucken: Kartenbogen in requisiten/ansichtskarten, auf festen Karton, an den Marken ausschneiden.",
+    "druck": "festen Karton, Kartenbogen Seite 3 und 4 beidseitig",
+    "hinweis": "Eine farbige Ansichtskarte von 1955, wie sie der Kramer an die Sommerfrischler verkauft. Auf der Rückseite steht nur der Verlag, Atelier Hölzl in Miesbach. Zum Drucken: Kartenbogen in requisiten/ansichtskarten, auf festen Karton, beidseitig mit Wenden an der langen Kante, an den Marken ausschneiden.",
     "bilder": [
-     "requisiten/ansichtskarten/dorf.webp"
+     "requisiten/ansichtskarten/dorf.webp",
+     "requisiten/ansichtskarten/dorf-rueckseite.webp"
+    ],
+    "unter": [
+     "Vorderseite",
+     "Rückseite"
     ],
     "szenen": [],
     "orte": [
@@ -77,10 +87,15 @@ window.LAHNREIT_REQUISITEN = [
     "id": "ak-lahnwirt",
     "titel": "Gasthof Beim Lahnwirt",
     "wann": "Liegt beim Kramer im Regal (D8). Gut als Stimmung, schon beim Ankommen auf dem Tisch.",
-    "druck": "festen Karton, Kartenbogen Seite 1",
-    "hinweis": "Eine farbige Ansichtskarte von 1955, wie sie der Kramer an die Sommerfrischler verkauft. Zum Drucken: Kartenbogen in requisiten/ansichtskarten, auf festen Karton, an den Marken ausschneiden.",
+    "druck": "festen Karton, Kartenbogen Seite 1 und 2 beidseitig",
+    "hinweis": "Eine farbige Ansichtskarte von 1955, wie sie der Kramer an die Sommerfrischler verkauft. Auf der Rückseite steht nur der Verlag, Atelier Hölzl in Miesbach. Zum Drucken: Kartenbogen in requisiten/ansichtskarten, auf festen Karton, beidseitig mit Wenden an der langen Kante, an den Marken ausschneiden.",
     "bilder": [
-     "requisiten/ansichtskarten/lahnwirt.webp"
+     "requisiten/ansichtskarten/lahnwirt.webp",
+     "requisiten/ansichtskarten/lahnwirt-rueckseite.webp"
+    ],
+    "unter": [
+     "Vorderseite",
+     "Rückseite"
     ],
     "szenen": [],
     "orte": [

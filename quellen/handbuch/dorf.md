@@ -160,7 +160,7 @@ Der Friedhof liegt um die Kirche, hinter einer niedrigen Mauer. Schmiedeeiserne 
 
 ### D4 · Der Pfarrhof
 
-**Bild D4** · Die Pfarrhofküche am Nachmittag. *Wer im Bild wer ist:* die Zenzi, rundlich, in Schürze, mit der Kaffeekanne am Herd; hinten durch die offene Tür der Pfarrer im Amtszimmer am Schreibtisch, streng, mit Brille. Worauf du zeigst: der Kaffee auf dem Tisch, der Schrank mit den Kirchenbüchern, der Pfarrer, der nicht aufschaut.
+**Bild D4** · Die Pfarrhofküche am Nachmittag. *Wer im Bild wer ist:* die Zenzi, rundlich, in Schürze, mit der Kaffeekanne am Herd; hinten durch die offene Tür der Pfarrer im Amtszimmer am Schreibtisch, schwer und streng. Worauf du zeigst: der Kaffee auf dem Tisch, der Schrank mit den Kirchenbüchern, der Pfarrer, der nicht aufschaut.
 
 Ein großes, weiß gekalktes Haus neben der Kirche, mit grünen Fensterläden und einem Garten unter Schnee. In der Küche bullert der Herd, es riecht nach echtem Bohnenkaffee, den es sonst kaum gibt. Im Amtszimmer stehen die Kirchenbücher in einem Schrank hinter Glas.
 
@@ -246,7 +246,7 @@ Ein Laden im Erdgeschoss mit einer Glocke über der Tür. Eine Theke mit Waage, 
 
 ### D9 · Der Schuster
 
-**Bild D9** · Die Werkstatt am Vormittag. *Wer im Bild wer ist:* der Schuster-Xare, hager, um die sechzig, Lederschurz, auf dem Schemel, einen Bergschuh auf dem Leisten, Schuhnägel im Mundwinkel; neben ihm auf der Werkbank ein aufgeschlagenes Heft. Worauf du zeigst: das Heft, die Schuhe auf den Regalen, jeder mit einem Zettel, die Schusterkugel, die das Licht bündelt.
+**Bild D9** · Die Werkstatt am Vormittag. *Wer im Bild wer ist:* der Schuster-Xare, untersetzt, um die sechzig, mit runder Brille und großem Schnauzbart, Lederschurz, auf dem Schemel, einen Bergschuh auf dem Leisten, Schuhnägel im Mundwinkel; neben ihm auf der Werkbank ein aufgeschlagenes Heft. Worauf du zeigst: das Heft, die Schuhe auf den Regalen, jeder mit einem Zettel, die Schusterkugel, die das Licht bündelt.
 
 Eine niedrige Werkstatt, eine Stufe hinunter. Leisten an der Wand, Schuhe auf Regalen, jeder mit einem Zettel daran, ein Fenster mit einer wassergefüllten Glaskugel davor, die das Licht auf die Werkbank bündelt. Es riecht nach Leder, Pech und Ofen.
 
@@ -290,7 +290,7 @@ Der älteste Hof im Dorf, ein Blockbau mit geschnitzten Balkonen und einer gemal
 
 ### D12 · Das Sägewerk
 
-**Bild D12** · Das Sägewerk am Nachmittag. *Wer im Bild wer ist:* am Sägegatter ein Mann mittleren Alters in abgetragener Arbeitsjacke, die Mütze in der Hand, steif und höflich; im Hintergrund ein kräftiger Mann mit Schnauzer und Zigarre, der Säger, der herschaut; oben in einem kleinen Fenster über dem Gatter ein Kindergesicht. Worauf du zeigst: das Sägemehl im Schnee, die Bretterstapel, die Seilrollen an der Wand.
+**Bild D12** · Das Sägewerk am Nachmittag. *Wer im Bild wer ist:* am Sägegatter ein Mann mittleren Alters in abgetragener Arbeitsjacke, die Mütze in der Hand, steif und höflich; im Hintergrund ein schwerer, glatt rasierter Mann mit Zigarre, der Säger, der herschaut; oben in einem kleinen Fenster über dem Gatter ein Kindergesicht. Worauf du zeigst: das Sägemehl im Schnee, die Bretterstapel, die Seilrollen an der Wand.
 
 Am Bach unterhalb des Dorfes steht das Sägegatter unter einem offenen Dach, angetrieben vom Wasser. Ringsum Bretterstapel und Sägemehl im Schnee. Über dem Gatter liegen Kammern mit kleinen Fenstern, in denen die Flüchtlinge wohnen. Ein Stück bachab steht das kleine E-Werk am Wehr.
 

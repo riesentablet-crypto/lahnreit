@@ -65,7 +65,7 @@ Jede Szene hat dieselben Teile in derselben Reihenfolge. Kleine Szenen lassen au
 Zu jeder Szene gibt es ein Bild, manchmal zwei. Die Bilder sind nur für dich, die Spieler sehen sie nie. Du schaust hin und erzählst, was du siehst. Das ersetzt die langen Beschreibungen, die man sonst vorlesen müsste.
 
 - Erzähle in drei Schritten: erst das Ganze (Licht, Wetter, Raum), dann zwei oder drei Dinge, die ins Auge fallen, dann die Menschen.
-- Beschreibe Menschen nach ihrem Aussehen, nicht nach ihrem Namen: »ein schwerer Mann mit Schnauzbart steht am Kopf des Tisches«. Den Namen erfahren die Spieler erst, wenn sich jemand vorstellt oder vorgestellt wird.
+- Beschreibe Menschen nach ihrem Aussehen, nicht nach ihrem Namen: »ein schwerer Mann mit grauem Haar steht am Kopf des Tisches«. Den Namen erfahren die Spieler erst, wenn sich jemand vorstellt oder vorgestellt wird.
 - Unter jedem Bild steht, wer im Bild wer ist. Diese Liste ist auch dein Ersatz, solange das Bild noch nicht gemacht ist.
 - Was ein Bild nicht zeigen kann, steht im Vorlesetext darunter. Lies ihn vor oder sag es mit deinen Worten. Auf keinem Bild sind die drei Ermittler zu sehen, denn was sie tun, entscheiden die Spieler.
 

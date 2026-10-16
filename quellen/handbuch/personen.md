@@ -161,7 +161,7 @@ Diese fünf haben gedroht, gelärmt oder gelogen, und keiner von ihnen war es. S
 
 ### P2 · Der Bürgermeister
 
-**Wer er ist.** Georg Daxenberger, der Daxer, 58, Bauer und seit 1948 Bürgermeister. Ein schwerer Mann mit grauem Schnauzbart und einer Virginia zwischen den Fingern, laut und jovial vor Leuten, scharf unter vier Augen. Vater von Traudl und Hans. Am 24. März hat er in München heimlich einen Vorvertrag unterschrieben: Die Gesellschaft kauft seine Wiese und übernimmt die zwanzigtausend Mark Schulden, die die Gemeinde für die neue Wasserleitung hat. Im Dorf redet er gegen das Hotel. Am Samstag hat er in Lindners Zimmer zwei Seiten aus dem Notizbuch gerissen, auf denen sein Name stand, und sie in der Kanzlei verbrannt.
+**Wer er ist.** Georg Daxenberger, der Daxer, 58, Bauer und seit 1948 Bürgermeister. Ein schwerer, glatt rasierter Mann mit grauem, welligem Haar und einer Virginia zwischen den Fingern, laut und jovial vor Leuten, scharf unter vier Augen. Vater von Traudl und Hans. Am 24. März hat er in München heimlich einen Vorvertrag unterschrieben: Die Gesellschaft kauft seine Wiese und übernimmt die zwanzigtausend Mark Schulden, die die Gemeinde für die neue Wasserleitung hat. Im Dorf redet er gegen das Hotel. Am Samstag hat er in Lindners Zimmer zwei Seiten aus dem Notizbuch gerissen, auf denen sein Name stand, und sie in der Kanzlei verbrannt.
 
 **Haltung zu Beginn:** Brandl feindselig · Hagedorn feindselig · Hias skeptisch.
 
@@ -709,7 +709,7 @@ Zwölf Figuren, die den Ermittlern weiterhelfen, wenn man sie richtig anfasst. H
 
 ### P17 · Der Schuster-Xare
 
-**Wer er ist.** Franz Xaver Lechner, der Schuster-Xare, 59, Schuhmacher. Ein hagerer Mann mit Brille, der seit dreißig Jahren jeden Bergschuh im Dorf macht und flickt und jedem zuerst auf die Füße schaut. Er führt ein Heft, in dem jede Arbeit steht, mit Tag, Uhrzeit und Namen. In diesem Heft steht der Satz, der den Fall aufmacht. Abends sitzt er beim Lahnwirt am Kartentisch, nicht am Stammtisch.
+**Wer er ist.** Franz Xaver Lechner, der Schuster-Xare, 59, Schuhmacher. Ein untersetzter Mann mit Glatze, runder Brille und großem grauem Schnauzbart, der seit dreißig Jahren jeden Bergschuh im Dorf macht und flickt und jedem zuerst auf die Füße schaut. Er führt ein Heft, in dem jede Arbeit steht, mit Tag, Uhrzeit und Namen. In diesem Heft steht der Satz, der den Fall aufmacht. Abends sitzt er beim Lahnwirt am Kartentisch, nicht am Stammtisch.
 
 **Haltung zu Beginn:** Brandl skeptisch · Hagedorn neutral · Hias kooperativ.
 
@@ -1093,7 +1093,7 @@ Spiel sie nicht aus. Jede dieser Figuren braucht einen Satz, eine Tätigkeit und
 
 **Der Wagner und sein Kaje.** Der Wagner ist sechzig, heißt im Dorf nur nach seinem Handwerk und besitzt den Hörnerschlitten, mit dem im Winter Holz und im Notfall Menschen ins Tal gebracht werden. Der Kaje ist sein Sohn, neunzehn: Kaje heißt in dieser Gegend der junge Gehilfe, der vorn an den Hörnern zieht, während der Alte hinten mit der Kette bremst. Die beiden kommen am Morgen nach der Nacht am Berg mit Rauch herauf und schnüren den Toten in eine Plane (S18). Sie reden dabei fast nichts, und was der Wagner sagt, klingt wie ein Werkstattsatz: »Hinten anheben. Langsam.« Nebenbei ist der Wagner der, von dem Rauch weiß, dass der Gschwendtner am Freitag einen Schuh zum Xare getragen hat (H13).
 
-**Der Säger,** Besitzer des Sägewerks am Bach, Mitte vierzig, der zweite Mann der Agnes und damit der Mann, der den Heimkehrer Wimmer-Sepp am meisten fürchtet. Er bestätigt Wolffs Alibi, wenn man ihn fragt, aber ungern und erst beim zweiten Nachfragen, weil ihm jedes Gespräch mit der Polizei unangenehm ist. Gegen den Wimmer hetzt er jeden Tag: »Der soll wieder hingehen, wo er hergekommen ist.« Das Abenteuer gibt ihm keinen Vornamen. Du brauchst auch keinen, denn im Dorf heißt er der Säger und sonst nichts.
+**Der Säger,** Johann Pfisterer, Besitzer des Sägewerks am Bach, Mitte vierzig, ein schwerer, glatt rasierter Mann mit Zigarre, der zweite Mann der Agnes und damit der Mann, der den Heimkehrer Wimmer-Sepp am meisten fürchtet. Er bestätigt Wolffs Alibi, wenn man ihn fragt, aber ungern und erst beim zweiten Nachfragen, weil ihm jedes Gespräch mit der Polizei unangenehm ist. Gegen den Wimmer hetzt er jeden Tag: »Der soll wieder hingehen, wo er hergekommen ist.« Im Dorf heißt er nur der Säger.
 
 **Der Eder, Straßenwärter,** achtundvierzig, zuständig für die Bergstraße, den Schnee und die Kehren. Er ist der nüchternste Mensch im Dorf und darum ein guter Zeuge: »Am Donnerstag ist kein Auto heraufgekommen. Nur der Postbus.« Er hat auch den Studenten mit dem Hammer am Donnerstagmorgen in den ersten Bus steigen sehen (G9). Seine Frau, die Ederin, ist das Gegenstück dazu und eine der lautesten Stimmen im Kramerladen.
 

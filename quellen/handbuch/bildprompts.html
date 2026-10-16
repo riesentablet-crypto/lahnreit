@@ -3,13 +3,13 @@
 <p>Zu fast jeder Szene dieses Buches gehört ein Bild, neununddreißig insgesamt. Sie sind nicht für die Spieler gemacht, sondern für dich. Du schaust auf das Bild und beschreibst, was du siehst, und darum musst du vorher nichts auswendig lernen: Der Raum, das Licht, das Wetter und die Leute stehen dir vor Augen, während du redest. Was ein Bild nicht zeigen kann, steht auf jeder Szenenseite unter »Was das Bild nicht zeigt«, und das ist der kurze Absatz, den du vorliest.</p>
 <p>Du kannst den Abend ohne ein einziges Bild leiten. Die Szenenseiten beschreiben alles in Worten. Die Bilder nehmen dir nur die Arbeit ab, dir beim Reden gleichzeitig einen Raum vorzustellen, und das ist bei einem Abenteuer mit fünfundzwanzig Szenen mehr Hilfe, als es klingt.</p>
 <h3 id="wie-du-vorgehst">Wie du vorgehst</h3>
-<p>Fang für jedes Bild einen neuen Chat in ChatGPT an. In einem langen Chat verschiebt das Modell mit jedem Bild ein wenig die Gesichter. Dass die Bilder trotzdem zusammenpassen, macht der Grundprompt, den du jedes Mal unverändert mitschickst.</p>
-<p>Für jedes Bild gehst du so vor. Häng zuerst die Porträts an, die in der ersten Zeile des Prompts unter »Angehängt« stehen, in genau dieser Reihenfolge: Das erste Porträt ist für das Modell Bild 1, das zweite Bild 2. Schreib dann in dieselbe Nachricht den Grundprompt und darunter den Prompt für das Bild, und schick beides zusammen ab.</p>
+<p>Fang für jedes Bild einen neuen Chat in ChatGPT an. In einem langen Chat verschiebt das Modell mit jedem Bild ein wenig die Gesichter. Dass die Bilder trotzdem zusammenpassen, machen der Grundprompt, den du jedes Mal unverändert mitschickst, und die Vorlagen.</p>
+<p>Für jedes Bild gehst du so vor. Häng zuerst die Porträts aus der Zeile »Angehängt« an und danach die Ortsvorlagen aus der Zeile »Ort«, jeweils in genau dieser Reihenfolge. Das erste angehängte Bild ist für das Modell Bild 1, das zweite Bild 2 und so weiter. Schreib dann in dieselbe Nachricht den Grundprompt und darunter den Prompt für das Bild, und schick beides zusammen ab.</p>
 <p>Wird ein Bild falsch, bleib im selben Chat und nenn nur eine einzige Änderung, zum Beispiel: »Ändere nur das: Die Frau am Fenster ist älter. Alles andere bleibt genau gleich.« Stehen die Leute falsch, zeichne die Aufstellung mit ein paar Strichen und Kreisen auf einen Zettel, fotografier ihn und häng ihn als letztes Bild an, mit dem Satz: »Das letzte Bild ist nur eine Skizze, wer wo steht.« Zwei Nachbesserungen reichen fast immer. Nach der dritten wird es meist schlechter statt besser, und dann nimm das Bild, das du hast. Es muss nicht schön sein. Es muss dir beim Reden helfen.</p>
 <h3 id="mit-den-personenvorlagen-arbeiten">Mit den Personenvorlagen arbeiten</h3>
 <p>Für die Dorfleute gibt es fertige Porträts, im Repository im Ordner »bilder«. Jede Datei heißt wie die Person, zum Beispiel »Maria Hallmaier.png«. Mit diesen Vorlagen sieht dieselbe Person auf jedem Bild gleich aus, und du erkennst sie am Tisch auf einen Blick: Die Wirtin aus S2 ist auch in S3, S4b, S6, S10 und S25 die Wirtin, und du musst sie nicht jedes Mal neu beschreiben.</p>
 <p>In jedem Prompt steht hinter jeder Person in Klammern ihr voller Name, genau wie im Dateinamen, und dahinter, als welches Bild ihre Vorlage angehängt wird: (Maria Hallmaier, Bild 2). »Ohne Vorlage« heißt, dass es für diese Person kein Porträt gibt oder dass sie so klein im Bild ist, dass keins nötig ist. Jede Person wird in allen Prompts mit denselben wenigen Worten beschrieben, damit das Modell sie auch ohne Vorlage wiedererkennt.</p>
-<p>Häng nie mehr als vier Porträts an eine Nachricht. Die Porträts sind Schwarzweiß und in Sonntagskleidung aufgenommen. Der Grundprompt sagt dem Modell darum, dass es von ihnen nur Gesicht, Haar, Alter und Statur übernimmt und Kleidung und Farbe aus dem Prompt nimmt.</p>
+<p>Häng nie mehr als vier Bilder an eine Nachricht, Porträts und Ortsvorlagen zusammengezählt. Die Porträts sind Schwarzweiß und in Sonntagskleidung aufgenommen. Der Grundprompt sagt dem Modell darum, dass es von ihnen nur Gesicht, Haar, Alter und Statur übernimmt und Kleidung und Farbe aus dem Prompt nimmt.</p>
 <table>
 <thead>
 <tr><th>Im Buch</th><th>Vorlage im Ordner bilder</th></tr>
@@ -42,6 +42,33 @@
 </tbody>
 </table>
 <p>Hast du keine Porträts, findest du die Prompts dafür im Dokument <a href="https://claude.ai/code/artifact/3725d552-60f1-48e8-a978-bb855416bae1">Das Dorf</a> im Reiter »Bildprompts Dorf«. Mach die Porträts dann zuerst.</p>
+<h3 id="mit-ortsvorlagen-arbeiten">Mit Ortsvorlagen arbeiten</h3>
+<p>Auch für Orte gibt es Vorlagen. Die drei Ansichtskarten aus dem Kramerladen zeigen den Gasthof, die Kirche und das Dorf unter dem Berg. Lindners Film zeigt die Milchsammelstelle, die Kaser und den Steinmann am Sattel, und das Atelierbild hängt in S23 an der Wand. Alle liegen ohne Kartenrand und ohne Schrift im Repository im Ordner »bilder/ortsvorlagen«.</p>
+<p>Dazu kommen deine eigenen fertigen Szenenbilder. Ist ein Ort schon auf einem Bild, nimmst du es als Vorlage für die nächste Szene dort. So sieht der Dorfplatz in S5, S7b, S21 und S25 aus wie in S1, die Gaststube in S4b und S10 wie in S4a, und die Kaser in der Sturmnacht wie bei Tag. Mach die Bilder deshalb in der Reihenfolge des Buchs.</p>
+<p>Die Ortsvorlagen stehen im Prompt in der Zeile »Ort«, und du hängst sie nach den Porträts an. Das Modell nimmt von ihnen nur, wie Häuser, Räume, Möbel und Berge aussehen. Die Menschen darauf, die Schrift, den Sommer auf den Karten und das Schwarzweiß des Films lässt es weg, denn so steht es im Grundprompt. Fehlt dir eine Vorlage, lass sie weg, streich sie aus der Zeile »Ort« und zähl die Nummern ohne sie weiter. Jeder Prompt beschreibt den Ort auch ohne Vorlage vollständig.</p>
+<table>
+<thead>
+<tr><th>Vorlage</th><th>zeigt</th><th>für</th></tr>
+</thead>
+<tbody>
+<tr><td>Ansichtskarte Gasthof Beim Lahnwirt</td><td>den Gasthof von vorn</td><td>S1, S25</td></tr>
+<tr><td>Ansichtskarte Lahnreit gegen Mandlkopf</td><td>das Dorf, die Lahn und den Gipfel</td><td>S1</td></tr>
+<tr><td>Ansichtskarte Sommerfrische Lahnreit</td><td>die Häuser und die Kirche</td><td>S7b, S8</td></tr>
+<tr><td>Lindners Film 1 Milchsammelstelle</td><td>das Milchhäusl mit Rampe</td><td>D15</td></tr>
+<tr><td>Lindners Film 2 Kaser innen</td><td>die Stube der Kaser</td><td>S14</td></tr>
+<tr><td>Lindners Film 3 Kasertür</td><td>die Tür und die Alm draußen</td><td>S14</td></tr>
+<tr><td>Lindners Film 4 Steinmann und Gipfel</td><td>den Steinmann vor dem Gipfel</td><td>S15a</td></tr>
+<tr><td>Lindners Film 5 Steinmann und Tal</td><td>den Steinmann und den Blick ins Tal</td><td>S15a</td></tr>
+<tr><td>Atelierbild 1955</td><td>Vater und Tochter im Atelier</td><td>S23</td></tr>
+<tr><td>dein Bild S1</td><td>den Dorfplatz</td><td>S5, S7b, S21, S25</td></tr>
+<tr><td>dein Bild S4a</td><td>die Gaststube zum Stammtisch hin</td><td>S4b</td></tr>
+<tr><td>dein Bild S4b</td><td>die Gaststube zur Schenke hin</td><td>S10</td></tr>
+<tr><td>dein Bild S7b</td><td>den Platz vor der Kirche</td><td>S21</td></tr>
+<tr><td>dein Bild S8</td><td>den Hof und die Tenne</td><td>S20</td></tr>
+<tr><td>dein Bild S13</td><td>die Lahn</td><td>S24</td></tr>
+<tr><td>dein Bild S14</td><td>die Stube der Kaser</td><td>S17a</td></tr>
+</tbody>
+</table>
 <h3 id="wenig-leute-klarer-blick">Wenig Leute, klarer Blick</h3>
 <p>Bei vielen Menschen verzählt sich das Bildmodell: Hände ohne Körper, eine Hand zu viel, dieselbe Person zweimal. Darum zeigt jedes Bild höchstens fünf Menschen deutlich. Jeder Prompt nennt die genaue Zahl, gibt jeder Person einen Platz im Bild (links, Mitte, rechts, vorn, hinten) und eine einzige Tätigkeit. Wer sonst noch da ist, bleibt klein und unscharf, ist nur von hinten zu sehen oder liegt außerhalb des Bildrands.</p>
 <p>Wohin die Leute schauen, steht mit Ziel und Grund im Prompt. Jedes Bild ist der Blick der Ermittler. Schauen alle zu den Fremden, schauen sie also in die Kamera, und genau so steht es dann auch im Prompt.</p>
@@ -61,19 +88,20 @@
 <p>STIL: ein gestochen scharfes, modernes Foto mit heutiger Kamera, natürliche Farben, natürliches Licht, klare Details. Alles im Bild bleibt aber im Jahr 1956: Kleidung, Gegenstände, Gesichter und Stimmung wie im deutschen Heimatfilm der fünfziger Jahre, ehrlich, ruhig und ein wenig kühl, ohne Postkartenkitsch.</p>
 <p>MENSCHEN: nur Dorfleute und ihre Arbeit. Gesichter von Leuten, die draußen arbeiten, wettergebräunt, mit schlechten Zähnen und derben Händen. Keine Models, kein Make-up, keine moderne Zahnpflege, keine modernen Frisuren.</p>
 <p>BILDAUFBAU: Im Bild sind genau so viele Menschen, wie der Einzelprompt nennt, nicht mehr. Jede Person kommt nur einmal vor, steht an dem Platz, den der Einzelprompt ihr gibt, und hat zwei Hände. Keine weiteren Personen im Vordergrund. Wer nur Hintergrund ist, bleibt klein und unscharf oder ist von hinten zu sehen. Niemand schaut in die Kamera, außer wenn es im Einzelprompt steht.</p>
-<p>VORLAGEN: Wenn Porträts angehängt sind, sind sie nummeriert, das erste ist Bild 1. Übernimm von jedem Porträt nur Gesicht, Haar, Alter und Statur der Person, der der Einzelprompt diese Nummer gibt: dasselbe Gesicht, nicht neu erfinden. Die Porträts sind Schwarzweiß und in Sonntagskleidung. Kleidung, Haltung, Licht und Farbe kommen aus dem Einzelprompt.</p>
+<p>VORLAGEN: Angehängte Bilder sind nummeriert, das erste ist Bild 1. Übernimm von jedem Porträt nur Gesicht, Haar, Alter und Statur der Person, der der Einzelprompt diese Nummer gibt: dasselbe Gesicht, nicht neu erfinden. Die Porträts sind Schwarzweiß und in Sonntagskleidung. Kleidung, Haltung, Licht und Farbe kommen aus dem Einzelprompt. Bilder aus der Zeile »Ort« zeigen nur den Ort: Übernimm von ihnen, wie Häuser, Räume, Möbel und Berge aussehen. Wo etwas im Bild steht, sagt der Einzelprompt. Übernimm von ihnen keine Menschen, keine Schrift, keinen Kartenrand, keine Jahreszeit und keinen Bildstil, außer der Einzelprompt verlangt es ausdrücklich.</p>
 <p>NICHT IM BILD: Schrift jeder Art, Beschriftungen, Schilder mit lesbarem Text, Wasserzeichen, Bildunterschriften, Namen. Keine Fahrzeuge nach 1956, keine Strommasten in den Bergen, keine Skilifte, keine Seilbahnen, keine Touristen. Keine städtisch gekleideten Herren in Anzug oder Mantel, kein Kriminalbeamter, kein Arzt, kein Bergführer von außen, sofern der Einzelprompt es nicht ausdrücklich verlangt.</p>
 <p>Und jetzt das Bild:</p></blockquote>
 <p>Spielt ein Bild drinnen, kannst du dem Grundprompt noch einen Satz anfügen: Innenräume sind niedrig, dunkel und rauchgeschwärzt, mit kleinen Fenstern und viel unbehandeltem Holz.</p>
 <p><strong>Wenn das Modell zu schön wird,</strong> und das passiert, schreib einen dieser Sätze dazu: »Weniger malerisch, mehr dokumentarisch.« »Das Licht flacher und grauer.« »Die Leute müder.« »Der Schnee schmutzig, mit Spuren, Mist und Stroh darin.« Der letzte Satz hilft fast immer, denn Schnee ist das Erste, was ein Bildmodell verkitscht.</p>
 <h2 id="alle-bilder-prompt-für-prompt">Alle Bilder, Prompt für Prompt</h2>
 <p>Die Nummern sind dieselben wie im Buch. Ein Buchstabe dahinter heißt, dass eine Szene zwei Bilder hat, zum Beispiel S15a der Fundort von weitem und S15b der Tote von nahem. Bei den Nummern, die mit D anfangen, geht es um einen Ort im Dorf, der in S9 besucht werden kann, und bei B6 um die Jagdhütte am Berg. Vor jeden dieser Prompts kommt der Grundprompt von oben.</p>
-<p>Jeder Prompt hat dieselbe Ordnung: zuerst, welche Porträts angehängt sind, dann Ort und Blick, dann die Menschen mit ihrer genauen Zahl und ihrem Platz, zuletzt, was auf keinen Fall fehlen darf.</p>
+<p>Jeder Prompt hat dieselbe Ordnung: zuerst, welche Porträts angehängt sind, bei manchen Bildern danach die Ortsvorlagen, dann Ort und Blick, dann die Menschen mit ihrer genauen Zahl und ihrem Platz, zuletzt, was auf keinen Fall fehlen darf.</p>
 <p>S9 hat kein eigenes Bild, weil die Szene kein Ort ist, sondern ein offener Nachmittag. Dort zeigst du das Bild des Ortes, an den die Gruppe geht.</p>
 <h3 id="teil-1-der-sonntagabend">Teil 1 · Der Sonntagabend</h3>
 <p><strong>Bild S1 · Die Ankunft</strong></p>
 <blockquote><p>Angehängt: Bild 1 Anton Rauch, Bild 2 Martin Obermüller.</p>
-<p>Ort und Blick: ein kleiner Dorfplatz in der Abenddämmerung, auf Augenhöhe gesehen von der Straße, die ins Dorf führt, als träte man gerade ins Dorf. Links ein großer gemauerter Gasthof mit einem verblassten gemalten heiligen Georg über der Tür. In der Mitte des Platzes liegt ein geschälter Fichtenstamm von dreißig Metern auf schweren Holzböcken, daneben brennt ein Feuer in einer rostigen Blechtonne. Hinter dem Dorf steigt dunkler Fichtenwald auf, darüber ein heller, kahler, steiler Hang, und ganz oben ein Felsgipfel mit Gipfelkreuz im letzten Abendlicht.</p>
+<p>Ort: Bild 3 »Ansichtskarte Gasthof Beim Lahnwirt« zeigt den Gasthof, Bild 4 »Ansichtskarte Lahnreit gegen Mandlkopf« den Hang und den Gipfel über dem Dorf.</p>
+<p>Ort und Blick: ein kleiner Dorfplatz in der Abenddämmerung, auf Augenhöhe gesehen von der Straße, die ins Dorf führt, als träte man gerade ins Dorf. Links ein großer Gasthof, unten weiß gekalkt, oben aus dunklem Holz mit zwei langen Balkonen und leeren Blumenkästen; über der Tür ein verblasstes gemaltes Bild des heiligen Georg. In der Mitte des Platzes liegt ein geschälter Fichtenstamm von dreißig Metern auf schweren Holzböcken, daneben brennt ein Feuer in einer rostigen Blechtonne. Hinter dem Dorf steigt dunkler Fichtenwald auf, darüber ein heller, kahler, steiler Hang, und ganz oben ein Felsgipfel mit Gipfelkreuz im letzten Abendlicht.</p>
 <p>Menschen, genau fünf: Vorn links vor dem Gasthof steht ein breiter Polizist Ende vierzig mit Schnauzer in der grünen Uniformjoppe der bayerischen Landpolizei, die Mütze unter dem Arm, und schaut auf seine Armbanduhr (Anton Rauch, Bild 1). In der Mitte, zwanzig Meter entfernt am Feuer, drehen sich vier junge Burschen in Lodenjoppen zur Straße um. Deutlich zu sehen ist nur der größte vorn, mit verschränkten Armen (Martin Obermüller, Bild 2). Die drei anderen stehen hinter ihm, klein und dunkel im Gegenlicht des Feuers (ohne Vorlage).</p>
 <p>Was klar zu sehen sein muss: der helle, kahle Hang über dem Wald, der Stamm auf den Böcken, der Mann in Uniform. In einem Fenster rechts ist ein Vorhang zur Seite geschoben, dahinter ist niemand zu erkennen.</p></blockquote>
 <p><strong>Bild S2 · Rauchs Nebenzimmer</strong></p>
@@ -93,11 +121,13 @@
 <p>Was klar zu sehen sein muss: der stehende Mann mit der erhobenen Hand, der junge Mann an der Wand, und hinter dem Kreuz im Herrgottswinkel, fächerförmig gesteckt, ein Dutzend kleine Sterbebilder mit schwarzem Rand.</p></blockquote>
 <p><strong>Bild S4b · Schenke und Kartentisch</strong></p>
 <blockquote><p>Angehängt: Bild 1 Maria Hallmaier, Bild 2 Rosl Brandstätter, Bild 3 Franz Xaver Lechner.</p>
+<p>Ort: Bild 4 ist dein fertiges Bild S4a und zeigt dieselbe Gaststube.</p>
 <p>Ort und Blick: dieselbe Gaststube am selben Abend, wieder aus der Eingangstür gesehen, diesmal nach rechts. Hinten die Schenke mit Zapfhahn und Gläserbord, an der rechten Wand ein großer grüner Kachelofen mit Ofenbank, vorn rechts ein Tisch am Fenster. Rauchschwaden im Licht der Deckenlampen. Der Kartentisch reicht über den rechten Bildrand hinaus, und wer dort sitzt, ist nicht im Bild.</p>
 <p>Menschen, genau vier. Alle vier schauen zur Tür und damit in die Kamera, weil gerade Fremde hereinkommen. Hinten hinter der Schenke steht eine kräftige Frau Mitte vierzig mit dunklem Zopfkranz in dunkler Schürze, eine Hand noch am Zapfhahn (Maria Hallmaier, Bild 1). In der Mitte des Raums ist eine Kellnerin von neunzehn mit blondem Zopfkranz stehen geblieben, in jeder Hand zwei Steinkrüge (Rosl Brandstätter, Bild 2). Vorn rechts am Tisch am Fenster sitzen zwei Männer beim Kartenspiel, die Karten in der Hand, und drehen die Köpfe zur Tür: vorn ein untersetzter Mann um die sechzig mit Glatze, runder Brille und großem grauem Schnauzbart (Franz Xaver Lechner, Bild 3), ihm gegenüber ein Bauer mit Hut (ohne Vorlage).</p>
 <p>Was klar zu sehen sein muss: die Frau am Zapfhahn, die Kellnerin mit den Krügen, der Kachelofen, die Karten in den Händen der Spieler.</p></blockquote>
 <p><strong>Bild S5 · Das Kasermandl-Austreiben</strong></p>
-<blockquote><p>Angehängt: nichts, alle Menschen sind klein und von oben zu sehen.</p>
+<blockquote><p>Angehängt: keine Porträts, alle Menschen sind klein und von oben zu sehen.</p>
+<p>Ort: Bild 1 ist dein fertiges Bild S1 und zeigt denselben Dorfplatz, hier bei Nacht und von oben.</p>
 <p>Ort und Blick: ein Dorfplatz bei Nacht im Schnee, steil von oben aus einem Fenster im ersten Stock gesehen. Ein fast voller Mond hinter ziehenden Wolken, Mondlicht und Feuerschein. Weil der Blick von oben kommt, sind alle Menschen klein.</p>
 <p>Menschen, genau zehn. Über den Platz zieht in einer Reihe ein Zug von acht jungen Männern in Lodenjoppen, jeder mit einer großen Kuhglocke um den Bauch geschnallt. Die zwei vorn tragen schwarze geschnitzte Holzmasken mit Bärten aus hellem Werg und Hörnern, der größere von beiden ist breit in den Schultern (Martin Obermüller, maskiert, ohne Vorlage). Einer in der Mitte des Zuges holt mit einer langen Peitsche aus. Abseits sitzt ein stiller junger Mann auf einem Holzbock am Feuer in einer Blechtonne und zieht nicht mit (Max Haslberger, ohne Vorlage). Am Rand des Platzes steht im Schatten einer Hauswand ein magerer Junge in einem zu großen Mantel und schaut zu (Erich Langer, ohne Vorlage).</p>
 <p>Was klar zu sehen sein muss: die Masken, die Glocken, und weit oben über dem schwarzen Bergwald ein einzelnes kleines Licht, so klein wie ein Streichholz. Leichte Bewegungsunschärfe in den Gestalten.</p></blockquote>
@@ -114,11 +144,13 @@
 <p>Was klar zu sehen sein muss: die Kanzel, die weinende junge Frau in der letzten Bank, der Mann, der sich nach ihr umdreht.</p></blockquote>
 <p><strong>Bild S7b · Der Georgiritt</strong></p>
 <blockquote><p>Angehängt: Bild 1 Georg Daxenberger, Bild 2 Sebastian Gschwendtner.</p>
+<p>Ort: Bild 3 ist dein fertiges Bild S1 und zeigt denselben Dorfplatz, Bild 4 »Ansichtskarte Sommerfrische Lahnreit« die Kirche mit dem Zwiebelturm.</p>
 <p>Ort und Blick: der Dorfplatz vor der Kirche am Georgitag, 23. April, am Vormittag, auf Augenhöhe gesehen. Schnee an den Rändern, Schneematsch und Stroh auf dem Platz. Am Kirchhang steigt weißer Rauch von einem Böller auf. Pferdeatem in der kalten Luft.</p>
 <p>Menschen und Pferde: genau drei Pferde und vier Menschen deutlich. In der Mitte steigt eine junge Fuchsstute mit geflochtener Mähne und Papierblumen am Kummet hoch, und ein Bub von siebzehn im Sonntagsjanker kippt rückwärts aus dem Sattel, mitten in der Bewegung (Hans Daxenberger, ohne Vorlage). Links daneben sitzt auf einem schweren Kaltblut ein schwerer Mann Ende fünfzig mit grauem Haar im Sonntagsstaat und dreht sich erschrocken zu dem Buben um (Georg Daxenberger, Bild 1). Rechts am Rand steht ein hagerer Mann Anfang fünfzig in Lodenjoppe neben seinem eigenen Pferd, hält es mit einer einzigen Hand am Zügel vollkommen ruhig und schaut hin (Sebastian Gschwendtner, Bild 2). Hinten vor der Kirchentür steht klein ein Priester im weißen Chorrock mit einem Weihwasserwedel (Pfarrer Alois Kreitmair, ohne Vorlage). Dahinter, klein und unscharf, die Zuschauer am Rand des Platzes, ein junger Mann mit einer bestickten Fahne (Martin Obermüller, ohne Vorlage) und ein Polizist in grüner Uniform, der die Leute zurückhält (Anton Rauch, ohne Vorlage). Keine weiteren Pferde im Vordergrund.</p>
 <p>Was klar zu sehen sein muss: die steigende Stute mit dem stürzenden Buben, der Rauch am Hang, der Mann mit der ruhigen Hand am Zügel.</p></blockquote>
 <p><strong>Bild S8 · Die leere Gasse im Oberdorf</strong></p>
-<blockquote><p>Angehängt: nichts.</p>
+<blockquote><p>Angehängt: keine Porträts.</p>
+<p>Ort: Bild 1 »Ansichtskarte Sommerfrische Lahnreit« zeigt die Häuser des Dorfs und die Kirche.</p>
 <p>Ort und Blick: eine Gasse im Oberdorf an einem klaren, kalten Vormittag, vollkommen menschenleer, weil das ganze Dorf unten beim Ritt ist. In der Mitte festgetretener Schnee mit Hufspuren und Stroh. Rechts ein großer Bauernhof mit Holzbalkon, gegenüber eine große Tenne aus dunklen Brettern, deren Tor mit einem auffallend hellen, neuen Eichenbalken quer verriegelt ist. Am Ende der Gasse der Zwiebelturm der Kirche, und am Friedhofszaun stehen ein paar angebundene Pferde mit Papierblumen am Geschirr.</p>
 <p>Menschen, genau eine: Links im Nachbarhaus schaut hinter einem kleinen Fenster mit Geranientöpfen eine sehr alte Frau mit weißem Haarknoten heraus, einen Rosenkranz in der Hand (Anna Hübl, ohne Vorlage). Vor dem Stall hebt ein großer Hofhund an einer Kette den Kopf.</p>
 <p>Was klar zu sehen sein muss: der helle Balken an der Tenne, frisch gegen das alte dunkle Holz.</p></blockquote>
@@ -165,12 +197,14 @@
 <p>Was klar zu sehen sein muss: das aufgeschlagene Buch; an der Wand ein Schlüsselbrett, an dem ein einzelner Schlüssel mit einem Holzanhänger hängt; ein gerahmtes Foto eines Herrn im Jagdanzug neben einem erlegten Hirsch.</p></blockquote>
 <p><strong>Bild D15 · Die Milchsammelstelle</strong></p>
 <blockquote><p>Angehängt: Bild 1 Magdalena Gschwendtner.</p>
+<p>Ort: Bild 2 »Lindners Film 1 Milchsammelstelle« zeigt das Milchhäusl mit Rampe und Kannen.</p>
 <p>Ort und Blick: eine Milchsammelstelle in einem Bergdorf um sieben Uhr morgens, kalt und blau, der Atem sichtbar. Über den offenen Kannen steht Dampf in der kalten Luft. Im Hintergrund der Berg im ersten Licht. Niemand redet.</p>
 <p>Menschen, genau vier: Vorn an der Betonrampe eines kleinen Milchhäusls hebt eine schmale junge Frau mit Kopftuch und dunkelblondem Zopf eine Blechmilchkanne von einem Handwagen und dreht dabei das Gesicht zur Seite weg (Magdalena Gschwendtner, Bild 1). Hinter der Rampe steht der Milchwart, ein Mann Ende vierzig mit einer Messkanne und einem Buch (Josef Kammerloher, ohne Vorlage). Dahinter warten zwei Bauern mit ihren Kannen, klein und im Dampf unscharf (ohne Vorlage).</p>
 <p>Was klar zu sehen sein muss: der Dampf über den Kannen, die Frau, die sich wegdreht, das Buch des Milchwarts.</p></blockquote>
 <h3 id="teil-3-der-berg">Teil 3 · Der Berg</h3>
 <p><strong>Bild S10 · Der Aufbruch</strong></p>
 <blockquote><p>Angehängt: Bild 1 Maria Hallmaier.</p>
+<p>Ort: Bild 2 ist dein fertiges Bild S4b und zeigt dieselbe Gaststube.</p>
 <p>Ort und Blick: die Gaststube eines bayerischen Dorfgasthofs kurz vor Tagesanbruch, die Stühle noch auf den Tischen, gesehen von der Tür zur Küche quer durch den Raum zum Fenster. Nur eine Petroleumlampe brennt. Innen warmes Lampenlicht, draußen blaue Nacht.</p>
 <p>Menschen, genau vier: Vorn an einem Tisch steht eine kräftige Frau Mitte vierzig mit dunklem Zopfkranz in dunkler Schürze und packt einen Rucksack aus Segeltuch. Sie schaut auf ihre Hände, nicht in die Kamera (Maria Hallmaier, Bild 1). Draußen vor dem Fenster, auf dem dunklen Dorfplatz an einem Feuer in einer Blechtonne, stehen drei junge Burschen, nur als dunkle Umrisse gegen das Feuer, und schauen herüber zum erleuchteten Fenster (ohne Vorlage).</p>
 <p>Was klar zu sehen sein muss: vor der Frau auf dem Tisch ein Laib Brot, ein Stück Speck in Butterbrotpapier, eine Thermosflasche, eine Sturmlaterne, eine kleine Blechkanne Petroleum und zwei zusammengelegte graue Wolldecken; auf dem Boden neben ihr ein Paar schwere, frisch gefettete Bergschuhe mit blanken Sohlennägeln; das Feuer draußen.</p></blockquote>
@@ -190,12 +224,14 @@
 <p>Menschen: keine. Kein Mensch im Bild.</p>
 <p>Was klar zu sehen sein muss: quer durch den Hang eine einzige schmale Spur, in die der Schnee aufgetreten ist; der Graben unten; die Sonne oben auf den Felsen; am oberen Rand, weit weg und klein, die ersten Zaunpfähle einer Alm.</p></blockquote>
 <p><strong>Bild S14 · Die Kaser bei Tag</strong></p>
-<blockquote><p>Angehängt: nichts.</p>
+<blockquote><p>Angehängt: keine Porträts.</p>
+<p>Ort: Bild 1 »Lindners Film 2 Kaser innen« zeigt die Stube mit Tisch und Tür, Bild 2 »Lindners Film 3 Kasertür« die Tür und die Alm draußen.</p>
 <p>Ort und Blick: die Stube einer verlassenen Almhütte bei Tag, von der Ecke neben dem Herd zur offenen Tür hin gesehen. Durch die Tür fällt hartes, weißes Schneelicht herein, sonst ist es dämmrig. Rauchgeschwärzte Balken, ein gemauerter Herd ohne Feuer, ein grober Tisch mit Bank, neben dem Herd ein Stapel Holz. Durch die Tür sieht man die verschneite Alm mit ein paar Zaunpfählen und weit hinten den dunklen Waldrand.</p>
 <p>Menschen: keine. Kein Mensch im Bild.</p>
 <p>Was klar zu sehen sein muss: vorn auf dem Tisch eine flache Holzschüssel mit gefrorener weißer Milch und daneben zwei Steingutbecher, dicht beieinander. Die zwei Becher sind das Erste, was auffällt. An der Wand ein Lager aus Brettern mit Strohsäcken und grauen Wolldecken, eine Decke ist zurückgeschlagen.</p></blockquote>
 <p><strong>Bild S15a · Der Sattel</strong></p>
-<blockquote><p>Angehängt: nichts.</p>
+<blockquote><p>Angehängt: keine Porträts.</p>
+<p>Ort: Bild 1 »Lindners Film 5 Steinmann und Tal« zeigt den Steinmann, den Pflock und den Blick ins Tal, Bild 2 »Lindners Film 4 Steinmann und Gipfel« den Gipfel mit dem Kreuz.</p>
 <p>Ort und Blick: ein breites, windgefegtes Joch zwischen einem Felsgipfel mit Gipfelkreuz und einem Grat mit überhängenden Schneewülsten, im klaren Vormittagslicht, weit von oben gesehen. Das Joch bricht zur Almseite in einer grauen Felsstufe ab, etwa vier Meter hoch, mit Eis in den Ritzen. Weit unten die verschneite Alm mit einer winzigen Hütte, dann der Wald, und ganz tief im Tal ein Dorf mit Kirchturm und Rauch aus den Kaminen. Auf der anderen Talseite eine helle Felswand. Am westlichen Himmel lange, dünne Wolkenstreifen.</p>
 <p>Menschen: kein lebender Mensch. Unter der Felsstufe, ein Stück weiter, liegt eine flache Mulde im glatten Neuschnee, und aus ihr ragt nur eine einzige Hand, dunkel und zur Faust geschlossen. Sonst ist von dem Mann nichts zu sehen (Rolf Lindner, ohne Vorlage).</p>
 <p>Was klar zu sehen sein muss: im Vordergrund ein mannshoher, sorgfältig geschichteter Steinmann und daneben ein Holzpflock mit einem flatternden roten Band; die Felsstufe; die Hand im Schnee, klein, aber deutlich; über der Mulde zwei große schwarze Raben im Flug.</p></blockquote>
@@ -215,7 +251,8 @@
 <p>Menschen: keine. Kein Mensch im Bild.</p>
 <p>Was klar zu sehen sein muss: ein eiserner Ofen mit Rohr an der Wand; sechs Betten in zwei Reihen mit grauen Decken; auf dem Tisch ein aufgeschlagenes Buch mit handschriftlichen Spalten und eine Flasche Enzian mit zwei Gläsern; an der Wand ein ausgebleichtes Gamsgehörn; am Fenster der Schnee, der waagrecht vorbeifliegt.</p></blockquote>
 <p><strong>Bild S17a · Die Kaser in der Sturmnacht</strong></p>
-<blockquote><p>Angehängt: nichts.</p>
+<blockquote><p>Angehängt: keine Porträts.</p>
+<p>Ort: Bild 1 ist dein fertiges Bild S14 und zeigt dieselbe Stube, hier bei Nacht.</p>
 <p>Ort und Blick: die Stube einer Almhütte in einer Sturmnacht, aus der Ecke am Lager zum Herd und zur Tür gesehen, nur vom Herdfeuer und einer Sturmlaterne an einem Balken beleuchtet. Rauch hängt unter der Decke, weil der Kamin schlecht zieht. Enge, Rauch, sehr wenig Licht.</p>
 <p>Menschen: keine. Kein Mensch im Bild.</p>
 <p>Was klar zu sehen sein muss: im gemauerten Herd ein kleines Feuer; an den Wänden feiner Schnee, der durch die Ritzen geweht ist und als kleine weiße Wehen auf dem Boden liegt; auf dem Tisch eine Holzschüssel und zwei Becher; auf dem Bretterlager ausgebreitete Wolldecken; am Herd zum Trocknen ein Paar Schuhe und Strümpfe; die geschlossene Tür mit dem schweren Holzriegel und daneben das kleine Fenster, innen bereift, dahinter nur Schwarz.</p></blockquote>
@@ -237,6 +274,7 @@
 <p>Was klar zu sehen sein muss: der Steintisch; über ihm an einem Haken eine Petroleumlampe; auf dem Boden unter dem Tisch eine nasse Plane; zwischen den beiden Männern ein kleines Fenster, durch das man den verschneiten Friedhof mit eisernen Grabkreuzen sieht.</p></blockquote>
 <p><strong>Bild S20 · Der Gschwendtner-Hof</strong></p>
 <blockquote><p>Angehängt: Bild 1 Sebastian Gschwendtner, Bild 2 Magdalena Gschwendtner.</p>
+<p>Ort: Bild 3 ist dein fertiges Bild S8 und zeigt denselben Hof mit der Tenne und dem Nachbarhaus.</p>
 <p>Ort und Blick: ein einzelner Bauernhof am Vormittag, vom Hofeingang aus auf Augenhöhe gesehen, direkt dahinter beginnt dunkler Fichtenwald. Links das Wohnhaus mit dem Stall unter einem Dach, mit Holzbalkon und Geranienkästen ohne Blumen. Rechts gegenüber eine große Tenne aus dunklen Brettern. Im Hof ein Brunnentrog mit Eiszapfen und ein Holzstoß. Ganz links am Bildrand die Ecke des Nachbarhauses mit einem kleinen Fenster.</p>
 <p>Menschen, genau drei: In der Mitte am Hackstock steht ein hagerer, sehniger Mann Anfang fünfzig in Hemdsärmeln und Weste, die Axt über dem Kopf erhoben, ruhig und genau. Er schaut auf das Holz, nicht in die Kamera (Sebastian Gschwendtner, Bild 1). Links in der Stalltür steht eine schmale junge Frau mit Kopftuch und dunkelblondem Zopf, eine Milchkanne in der Hand, und schaut herüber zur Kamera, weil jemand in den Hof kommt (Magdalena Gschwendtner, Bild 2). Ganz links schaut hinter dem kleinen Fenster des Nachbarhauses eine sehr alte Frau mit weißem Haarknoten heraus (Anna Hübl, ohne Vorlage). Vor dem Stall stemmt sich ein großer Hofhund bellend bis ans Ende seiner Kette.</p>
 <p>Was klar zu sehen sein muss: am Tor der Tenne ein auffallend heller, neuer Eichenbalken, der das Tor quer verriegelt, frisch gegen das alte dunkle Holz; am Zaunpfosten neben dem Mann eine grüne Lodenjoppe; die junge Frau in der Stalltür.</p></blockquote>
@@ -247,6 +285,7 @@
 <p>Was klar zu sehen sein muss: links und hinten ein hoher Heustock bis unter das Dach, davor ein Leiterwagen mit Deichsel und ein paar Rechen an der Wand; eine Holzleiter zum Heuboden hinauf; hinten links im Boden des Heubodens eine viereckige Luke, aus der Heu herunterhängt; vorn innen am Tor zwei schwere Eisenkrampen, in denen draußen der Riegelbalken liegt; eine Stelle im Heu, die aussieht, als wäre dort etwas hineingedrückt worden.</p></blockquote>
 <p><strong>Bild S21 · Der Postbus</strong></p>
 <blockquote><p>Angehängt: Bild 1 Magdalena Gschwendtner, Bild 2 Sebastian Gschwendtner.</p>
+<p>Ort: Bild 3 ist dein fertiges Bild S1, Bild 4 dein fertiges Bild S7b. Beide zeigen denselben Dorfplatz.</p>
 <p>Ort und Blick: der Dorfplatz vor der Kirche am Vormittag, auf Augenhöhe gesehen. Auf dem Platz liegt ein geschälter Fichtenstamm auf Holzböcken, daneben ein Feuer in einer Blechtonne. In der Mitte steht ein gelber Postbus von 1956 mit rundem Kühler und schwarzem Posthorn an der Seite, die Falttür offen, der Motor läuft. Alles still, obwohl der Motor läuft.</p>
 <p>Menschen, genau sechs, davon drei deutlich. Vor dem Bus steht eine schmale junge Frau mit Kopftuch und dunkelblondem Zopf, einen braunen Pappkoffer in der Hand, und schaut zu Boden (Magdalena Gschwendtner, Bild 1). Links neben ihr steht ein hagerer Mann Anfang fünfzig in einer Lodenjoppe mit Hirschhornknöpfen und hält sie am Oberarm, nicht grob, aber fest. Er schaut auf die offene Tür des Busses (Sebastian Gschwendtner, Bild 2). In der Tür des Busses steht der Fahrer in Postuniform mit Schirmmütze und wartet (ohne Vorlage). Klein im Hintergrund, am Rand des Platzes in der Tür eines Kramerladens, schauen zwei Frauen und ein Bub von zehn herüber (ohne Vorlage).</p>
 <p>Was klar zu sehen sein muss: der Koffer, die Hand des Vaters an ihrem Arm, die offene Tür des Busses.</p></blockquote>
@@ -258,17 +297,20 @@
 <h3 id="teil-5-das-ende">Teil 5 · Das Ende</h3>
 <p><strong>Bild S23 · Die Stube</strong></p>
 <blockquote><p>Angehängt: Bild 1 Sebastian Gschwendtner.</p>
+<p>Ort: Bild 2 »Atelierbild 1955« ist die zweite der beiden gerahmten Fotografien an der Wand, genau dieses Bild, klein und hinter Glas.</p>
 <p>Ort und Blick: die Stube eines Bauernhauses am Abend, niedrig, mit dunkler Holzdecke und kleinen Fenstern, im Licht einer Lampe über dem Tisch, von der Stubentür aus zum Ecktisch gesehen. Die Hände auf dem Tisch sind der Mittelpunkt des Bildes.</p>
 <p>Menschen, genau einer: Am Ecktisch unter dem Herrgottswinkel sitzt ein hagerer, sehniger Mann Anfang fünfzig in Weste und Hemdsärmeln, vollkommen aufrecht, beide Hände flach auf der Tischplatte. Er schaut auf seine Hände, nicht in die Kamera (Sebastian Gschwendtner, Bild 1).</p>
 <p>Was klar zu sehen sein muss: über ihm ein Kruzifix und daneben zwei kleine gerahmte Schwarzweißfotografien, ein Hochzeitspaar in Tracht und ein Mann, der hinter einer jungen Frau steht und die Hand auf ihrer Schulter hat; auf dem Tisch ein Krug Most, keine Gläser; an der Wand eine Pendeluhr und daneben ein grüner Kachelofen mit Ofenbank; neben der Stubentür an einem Haken eine grüne Lodenjoppe; hinten eine Tür zur Küche, einen Spalt offen, dahinter Dunkel.</p></blockquote>
 <p><strong>Bild S24 · Die Flucht an die Lahn</strong></p>
 <blockquote><p>Angehängt: Bild 1 Sebastian Gschwendtner.</p>
+<p>Ort: Bild 2 ist dein fertiges Bild S13 und zeigt denselben Hang.</p>
 <p>Ort und Blick: ein steiler, offener Lawinenhang ohne einen Baum am Nachmittag in voller Sonne, von oben am Rand der Rinne gesehen, dort, wo die letzten Bäume stehen. Der Schnee ist schwer, nass und glänzend, und überall auf dem Hang liegen kleine Schneeräder, die von oben heruntergerollt sind und lange Spuren hinter sich hergezogen haben. Oben säumen Felsen den Hang, unten verschwindet er in der Rinne. Gleißendes Licht, kein Schatten, sehr still.</p>
 <p>Menschen, genau einer: Gut dreißig Schritte draußen im Hang steht ein hagerer Mann Anfang fünfzig in grüner Lodenjoppe ohne Hut, bis über die Knie im nassen Schnee. Er hat sich halb umgedreht und schaut zurück zu den Bäumen und damit in die Kamera (Sebastian Gschwendtner, Bild 1).</p>
 <p>Was klar zu sehen sein muss: die tiefe, frische Spur, die von den letzten Bäumen vorn in den Hang hinaus bis zu ihm führt; die Schneeräder.</p></blockquote>
 <p><strong>Bild S25 · Die Abfahrt</strong></p>
 <blockquote><p>Angehängt: Bild 1 Maria Hallmaier.</p>
-<p>Ort und Blick: ein Dorfplatz im ersten Morgenlicht, alles mit Reif überzogen, der Himmel klar und blassblau, auf Augenhöhe über den Platz gesehen. Vor einem großen Gasthof mit einem verblassten gemalten heiligen Georg über der Tür steht ein schwarzer Mercedes von 1955, Reif auf der Motorhaube, aus dem Auspuff steigt eine weiße Wolke. Auf dem Platz liegt ein geschälter Fichtenstamm auf seinen Böcken, daneben raucht in einer Blechtonne ein fast ausgebranntes Feuer. Hinter dem Dorf der dunkle Bergwald, darüber der helle, kahle Lawinenhang, ganz oben der Gipfel mit dem Kreuz in der ersten Sonne.</p>
+<p>Ort: Bild 2 ist dein fertiges Bild S1 und zeigt denselben Platz mit Gasthof und Berg, Bild 3 »Ansichtskarte Gasthof Beim Lahnwirt« den Gasthof.</p>
+<p>Ort und Blick: ein Dorfplatz im ersten Morgenlicht, alles mit Reif überzogen, der Himmel klar und blassblau, auf Augenhöhe über den Platz gesehen. Vor einem großen Gasthof, unten weiß gekalkt und oben aus dunklem Holz mit zwei langen Balkonen, über der Tür ein verblasstes gemaltes Bild des heiligen Georg, steht ein schwarzer Mercedes von 1955, Reif auf der Motorhaube, aus dem Auspuff steigt eine weiße Wolke. Auf dem Platz liegt ein geschälter Fichtenstamm auf seinen Böcken, daneben raucht in einer Blechtonne ein fast ausgebranntes Feuer. Hinter dem Dorf der dunkle Bergwald, darüber der helle, kahle Lawinenhang, ganz oben der Gipfel mit dem Kreuz in der ersten Sonne.</p>
 <p>Menschen, genau eine: In der Tür des Gasthofs steht eine kräftige Frau Mitte vierzig mit dunklem Zopfkranz in dunkler Schürze, ein Päckchen in Butterbrotpapier in beiden Händen, und schaut zum Wagen (Maria Hallmaier, Bild 1). Sonst ist der Platz leer, niemand steht am Wagen.</p>
 <p>Was klar zu sehen sein muss: der Reif auf dem Wagen, das Päckchen in den Händen der Frau, der Berg über dem Dorf.</p></blockquote>
 <h3 id="bilder-für-die-handouts">Bilder für die Handouts</h3>

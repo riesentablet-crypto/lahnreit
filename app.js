@@ -51,11 +51,12 @@
   const RQ = Object.fromEntries(REQ_GRUPPEN.flatMap((g) => g.stuecke.map((r) => [r.id, Object.assign({ gruppe: g.titel }, r)])));
   const reqFuer = (art, code) => Object.values(RQ).filter((r) => (r[art] || []).includes(code));
   const reqId = (ort) => (/^R-/.test(ort || '') && RQ[ort.slice(2)] ? ort.slice(2) : null);
+  const VB = window.LAHNREIT_VERBINDUNGEN || {};
 
   // ---------- Zustand, nur in diesem Browser gespeichert ----------
   const KEY = 'lahnreit-spielleitung-v1';
   const leer = () => ({ wer: 'B', tat: {}, probe: {}, schloss: {}, ausnahme: {}, treffen: {}, uhr: 'abends', ort: 'S1',
-    gespraech: null, kontext: null, gefunden: {}, theme: 'dark', rail: 'szenen' });
+    gespraech: null, kontext: null, gefunden: {}, theme: 'dark', rail: 'szenen', geraet: null });
   let S = leer();
   try {
     const roh = localStorage.getItem(KEY);
@@ -67,6 +68,15 @@
     for (const k of Object.keys(v)) if (v[k] === true) v[k] = 'ue';
   }
   const sichern = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* egal */ } };
+  // Tablet oder Laptop: ohne Wahl richtet es sich danach, ob der Bildschirm Finger oder Maus erwartet
+  const FINGER = window.matchMedia ? window.matchMedia('(pointer: coarse)') : null;
+  const geraet = () => S.geraet || (FINGER && FINGER.matches ? 'tablet' : 'laptop');
+  const tablet = () => geraet() === 'tablet';
+  function setzeGeraet() {
+    document.documentElement.dataset.geraet = geraet();
+    const k = document.getElementById('geraet-knopf');
+    if (k) k.setAttribute('aria-pressed', String(tablet()));
+  }
 
   // Was nur für diesen Augenblick gilt
   const T = { frage: '', thema: null, alleThemen: false, medien: {}, plan: {}, oeffne: null, resetFrage: false, overlay: null, reqSl: {}, zeigen: null, treffenWahl: null };
@@ -471,7 +481,7 @@
     }
     E.marken.forEach((m, i) => {
       s += `<g class="marke${sel.marke === i ? ' aktiv' : ''}" data-marke="${i}" tabindex="0" role="button" aria-label="${esc(m.name)}">
-        <circle cx="${m.x}" cy="${m.y}" r="12"/><text x="${m.x}" y="${m.y + 5}">${i + 1}</text></g>`;
+        <circle cx="${m.x}" cy="${m.y}" r="${tablet() ? 17 : 12}"/><text x="${m.x}" y="${m.y + (tablet() ? 6 : 5)}">${i + 1}</text></g>`;
     });
     // Personen als Schildchen unten im Raum
     const proRaum = {};
@@ -505,7 +515,7 @@
         return `<button type="button" data-ebene="${i}" aria-pressed="${i === sel.ebene}">${esc(e.name)}${n ? ` <span class="zahl">${n}</span>` : ''}</button>`;
       }).join('')}</div>`;
     }
-    h += `<div class="plan-rahmen">${planSVG(code, sel.ebene, leute, sel)}</div>`;
+    h += `<div class="plan-rahmen">${planSVG(code, sel.ebene, leute, sel)}</div><div class="plan-seite">`;
     const r = E.raeume.find((x) => x.id === sel.raum);
     if (r) {
       const drin = leute.filter((l) => l.raum === r.id);
@@ -518,14 +528,21 @@
       h += `</div>`;
     } else if (sel.marke != null && E.marken[sel.marke]) {
       h += `<div class="raum-info">${markeHTML(E.marken[sel.marke], sel.marke, true)}</div>`;
-    } else {
+    }
+    // Legende der Nummern: was wo liegt, ohne erst zu tippen
+    if (E.marken.length) {
+      h += `<ol class="marken-liste">${E.marken.map((m, i) => `<li><button type="button" class="ml" data-marke="${i}" aria-pressed="${sel.marke === i}"><span class="nr">${i + 1}</span><span class="ml-name">${esc(m.name)}</span>${(m.zeigen || []).length ? '<span class="ml-zeigen" title="Hier liegt etwas zum Zeigen">▤</span>' : ''}</button></li>`).join('')}</ol>`;
+    }
+    if (!r && sel.marke == null) {
       h += `<div class="legende"><span class="lg lg-oeffentlich">öffentlich</span><span class="lg lg-gaeste">Gästezimmer</span><span class="lg lg-privat">privat</span><span class="lg lg-zu">abgesperrt</span><span class="lg-tipp">Raum oder Nummer antippen, Namen öffnen das Gespräch</span></div>`;
     }
-    return h + '</div>';
+    return h + '</div></div>';
   }
   function markeHTML(m, i, offen) {
     const teile = m.refs.map(loese).filter(Boolean);
     let h = `<details class="marke-info" ${offen ? 'open' : ''}><summary><span class="nr">${i + 1}</span>${esc(m.name)}</summary>`;
+    const zeigen = (m.zeigen || []).filter((id) => RQ[id]);
+    if (zeigen.length) h += `<div class="bezuege mi-zeigen">${zeigen.map((id) => reqChip(RQ[id])).join('')}</div>`;
     for (const t of teile) {
       if (t.link) h += `<p><a class="ref" href="${t.link}">${esc(t.titel)}</a></p>`;
       else h += `<div class="mi-teil"><div class="mi-titel">${esc(t.titel)}${t.tags ? tagsHTML(t.tags) : ''}</div>${t.html}</div>`;
@@ -599,10 +616,56 @@
     return h + '</nav>';
   }
 
+  // ---------- Verknüpfungen ----------
+  // Nummern im Grundriss, die eine Bedingung erfüllen: [{ ebene, i, m }]
+  function markenWo(code, pruef) {
+    const pl = PL[code];
+    if (!pl) return [];
+    const out = [];
+    pl.ebenen.forEach((E, ebene) => E.marken.forEach((m, i) => { if (pruef(m)) out.push({ ebene, i, m }); }));
+    return out;
+  }
+  // Knopf, der im Grundriss diese Nummer aufschlägt
+  function markeChip(code, key, x) {
+    const pl = PL[code];
+    const stock = pl.ebenen.length > 1 ? ` ${esc(pl.ebenen[x.ebene].name)}` : '';
+    return `<button type="button" class="vb-chip vb-marke" data-zur-marke="${esc(key)}|${code}|${x.ebene}|${x.i}" title="${esc(x.m.name)}">Grundriss${stock} <span class="nr">${x.i + 1}</span></button>`;
+  }
+  const reqChip = (r) => `<button type="button" class="vb-chip vb-req" data-req="${r.id}" title="Zum Zeigen">▤ ${esc(r.titel)}</button>`;
+  // Personen, die ein Text beim Namen nennt
+  const RUFNAMEN = { P1: ['Benedikta'], P2: ['Bürgermeister', 'Daxenberger', 'Daxer'], P3: ['Gschwendtner'], P4: ['Ilse', 'Lehrerin'],
+    P5: ['Jäger'], P6: ['Korbi'], P7: ['Kramerin'], P8: ['Lahnwirtin', 'Wirtin', 'Hallmaier'], P9: ['Leni'], P10: ['Martl'], P11: ['Maxi'],
+    P12: ['Mesner-Michl', 'Mesner'], P13: ['Moar-Kaspar', 'Kaspar'], P14: ['Pfarrer'], P15: ['Rauch'], P16: ['Rosl'],
+    P17: ['Schuster-Xare', 'Xare'], P18: ['Toni'], P19: ['Traudl'], P20: ['Wimmer-Sepp', 'Sepp'], P21: ['Wolff'], P22: ['Zenzi'] };
+  const RUF_RE = Object.fromEntries(Object.entries(RUFNAMEN).map(([pid, l]) => [pid, new RegExp(`(^|[^\\wäöüÄÖÜß-])(${l.join('|')})(s|e?n)?(?![\\wäöüÄÖÜß-])`)]));
+  const genannt = (text) => Object.keys(RUF_RE).filter((pid) => P[pid] && RUF_RE[pid].test(text));
+  const personChip = (pid) => `<button type="button" class="vb-chip vb-person" data-pid="${pid}"><span class="dot st-${stufe(pid, S.wer)}"></span>${esc(kurzName(P[pid]))}</button>`;
+  // Alles, was zu einem Eintrag »Was es hier gibt« gehört, als eine Zeile Knöpfe
+  function bezuege(code, g, k) {
+    const chips = [];
+    for (const x of markenWo(code, (m) => m.refs.includes(`${code}:${g.titel}`))) chips.push(markeChip(code, code, x));
+    for (const id of VB[`${code}:${g.titel}`] || []) if (RQ[id]) chips.push(reqChip(RQ[id]));
+    const text = `${g.titel} ${g.md}`;
+    for (const pid of genannt(text)) chips.push(personChip(pid));
+    const codes = [...new Set((text.match(/\b[SDB]\d{1,2}\b/g) || []))].filter((c) => c !== code && (SZ[c] || ORTE[c]));
+    for (const c of codes) chips.push(`<a class="vb-chip" href="#${c}" title="${esc(SZ[c] ? SZ[c].titel : ORTE[c].name)}">${c} ${esc(SZ[c] ? SZ[c].titel : ortKurz(c))}</a>`);
+    return chips.length ? `<div class="bezuege" data-zu="${code}-g${k}">${chips.join('')}</div>` : '';
+  }
+
   // ---------- Requisiten ----------
-  function reqZeile(liste) {
+  // Zum Zeigen: jedes Stück mit dem Satz, wo es liegt, und mit Knöpfen zu Grundriss und Eintrag
+  function reqZeile(liste, code, sid) {
     if (!liste.length) return '';
-    return `<div class="req-zeile"><span class="etikett">Zum Zeigen</span>${liste.map((r) => `<button type="button" class="req-chip" data-req="${r.id}">${esc(r.titel)}</button>`).join('')}</div>`;
+    const planCode = code && PL[code] ? code : (sid ? planFuer(sid) : null);
+    const key = planCode ? planCode + (sid || '') : '';
+    return `<section class="zum-zeigen"><div class="etikett">Zum Zeigen</div><ul class="zz-liste">${liste.map((r) => {
+      const wo = [];
+      if (planCode) for (const x of markenWo(planCode, (m) => (m.zeigen || []).includes(r.id))) wo.push(markeChip(planCode, key, x));
+      if (code && ORTE[code]) ORTE[code].gibt.forEach((g, k) => { if ((VB[`${code}:${g.titel}`] || []).includes(r.id)) wo.push(`<button type="button" class="vb-chip" data-zum-eintrag="${code}-g${k}">${esc(g.titel)}</button>`); });
+      for (const s2 of r.szenen || []) if (SZ[s2] && s2 !== sid) wo.push(`<a class="vb-chip" href="#${s2}" title="${esc(SZ[s2].titel)}">${s2}</a>`);
+      for (const c of r.orte || []) if (ORTE[c] && c !== code) wo.push(`<a class="vb-chip" href="#${c}" title="${esc(ORTE[c].name)}">${c} ${esc(ortKurz(c))}</a>`);
+      return `<li><button type="button" class="req-chip" data-req="${r.id}">${esc(r.titel)}</button><div class="zz-text"><span class="zz-wann">${inline(r.wann || '')}</span>${wo.length ? `<span class="zz-wo">${wo.join('')}</span>` : ''}</div></li>`;
+    }).join('')}</ul></section>`;
   }
   function reqInhalt(r) {
     let h = tipp(`r|${r.id}`, `<span class="etikett">Wann</span> ${inline(r.wann)}`, 'anfang');
@@ -695,7 +758,7 @@
 
     const bilder = s.bilder.map((b) => ({ code: b.code, text: b.text }));
     h += `<div class="buehne">${medienHTML(sid, bilder, planFuer(sid), sid)}<aside class="leute-box"><h2>${sid === 'S9' ? `Im Dorf · ${uhrName()}` : 'Wer ist da'}</h2>${leuteBox(s)}</aside></div>`;
-    h += reqZeile(reqFuer('szenen', sid));
+    h += reqZeile(reqFuer('szenen', sid), null, sid);
 
     if (e.vorlesen.length) {
       h += `<section class="block"><h2>Vorlesen</h2>${e.vorlesen.map((v, k) => zeile(`${sid}-v${k}`, esc(v.titel), saetze(flach(v.md).replace(/^Lies das, bevor du das Bild ansiehst: /, ''), 1), md(v.md), 'vorlesen')).join('')}</section>`;
@@ -775,7 +838,9 @@
     const szenen = SZENEN.filter((s) => new RegExp(`\\b${code}\\b`).test(s.meta['Wo'] || '')).map((s) => `<a class="ref" href="#${s.id}" title="${esc(s.titel)}">${s.id}</a>`);
     let h = `<article class="seite" data-view="${code}">
       <header class="kopf"><div><div class="ueber">${code} · ${o.berg ? 'Am Berg' : 'Im Dorf'}</div><h1>${esc(o.name)}</h1>
-      <div class="eck">${szenen.length ? `Szenen hier: ${szenen.join(' ')}` : ''}</div>${KO(code).kurz ? (o.beschreibung ? tipp(`o|${code}|kurz`, inline(KO(code).kurz), 'ort-kurz') : `<div class="ort-kurz">${inline(KO(code).kurz)}</div>`) : ''}</div></header>`;
+      <div class="eck">${szenen.length ? `Szenen hier: ${szenen.join(' ')}` : ''}</div>${KO(code).kurz ? `<div class="ort-kurz">${inline(KO(code).kurz)}</div>` : ''}</div></header>`;
+    // Wie es hier aussieht: das, was man den Spielern vorliest, ganz oben
+    if (o.beschreibung) h += `<section class="aussehen"><div class="etikett">So sieht es aus</div>${o.beschreibung.length > 520 ? klapp(md(o.beschreibung), 3) : md(o.beschreibung)}</section>`;
     const bilder = o.bild ? [{ code: o.bild, text: o.bild_md || `Siehe ${o.bild}.`, titel: o.name }] : [];
     const jetzt = leuteAmOrt(code), neben = nebenAmOrt(code);
     let box = '';
@@ -795,14 +860,13 @@
     const planCode = PL[code] ? code : null;
     if (planCode && !T.medien[code]) T.medien[code] = 'plan';
     h += `<div class="buehne">${medienHTML(code, bilder, planCode, null)}<aside class="leute-box"><h2>${o.berg ? 'Wer hier ist' : `Jetzt hier · ${uhrName()}`}</h2>${box}</aside></div>`;
-    h += reqZeile(reqFuer('orte', code));
+    h += reqZeile(reqFuer('orte', code), code, null);
     if (o.anfang) h += KO(code).anfang ? tipp(`o|${code}|anfang`, `<span class="etikett">So fängt es an</span> ${inline(KO(code).anfang)}`, 'anfang') : `<div class="anfang"><span class="etikett">So fängt es an</span> ${inline(o.anfang)}</div>`;
     if (o.gibt.length || o.gibt_md) {
-      h += `<section class="block"><h2>Was es hier gibt</h2>${o.gibt_md ? `<p>${inline(o.gibt_md)}</p>` : ''}${o.gibt.map((g, k) => { const kk = (KO(code).gibt || [])[k]; return zeile(`${code}-g${k}`, esc(g.titel), kk || saetze(flach(g.md), 1), md(g.md), kk ? 'mit-kurz' : ''); }).join('')}</section>`;
+      h += `<section class="block"><h2>Was es hier gibt</h2>${o.gibt_md ? `<p>${inline(o.gibt_md)}</p>` : ''}${o.gibt.map((g, k) => { const kk = (KO(code).gibt || [])[k]; return `<div class="gibt">${zeile(`${code}-g${k}`, esc(g.titel), kk || saetze(flach(g.md), 1), md(g.md), kk ? 'mit-kurz' : '')}${bezuege(code, g, k)}</div>`; }).join('')}</section>`;
     }
     const mehr = [];
     if (o.dorf) mehr.push(['Was die Gruppe hier bekommen kann', `<p>${inline(o.dorf.bekommt)}</p><p><span class="etikett">Führt zu</span> ${inline(o.dorf.fuehrt)}</p>`, KO(code).bekommt]);
-    if (o.beschreibung) mehr.push(['Wie es hier aussieht', md(o.beschreibung)]);
     for (const [k, v] of Object.entries(o.felder)) {
       if (k === 'Tabelle' || (k === 'Wer hier ist' && o.berg)) continue;
       mehr.push([k, md(v)]);
@@ -1269,6 +1333,22 @@
       const k = el.closest('.klapp'); k.classList.toggle('offen');
       el.textContent = k.classList.contains('offen') ? 'weniger' : 'mehr'; return;
     }
+    if ((el = t.closest('[data-zur-marke]'))) {
+      const [key, code, eb, i] = el.dataset.zurMarke.split('|');
+      const sel = T.plan[key] = T.plan[key] || { ebene: 0, raum: null, marke: null };
+      const E = PL[code].ebenen[Number(eb)];
+      const rm = E.raeume.find((x) => inRaum(x, E.marken[Number(i)]));
+      Object.assign(sel, { ebene: Number(eb), marke: Number(i), raum: rm ? rm.id : null });
+      T.medien[S.ort] = 'plan'; zeichneHaupt();
+      const box = $(`.planbox[data-plan="${key}"]`);
+      if (box) { const oben = $('.bar') ? $('.bar').offsetHeight : 0; window.scrollTo({ top: box.getBoundingClientRect().top + window.scrollY - oben - 12, behavior: 'smooth' }); }
+      return;
+    }
+    if ((el = t.closest('[data-zum-eintrag]'))) {
+      const d = document.getElementById(el.dataset.zumEintrag);
+      if (d) { d.open = true; d.scrollIntoView({ block: 'center', behavior: 'smooth' }); d.classList.add('blitz'); setTimeout(() => d.classList.remove('blitz'), 1600); }
+      return;
+    }
     if ((el = t.closest('[data-treffen-auf]'))) {
       T.treffenWahl = el.dataset.treffenAuf; zeichneHaupt();
       const sel = $('#treffen-wahl'); if (sel) sel.focus();
@@ -1340,7 +1420,7 @@
     if (t.closest('[data-ol-zu]') || t.id === 'overlay') { schliesseOverlay(); return; }
     if ((el = t.closest('[data-reset]'))) {
       if (!T.resetFrage) { T.resetFrage = true; zeichneOverlay(); return; }
-      S = Object.assign(leer(), { theme: S.theme, ort: S.ort, rail: S.rail, uhr: S.uhr });
+      S = Object.assign(leer(), { theme: S.theme, ort: S.ort, rail: S.rail, uhr: S.uhr, geraet: S.geraet });
       T.resetFrage = false; sichern(); zeichne(); return;
     }
     if (t.closest('[data-reset-nein]')) { T.resetFrage = false; zeichneOverlay(); return; }
@@ -1386,10 +1466,13 @@
   $('#personen-knopf').addEventListener('click', () => zeigeOverlay('personen'));
   $('#thema-knopf').addEventListener('click', () => { S.theme = S.theme === 'dark' ? 'light' : 'dark'; sichern(); document.documentElement.dataset.theme = S.theme; });
   $('#rail-knopf').addEventListener('click', () => document.body.classList.toggle('rail-offen'));
+  $('#geraet-knopf').addEventListener('click', () => { S.geraet = tablet() ? 'laptop' : 'tablet'; sichern(); setzeGeraet(); zeichne(); });
+  if (FINGER && FINGER.addEventListener) FINGER.addEventListener('change', () => { if (!S.geraet) { setzeGeraet(); zeichne(); } });
   $('.uhr').innerHTML = UHR.map((u) => `<button type="button" data-uhr="${u.k}" aria-pressed="${S.uhr === u.k}">${u.name}</button>`).join('');
 
   window.addEventListener('hashchange', route);
   document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement && T.zeigen) schliesseZeigen(); });
   document.documentElement.dataset.theme = S.theme;
+  setzeGeraet();
   route();
 })();

@@ -92,17 +92,17 @@ button:focus-visible, a:focus-visible, summary:focus-visible, input:focus-visibl
 .brand { display: flex; flex-direction: column; line-height: 1.05; font-family: var(--font-display); white-space: nowrap; }
 .brand b { font-weight: 600; font-size: 1.05rem; }
 .brand span { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
-.uhr { display: flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.uhr { display: flex; flex-shrink: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
 .uhr button {
   border: 0; background: transparent; padding: 0 0.75rem; min-height: 38px; cursor: pointer;
   font-family: var(--font-display); font-size: 0.92rem; color: var(--muted); border-right: 1px solid var(--line);
 }
 .uhr button:last-child { border-right: 0; }
 .uhr button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
-.bar-rechts { margin-left: auto; display: flex; gap: 0.5rem; align-items: center; }
-.suche { display: flex; gap: 0.35rem; }
+.bar-rechts { margin-left: auto; display: flex; gap: 0.5rem; align-items: center; min-width: 0; }
+.suche { display: flex; gap: 0.35rem; min-width: 0; }
 .suche input {
-  width: 15rem; min-height: 40px; padding: 0 0.75rem; border-radius: 8px; border: 1px solid var(--line);
+  width: 15rem; min-width: 5rem; min-height: 40px; padding: 0 0.75rem; border-radius: 8px; border: 1px solid var(--line);
   background: var(--bg); color: var(--ink); font: 0.95rem var(--font-display);
 }
 .nur-schmal { display: none; }
@@ -167,9 +167,10 @@ body.mit-gespraech .shell { grid-template-columns: 240px minmax(0, 1fr) 440px; }
 @container (min-width: 820px) {
   .planbox { display: grid; grid-template-columns: minmax(0, 1fr) 290px; gap: 0 1rem; align-items: start; }
   .planbox > .ebenen { grid-column: 1 / -1; }
-  .planbox > .raum-info, .planbox > .legende { margin-top: 0; }
-  .planbox > .legende { flex-direction: column; align-items: flex-start; }
-  .planbox > .legende .lg-tipp { margin-left: 0; margin-top: 0.4rem; }
+  .plan-seite > :first-child { margin-top: 0; }
+  .plan-seite .legende { flex-direction: column; align-items: flex-start; }
+  .plan-seite .legende .lg-tipp { margin-left: 0; margin-top: 0.4rem; }
+  .marken-liste { grid-template-columns: minmax(0, 1fr); }
 }
 .medien-tabs, .ebenen { display: flex; gap: 0.3rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
 .medien-tabs button, .ebenen button {
@@ -455,6 +456,8 @@ details.ak-mehr > summary { cursor: pointer; font: 500 0.85rem var(--font-displa
 @media (max-width: 1100px) {
   .buehne { grid-template-columns: 1fr; }
   .suche input { width: 10rem; }
+  /* Platz für die Tageszeiten: Suchen geht hier mit der Eingabetaste */
+  #suche-knopf { display: none; }
 }
 @media (max-width: 860px) {
   :root { --bar-h: auto; }
@@ -462,6 +465,7 @@ details.ak-mehr > summary { cursor: pointer; font: 500 0.85rem var(--font-displa
   .bar-rechts { margin-left: 0; width: 100%; }
   .suche { flex: 1; }
   .suche input { width: 100%; flex: 1; }
+  #suche-knopf { display: inline-flex; }
   .uhr { order: 3; width: 100%; }
   .uhr button { flex: 1; padding: 0 0.3rem; font-size: 0.85rem; }
   .nur-schmal { display: inline-flex; }
@@ -591,3 +595,76 @@ img.kopf.klein { width: 26px; height: 26px; display: inline-block; vertical-alig
 .treffen-wahl .leise { justify-self: start; }
 .ok-p.treffen { font-style: italic; }
 .pz-wo .treffen-marke { font-size: 0.68rem; }
+
+/* ---------- Verknüpfungen an Orten ---------- */
+.aussehen { background: var(--read); border-left: 4px solid var(--read-line); padding: 0.6rem 1rem 0.5rem; border-radius: 0 10px 10px 0; margin: 0 0 1.1rem; max-width: 75ch; }
+.aussehen .etikett { display: block; margin-bottom: 0.15rem; }
+.aussehen .md p, .aussehen p { margin: 0 0 0.45rem; }
+.aussehen .klapp .kk { margin-top: 0.1rem; }
+.plan-seite { min-width: 0; }
+.marken-liste { list-style: none; margin: 0.6rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 0.25rem 0.6rem; }
+.marken-liste .ml {
+  display: flex; align-items: center; gap: 0.5rem; width: 100%; min-height: 36px; padding: 0.2rem 0.4rem; border: 1px solid transparent;
+  border-radius: 8px; background: transparent; cursor: pointer; text-align: left; font: 0.92rem/1.25 var(--font-display);
+}
+.marken-liste .ml:hover { border-color: var(--line); background: var(--bg); }
+.marken-liste .ml[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.marken-liste .ml[aria-pressed="true"] .nr { background: var(--accent); color: var(--accent-ink); }
+.ml-name { flex: 1; min-width: 0; }
+.ml-zeigen { color: var(--accent); flex-shrink: 0; }
+.vb-chip {
+  display: inline-flex; align-items: center; gap: 0.35rem; border: 1px solid var(--line); background: var(--bg); color: var(--ink);
+  border-radius: 99px; padding: 0.1rem 0.65rem; min-height: 30px; cursor: pointer; font: 0.84rem var(--font-display); text-decoration: none; white-space: nowrap;
+}
+.vb-chip:hover { border-color: var(--accent); }
+.vb-chip .nr { width: 1.25rem; height: 1.25rem; font-size: 0.7rem; }
+.vb-req { color: var(--accent); }
+.vb-person .dot { width: 9px; height: 9px; }
+.bezuege { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.gibt { margin-bottom: 0.45rem; }
+.gibt > details.zeile { margin-bottom: 0; }
+.gibt > .bezuege { padding: 0.3rem 0 0 2.1rem; }
+.mi-zeigen { margin: 0.35rem 0 0.2rem 2rem; }
+.zum-zeigen { margin: 0 0 1.25rem; max-width: 900px; }
+.zum-zeigen > .etikett { display: block; margin-bottom: 0.35rem; }
+.zz-liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.45rem; }
+.zz-liste li { display: grid; grid-template-columns: minmax(10rem, max-content) minmax(0, 1fr); gap: 0.25rem 0.8rem; align-items: start; padding: 0.45rem 0.6rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.zz-liste .req-chip { justify-self: start; text-align: left; }
+.zz-text { display: grid; gap: 0.3rem; min-width: 0; padding-top: 0.2rem; }
+.zz-wann { font-size: 0.93rem; }
+.zz-wo { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+@media (max-width: 860px) {
+  .zz-liste li { grid-template-columns: minmax(0, 1fr); }
+  .gibt > .bezuege { padding-left: 1rem; }
+}
+
+/* ---------- Tablet: größere Tippflächen ---------- */
+#geraet-knopf[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+:root[data-geraet="tablet"] button, :root[data-geraet="tablet"] a, :root[data-geraet="tablet"] summary, :root[data-geraet="tablet"] .plan g[role="button"] { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+:root[data-geraet="tablet"] .leise, :root[data-geraet="tablet"] .knopf, :root[data-geraet="tablet"] .suche input { min-height: 46px; }
+:root[data-geraet="tablet"] .knopf.klein, :root[data-geraet="tablet"] .leise.klein { min-height: 42px; padding: 0.3rem 0.8rem; font-size: 0.9rem; }
+:root[data-geraet="tablet"] .uhr button { min-height: 46px; padding: 0 0.85rem; }
+:root[data-geraet="tablet"] .rail-tabs button { min-height: 44px; }
+:root[data-geraet="tablet"] .rail .item { padding: 0.62rem 0.5rem; font-size: 0.95rem; }
+:root[data-geraet="tablet"] .rail h3 .info { width: 36px; height: 36px; }
+:root[data-geraet="tablet"] .medien-tabs button, :root[data-geraet="tablet"] .ebenen button { min-height: 44px; padding: 0.3rem 1rem; font-size: 0.95rem; }
+:root[data-geraet="tablet"] details.zeile > summary { min-height: 52px; padding: 0.6rem 0.9rem; }
+:root[data-geraet="tablet"] details.marke-info > summary { min-height: 44px; }
+:root[data-geraet="tablet"] .kk { min-height: 40px; padding: 0.3rem 0.6rem 0.3rem 0; font-size: 0.95rem; }
+:root[data-geraet="tablet"] .chip { min-height: 42px; padding: 0.3rem 0.9rem; font-size: 0.93rem; }
+:root[data-geraet="tablet"] .vb-chip { min-height: 42px; padding: 0.25rem 0.85rem; font-size: 0.92rem; gap: 0.4rem; }
+:root[data-geraet="tablet"] .bezuege, :root[data-geraet="tablet"] .zz-wo { gap: 0.45rem; }
+:root[data-geraet="tablet"] .req-chip { min-height: 44px; padding: 0.3rem 0.95rem; }
+:root[data-geraet="tablet"] .marken-liste .ml { min-height: 48px; font-size: 1rem; }
+:root[data-geraet="tablet"] .marken-liste .nr { width: 1.8rem; height: 1.8rem; font-size: 0.88rem; }
+:root[data-geraet="tablet"] .pknopf { min-height: 50px; }
+:root[data-geraet="tablet"] .pzeile { min-height: 52px; }
+:root[data-geraet="tablet"] .knopfreihe button { min-height: 46px; }
+:root[data-geraet="tablet"] .zu-knopf { width: 46px; height: 46px; }
+:root[data-geraet="tablet"] .zu-knopf.klein { width: 40px; height: 40px; min-height: 40px; }
+:root[data-geraet="tablet"] .fund .haken { width: 42px; height: 42px; top: 0.3rem; }
+:root[data-geraet="tablet"] .fund details.zeile > summary { padding-right: 3.8rem; }
+:root[data-geraet="tablet"] #g-frage, :root[data-geraet="tablet"] .treffen-wahl select { min-height: 48px; }
+:root[data-geraet="tablet"] .req-fassung button { min-height: 42px; }
+:root[data-geraet="tablet"] .plan .marke text { font-size: 18px; }
+:root[data-geraet="tablet"] .kontext .kx-text { font-size: 1.02rem; }

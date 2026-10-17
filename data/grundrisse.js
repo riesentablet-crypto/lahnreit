@@ -4,7 +4,7 @@
 // raum:   id, name, x, y, w, h, art (oeffentlich | gaeste | privat | aussen), zu, zuText, notiz
 // moebel: x, y, w, h, name (nur Zeichnung)
 // tuer:   x, y, l, dir ('h' liegt in einer waagrechten Wand, 'v' in einer senkrechten), name, zu
-// marke:  x, y, name, refs: ['S3:Das Notizbuch', 'D2:Der Dachreiter', 'S7:M6']
+// marke:  x, y, name, refs: ['S3:Das Notizbuch', 'D2:Der Dachreiter', 'S7:M6'], zeigen: Requisiten, die hier liegen (ids aus requisiten.js)
 // regeln: [Person oder null, Stichwort im Text »Wo ist wer« oder »Was er hier tut«, Raum]
 window.LAHNREIT_PLAENE = {
   D5: {
@@ -56,8 +56,8 @@ window.LAHNREIT_PLAENE = {
         durchreichen: [{ x: 470, y: 150, l: 50, dir: 'v' }, { x: 880, y: 250, l: 50, dir: 'h' }],
         fenster: [[80, 560, 200, 'h'], [280, 560, 380, 'h'], [700, 560, 900, 'h'], [40, 300, 400, 'v']],
         marken: [
-          { x: 56, y: 96, name: 'Sterbebilder hinter dem Kreuz', refs: ['S4:Die Sterbebilder'] },
-          { x: 430, y: 100, name: 'Fremdenbuch an der Theke', refs: ['S3:Das Fremdenbuch'] },
+          { x: 56, y: 96, name: 'Sterbebilder hinter dem Kreuz', refs: ['S4:Die Sterbebilder'], zeigen: ['sterbebild'] },
+          { x: 430, y: 100, name: 'Fremdenbuch an der Theke', refs: ['S3:Das Fremdenbuch'], zeigen: ['fremdenbuch'] },
           { x: 430, y: 220, name: 'Schlüsselbrett: Zimmer 1 hängt an der Holzbirne mit der Eins', refs: ['S8:Lindners Zimmer'] },
           { x: 600, y: 436, name: 'Schuhe putzen', refs: ['S3:Die Bergschuhe'] },
         ],
@@ -100,9 +100,9 @@ window.LAHNREIT_PLAENE = {
         fenster: [[60, 560, 240, 'h'], [280, 560, 450, 'h'], [680, 560, 940, 'h'], [490, 40, 620, 'h'], [660, 40, 940, 'h']],
         marken: [
           { x: 152, y: 200, name: 'Bett, unberührt', refs: ['S3:Das unberührte Bett'] },
-          { x: 179, y: 101, name: 'Nachtkästchen: das Notizbuch', refs: ['S3:Das Notizbuch', 'S3:Der Durchdruck'] },
+          { x: 179, y: 101, name: 'Nachtkästchen: das Notizbuch', refs: ['S3:Das Notizbuch', 'S3:Der Durchdruck'], zeigen: ['notizbuch'] },
           { x: 436, y: 88, name: 'Aschenbecher auf dem Tisch', refs: ['S3:Der Virginia-Stumpen'] },
-          { x: 436, y: 164, name: 'Koffer auf dem Schemel', refs: ['S3:Die Skizzen', 'S3:Der Brief der Gesellschaft', 'S3:Lenis Briefe'] },
+          { x: 436, y: 164, name: 'Koffer auf dem Schemel', refs: ['S3:Die Skizzen', 'S3:Der Brief der Gesellschaft', 'S3:Lenis Briefe'], zeigen: ['gesellschaft', 'briefe'] },
           { x: 313, y: 173, name: 'Papierkorb', refs: ['S3:Der Filmkarton'] },
           { x: 310, y: 88, name: 'Waschtisch', refs: ['S3:Keine Medizin'] },
           { x: 380, y: 300, name: 'Schuhe vor den Türen', refs: ['S3:Die Bergschuhe'] },
@@ -155,10 +155,10 @@ window.LAHNREIT_PLAENE = {
         ],
         fenster: [[80, 510, 220, 'h'], [330, 510, 520, 'h'], [40, 120, 260, 'v']],
         marken: [
-          { x: 534, y: 88, name: 'Kanzleiofen', refs: ['S8:Die Brandreste'] },
-          { x: 258, y: 112, name: 'Abgesperrte Schreibtischlade', refs: ['S8:Der Vorvertrag'] },
-          { x: 538, y: 386, name: 'Zigarrenkiste mit den Gesprächszetteln', refs: ['S8:Traudls Gesprächszettel'] },
-          { x: 158, y: 348, name: 'Das einzige Telefon im Dorf', refs: ['S22'] },
+          { x: 534, y: 88, name: 'Kanzleiofen', refs: ['S8:Die Brandreste'], zeigen: ['notizbuch'] },
+          { x: 258, y: 112, name: 'Abgesperrte Schreibtischlade', refs: ['S8:Der Vorvertrag'], zeigen: ['vorvertrag'] },
+          { x: 538, y: 386, name: 'Zigarrenkiste mit den Gesprächszetteln', refs: ['S8:Traudls Gesprächszettel'], zeigen: ['zettel'] },
+          { x: 158, y: 348, name: 'Das einzige Telefon im Dorf', refs: ['S22'], zeigen: ['zettel2'] },
           { x: 938, y: 78, name: 'Ottilie am Herd', refs: ['S8:Ottilie fragen statt schleichen'] },
         ],
         aussen: [{ x: 300, y: 560, text: 'Dorfplatz' }],
@@ -224,7 +224,7 @@ window.LAHNREIT_PLAENE = {
         ],
         fenster: [[60, 620, 240, 'h'], [280, 620, 420, 'h'], [640, 510, 570, 'v']],
         marken: [
-          { x: 198, y: 530, name: 'Zwei Atelierbilder über dem Tisch', refs: ['S20:Die zwei Atelierbilder'] },
+          { x: 198, y: 530, name: 'Zwei Atelierbilder über dem Tisch', refs: ['S20:Die zwei Atelierbilder'], zeigen: ['atelier'] },
           { x: 400, y: 466, name: 'Bergschuhe unter der Bank', refs: ['S20:Die Bergschuhe (zu Schluss D)'] },
           { x: 640, y: 436, name: 'Joppe am Zaunpfosten', refs: ['S20:Der fremde Knopf'] },
           { x: 658, y: 300, name: 'Neuer Riegelbalken', refs: ['S20:Der neue Riegelbalken (zu Schluss E)'] },
@@ -244,7 +244,7 @@ window.LAHNREIT_PLAENE = {
         geist: [[40, 70, 400, 250, 'Stall'], [260, 490, 180, 130, 'über der Küche'], [640, 70, 320, 330, 'Tenne'], [640, 470, 320, 150, 'Hübl-Haus']],
         moebel: [{ x: 60, y: 510, w: 70, h: 100, name: 'Bett' }],
         tueren: [{ x: 150, y: 490, l: 36, dir: 'h' }],
-        marken: [{ x: 95, y: 528, name: 'Unter dem Kopfkissen: die Ansichtskarte', refs: ['S8:Die Ansichtskarte'] }],
+        marken: [{ x: 95, y: 528, name: 'Unter dem Kopfkissen: die Ansichtskarte', refs: ['S8:Die Ansichtskarte'], zeigen: ['ak-kudamm'] }],
         aussen: [],
       },
     ],
@@ -303,7 +303,7 @@ window.LAHNREIT_PLAENE = {
           { x: 152, y: 275, name: 'Leiter zum Dachboden', refs: ['D2:Der Dachreiter'] },
           { x: 862, y: 236, name: 'Dachreiter mit Sterbeglöckerl, darüber', refs: ['D2:Der Dachreiter'] },
           { x: 600, y: 116, name: 'Votivtafel von 1929', refs: ['D2:Die Votivtafel von 1929'] },
-          { x: 962, y: 70, name: 'Leichenhaus', refs: ['S19'] },
+          { x: 962, y: 70, name: 'Leichenhaus', refs: ['S19'], zeigen: ['leichenschau'] },
         ],
         aussen: [{ x: 530, y: 592, text: 'Friedhof' }, { x: 530, y: 74, text: 'Frauenseite' }, { x: 530, y: 560, text: 'Männerseite' }, { x: 16, y: 315, text: 'Platz', senkrecht: true }],
       },

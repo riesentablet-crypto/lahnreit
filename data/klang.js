@@ -4,8 +4,10 @@
 // Knopf: Kennung oder [Kennung, eigener Name, Pegel]. Die Knöpfe liegen bei -20 LUFS, Ferne und Dämpfung sind eingerechnet.
 // uhr: welche Lage bei welcher Tageszeit zuerst angeboten wird (Nummer in lagen).
 (function () {
-  const DORF_TAG = [['L-bach', -14], ['L-wind', -12], ['L-tauwasser', -16]];
-  const DORF_NACHT = [['L-bach', -12], ['L-wind', -10]];
+  // Der Bach liegt unten am Sägewerk (D12); im übrigen Dorf hört man ihn nur fern und dumpf (Daniel, 18.10.)
+  const BACH_FERN = ['L-bach', -26, { tief: 1500 }];
+  const DORF_TAG = [BACH_FERN, ['L-wind', -12], ['L-tauwasser', -16]];
+  const DORF_NACHT = [BACH_FERN, ['L-wind', -10]];
   const FEUER = ['L-feuer', -10];
   const STUBE = [['L-ofen', -12]];
   const FERN = { tief: 900 };
@@ -57,7 +59,7 @@
       S7: {
         lagen: [
           { name: 'In der Kirche', s: [['L-kirche', -6], ['L-mauern', -20, FERN]] },
-          { name: 'Auf dem Platz', s: [['L-leute', -8], ['L-roesser', -12], ['L-bach', -18]] },
+          { name: 'Auf dem Platz', s: [['L-leute', -8], ['L-roesser', -12], BACH_FERN] },
         ],
         knoepfe: ['C-orgel', 'C-motorrad', 'C-hufe', 'C-blasmusik', ['C-boeller', 'Ein Böller'], ['C-stute', 'Die Stute steigt'], ['C-laeuten', 'Die Glocken läuten']],
       },
@@ -136,7 +138,7 @@
         knoepfe: [],
       },
       S20: {
-        lagen: [{ name: 'Am Hof', s: [['L-brunnen', -12], ['L-stall', -18, FERN], ['L-axt', -8], ['L-bach', -18]] }],
+        lagen: [{ name: 'Am Hof', s: [['L-brunnen', -12], ['L-stall', -18, FERN], ['L-axt', -8], BACH_FERN] }],
         knoepfe: ['C-hund-kette', ['C-scheibe', 'Anna Hübl klopft']],
       },
       S21: {
@@ -158,7 +160,7 @@
       },
       S24: {
         lagen: [
-          { name: 'Am Hof', s: [['L-bach', -16], ['L-wind', -14], ['L-stall', -20, FERN]] },
+          { name: 'Am Hof', s: [BACH_FERN, ['L-wind', -14], ['L-stall', -20, FERN]] },
           { name: 'Im Hang', s: [['L-fichten', -12], ['L-waten', -8], ['L-keuchen', -12], ['L-schmelz', -18]] },
         ],
         knoepfe: [['C-scheibe', 'Anna Hübl klopft'], 'C-hang', 'C-lahn', ['C-lahn-wald', 'Die Lahn, vom Wald aus'], ['C-sterbe-hand', 'Am Abend: das Glöckerl']],
@@ -173,7 +175,7 @@
         lagen: [
           { name: 'Am Tag', s: [...DORF_TAG, ['L-kinder', -20], ['L-feuer', -14]] },
           { name: 'Am Abend', s: [...DORF_NACHT, FEUER] },
-          { name: 'Georgimorgen', s: [['L-leute', -8], ['L-roesser', -12], ['L-bach', -18]] },
+          { name: 'Georgimorgen', s: [['L-leute', -8], ['L-roesser', -12], BACH_FERN] },
         ],
         uhr: { abends: 1, nachts: 1, georgi: 2 },
         knoepfe: ['C-laeuten', 'C-viertel', 'C-hund-fern', 'C-bus-ab'],
@@ -234,7 +236,7 @@
       },
       D10: {
         lagen: [
-          { name: 'Am Tag', s: [['L-brunnen', -12], ['L-stall', -18, FERN], ['L-axt', -8], ['L-bach', -18]] },
+          { name: 'Am Tag', s: [['L-brunnen', -12], ['L-stall', -18, FERN], ['L-axt', -8], BACH_FERN] },
           { name: 'Die Stube', s: [['L-uhr', -6], ['L-ofen', -14]] },
           { name: 'In der Nacht', s: [...DORF_NACHT, ['L-brunnen', -18]] },
         ],

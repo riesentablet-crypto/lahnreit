@@ -11,6 +11,14 @@
   const FEUER = ['L-feuer', -10];
   const STUBE = [['L-ofen', -12]];
   const FERN = { tief: 900 };
+  // Zufallsklänge: nur, was ohnehin um einen herum passiert. Nichts, was im Buch ein Zeichen ist
+  // (Klopfen, Glöckerl, Uhrschläge, der Hang, die Raben am Sattel), das spielt die Spielleitung von Hand.
+  const TREPPE = ['C-treppe', -10, 50, 140];
+  const TREPPE_SELTEN = ['C-treppe', -12, 80, 200];
+  const HUND_FERN = ['C-hund-fern', -6, 45, 130];
+  const KUH_FERN = ['C-kuh', -12, 60, 160];
+  const RABE = ['C-rabe', -10, 60, 160];
+  const WALD = [['C-ast', -8, 30, 90], ['C-haeher', -10, 50, 140]];
 
   window.LAHNREIT_KLANG = {
     // Grundpegel einzelner Knöpfe, damit Fernes leiser bleibt als Nahes
@@ -28,13 +36,13 @@
         lagen: [
           { name: 'Auf der Autobahn', s: [['L-autobahn', -4]] },
           { name: 'Die Bergstraße', s: [['L-schotter', -4]] },
-          { name: 'Dorfplatz um sechs', s: [...DORF_NACHT, ['L-feuer', -8]] },
+          { name: 'Dorfplatz um sechs', s: [...DORF_NACHT, ['L-feuer', -8]], zufall: [HUND_FERN] },
         ],
         knoepfe: ['C-kreuzer', ['C-radio', 'Das Autoradio'], 'C-autotuer', ['C-laeuten', 'Abendläuten'], ['C-hund-fern', 'Ein Hund bellt']],
       },
       S2: {
         lagen: [
-          { name: 'Im Nebenzimmer', s: [['L-gaststube', -16, { tief: 700 }], ['L-ofen', -10]] },
+          { name: 'Im Nebenzimmer', s: [['L-gaststube', -16, { tief: 700 }], ['L-ofen', -10]], zufall: [TREPPE] },
           { name: 'Draußen am Platz', s: [...DORF_NACHT, ['L-feuer', -10]] },
         ],
         knoepfe: ['C-treppe'],
@@ -44,11 +52,11 @@
         knoepfe: ['C-treppe', 'C-schluessel', 'C-balkontuer'],
       },
       S4: {
-        lagen: [{ name: 'Die volle Stube', s: [['L-gaststube', -6], ['L-ofen', -14]], zufall: [['C-karten', -8, 10, 30], ['C-kruege', -8, 12, 35], ['C-lachen', -8, 15, 45]] }],
+        lagen: [{ name: 'Die volle Stube', s: [['L-gaststube', -6], ['L-ofen', -14]], zufall: [['C-karten', -8, 10, 30], ['C-kruege', -8, 12, 35], ['C-lachen', -8, 15, 45], TREPPE_SELTEN] }],
         knoepfe: [['C-stock-dielen', 'Der Moar-Kaspar klopft'], 'C-lachen', 'C-karten', ['C-zug-draussen', 'Gegen elf: Glocken draußen']],
       },
       S5: {
-        lagen: [{ name: 'Der Platz in der Nacht', s: [...DORF_NACHT, ['L-feuer', -9]] }],
+        lagen: [{ name: 'Der Platz in der Nacht', s: [...DORF_NACHT, ['L-feuer', -9]], zufall: [HUND_FERN] }],
         knoepfe: [['C-zug', 'Der Zug mit den Glocken'], 'C-goassl', 'C-fenster'],
       },
       // ---------- Teil 2 ----------
@@ -74,7 +82,7 @@
         lagen: [
           { name: 'Georginachmittag', s: [...DORF_TAG, ['L-feuer', -12], ['L-gaststube', -22, { tief: 600 }]], zufall: [['C-ziehharmonika', -12, 50, 120]] },
           { name: 'Werktag', s: [...DORF_TAG, ['L-saege', -22, { tief: 1500 }], ['L-kinder', -24]], zufall: [['C-kannen', -14, 40, 100]] },
-          { name: 'Am Abend', s: [...DORF_NACHT, ['L-feuer', -10]] },
+          { name: 'Am Abend', s: [...DORF_NACHT, ['L-feuer', -10]], zufall: [HUND_FERN] },
         ],
         uhr: { abends: 2, nachts: 2 },
         knoepfe: [['C-vier', 'Es schlägt vier'], 'C-kuh', ['C-laeuten', 'Um sechs: Rosenkranz'], 'C-viertel', 'C-ziehharmonika'],
@@ -83,16 +91,16 @@
       S10: {
         lagen: [
           { name: 'In der Gaststube', s: [['L-ofen', -10]], zufall: [['C-zischen', -8, 15, 45]] },
-          { name: 'Draußen am Platz', s: [...DORF_NACHT, ['L-feuer', -8]] },
+          { name: 'Draußen am Platz', s: [...DORF_NACHT, ['L-feuer', -8]], zufall: [['C-hahn', -8, 40, 120]] },
         ],
         knoepfe: ['C-zischen', ['C-hahn', 'Ein Hahn kräht']],
       },
       S11: {
-        lagen: [{ name: 'Im Bergwald', s: [['L-fichten', -8], ['L-pulver', -12], ['L-atem', -18]] }],
+        lagen: [{ name: 'Im Bergwald', s: [['L-fichten', -8], ['L-pulver', -12], ['L-atem', -18]], zufall: WALD }],
         knoepfe: [['C-hasso', 'Ein Hund hechelt'], 'C-ast', 'C-haeher'],
       },
       S12: {
-        lagen: [{ name: 'Am Marterl', s: [['L-bacheis', -8], ['L-fichten', -12]] }],
+        lagen: [{ name: 'Am Marterl', s: [['L-bacheis', -8], ['L-fichten', -12]], zufall: [['C-haeher', -10, 50, 140]] }],
         knoepfe: ['C-haeher', 'C-ast', 'C-ausrutschen'],
       },
       S13: {
@@ -101,7 +109,7 @@
       },
       S14: {
         lagen: [
-          { name: 'Auf der Hochalm', s: [['L-sattel', -8], ['L-tauwasser', -14]] },
+          { name: 'Auf der Hochalm', s: [['L-sattel', -8], ['L-tauwasser', -14]], zufall: [RABE] },
           { name: 'In der Kaser', s: [['L-ritzen', -10], ['L-sattel', -20, { tief: 700 }]] },
         ],
         knoepfe: ['C-riegel', 'C-rabe'],
@@ -128,7 +136,7 @@
       S18: {
         lagen: [
           { name: 'Stille nach dem Sturm', s: [['L-wind', -26, { tief: 1200 }]] },
-          { name: 'Der Abstieg', s: [['L-schlitten', -8], ['L-pulver', -14], ['L-fichten', -18]] },
+          { name: 'Der Abstieg', s: [['L-schlitten', -8], ['L-pulver', -14], ['L-fichten', -18]], zufall: [['C-ast', -10, 40, 110]] },
         ],
         knoepfe: ['C-tuer-schnee', 'C-schaufeln', ['C-kette-unten', 'Gegen acht: die Kette'], ['C-sterbe-hand', 'Das Sterbeglöckerl']],
       },
@@ -138,7 +146,7 @@
         knoepfe: [],
       },
       S20: {
-        lagen: [{ name: 'Am Hof', s: [['L-brunnen', -12], ['L-stall', -18, FERN], ['L-axt', -8], BACH_FERN] }],
+        lagen: [{ name: 'Am Hof', s: [['L-brunnen', -12], ['L-stall', -18, FERN], ['L-axt', -8], BACH_FERN], zufall: [KUH_FERN] }],
         knoepfe: ['C-hund-kette', ['C-scheibe', 'Anna Hübl klopft']],
       },
       S21: {
@@ -166,7 +174,7 @@
         knoepfe: [['C-scheibe', 'Anna Hübl klopft'], 'C-hang', 'C-lahn', ['C-lahn-wald', 'Die Lahn, vom Wald aus'], ['C-sterbe-hand', 'Am Abend: das Glöckerl']],
       },
       S25: {
-        lagen: [{ name: 'Der Platz am Morgen', s: [...DORF_NACHT] }],
+        lagen: [{ name: 'Der Platz am Morgen', s: [...DORF_NACHT], zufall: [['C-hahn', -10, 60, 160]] }],
         knoepfe: ['C-motor', ['C-sieben', 'Es schlägt sieben'], 'C-autotuer', ['C-wagendach', 'Zwei Schläge aufs Dach'], 'C-bus-ab'],
       },
 
@@ -174,7 +182,7 @@
       D1: {
         lagen: [
           { name: 'Am Tag', s: [...DORF_TAG, ['L-kinder', -20], ['L-feuer', -14]] },
-          { name: 'Am Abend', s: [...DORF_NACHT, FEUER] },
+          { name: 'Am Abend', s: [...DORF_NACHT, FEUER], zufall: [HUND_FERN] },
           { name: 'Georgimorgen', s: [['L-leute', -8], ['L-roesser', -12], BACH_FERN] },
         ],
         uhr: { abends: 1, nachts: 1, georgi: 2 },
@@ -191,7 +199,7 @@
       },
       D3: {
         lagen: [
-          { name: 'Am Friedhof', s: [...DORF_TAG] },
+          { name: 'Am Friedhof', s: [...DORF_TAG], zufall: [['C-rabe', -12, 60, 160]] },
           { name: 'Im Leichenhaus', s: [['L-tropfen', -8], ['L-lampe', -14]] },
           { name: 'Am Abend', s: [...DORF_NACHT] },
         ],
@@ -204,8 +212,8 @@
       },
       D5: {
         lagen: [
-          { name: 'Die Stube ruhig', s: [['L-ofen', -10]] },
-          { name: 'Die Stube voll', s: [['L-gaststube', -6], ['L-ofen', -14]], zufall: [['C-karten', -8, 10, 30], ['C-kruege', -8, 12, 35], ['C-lachen', -8, 15, 45]] },
+          { name: 'Die Stube ruhig', s: [['L-ofen', -10]], zufall: [TREPPE] },
+          { name: 'Die Stube voll', s: [['L-gaststube', -6], ['L-ofen', -14]], zufall: [['C-karten', -8, 10, 30], ['C-kruege', -8, 12, 35], ['C-lachen', -8, 15, 45], TREPPE_SELTEN] },
         ],
         uhr: { abends: 1 },
         knoepfe: ['C-treppe', 'C-schluessel', 'C-lachen', 'C-karten'],
@@ -226,17 +234,17 @@
         knoepfe: [],
       },
       D8: {
-        lagen: [{ name: 'Vor dem Laden', s: [...DORF_TAG] }],
+        lagen: [{ name: 'Vor dem Laden', s: [...DORF_TAG], zufall: [['C-ladenglocke', -10, 45, 130]] }],
         uhr: {},
         knoepfe: ['C-ladenglocke'],
       },
       D9: {
-        lagen: [{ name: 'In der Werkstatt', s: [['L-ofen', -12]] }],
+        lagen: [{ name: 'In der Werkstatt', s: [['L-ofen', -12]], zufall: [['C-schuster', -8, 20, 60]] }],
         knoepfe: ['C-schuster'],
       },
       D10: {
         lagen: [
-          { name: 'Am Tag', s: [['L-brunnen', -12], ['L-stall', -18, FERN], ['L-axt', -8], BACH_FERN] },
+          { name: 'Am Tag', s: [['L-brunnen', -12], ['L-stall', -18, FERN], ['L-axt', -8], BACH_FERN], zufall: [KUH_FERN] },
           { name: 'Die Stube', s: [['L-uhr', -6], ['L-ofen', -14]] },
           { name: 'In der Nacht', s: [...DORF_NACHT, ['L-brunnen', -18]] },
         ],
@@ -246,7 +254,7 @@
       D11: {
         lagen: [
           { name: 'Die Stube', s: [['L-uhr', -8], ['L-ofen', -12]] },
-          { name: 'Im Stall', s: [['L-stall', -8]] },
+          { name: 'Im Stall', s: [['L-stall', -8]], zufall: [['C-kuh', -6, 25, 70]] },
         ],
         knoepfe: ['C-stock', 'C-kuh'],
       },
@@ -260,7 +268,7 @@
         knoepfe: [],
       },
       D13: {
-        lagen: [{ name: 'Am Häusl', s: [...DORF_NACHT] }],
+        lagen: [{ name: 'Am Häusl', s: [...DORF_NACHT], zufall: [HUND_FERN] }],
         knoepfe: ['C-hund-fern'],
       },
       D14: {
@@ -275,17 +283,17 @@
       // ---------- Orte am Berg ----------
       B1: {
         lagen: [
-          { name: 'Im Bergwald', s: [['L-fichten', -8]] },
-          { name: 'Gehen', s: [['L-fichten', -10], ['L-pulver', -12], ['L-atem', -18]] },
+          { name: 'Im Bergwald', s: [['L-fichten', -8]], zufall: WALD },
+          { name: 'Gehen', s: [['L-fichten', -10], ['L-pulver', -12], ['L-atem', -18]], zufall: WALD },
         ],
         knoepfe: ['C-ast', 'C-haeher', 'C-hasso'],
       },
       B2: {
-        lagen: [{ name: 'Am Marterl', s: [['L-bacheis', -8], ['L-fichten', -12]] }],
+        lagen: [{ name: 'Am Marterl', s: [['L-bacheis', -8], ['L-fichten', -12]], zufall: [['C-haeher', -10, 50, 140]] }],
         knoepfe: ['C-haeher', 'C-ast', 'C-ausrutschen'],
       },
       B3: {
-        lagen: [{ name: 'Auf der Alm', s: [['L-sattel', -10], ['L-tauwasser', -14]] }],
+        lagen: [{ name: 'Auf der Alm', s: [['L-sattel', -10], ['L-tauwasser', -14]], zufall: [RABE] }],
         knoepfe: ['C-rabe'],
       },
       B4: {

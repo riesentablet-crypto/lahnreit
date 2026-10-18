@@ -5,6 +5,7 @@
 // moebel: x, y, w, h, name (nur Zeichnung)
 // tuer:   x, y, l, dir ('h' liegt in einer waagrechten Wand, 'v' in einer senkrechten), name, zu
 // marke:  x, y, name, refs: ['S3:Das Notizbuch', 'D2:Der Dachreiter', 'S7:M6'], zeigen: Requisiten, die hier liegen (ids aus requisiten.js)
+//         Eine Szene zeigt nur Nummern mit eigenen refs. Am Ort ersetzt ein Ortseintrag (D5:…) die Funde der Szenen; die stehen dann als Sprung daneben.
 // regeln: [Person oder null, Stichwort im Text »Wo ist wer« oder »Was er hier tut«, Raum]
 window.LAHNREIT_PLAENE = {
   D5: {
@@ -56,10 +57,10 @@ window.LAHNREIT_PLAENE = {
         durchreichen: [{ x: 470, y: 150, l: 50, dir: 'v' }, { x: 880, y: 250, l: 50, dir: 'h' }],
         fenster: [[80, 560, 200, 'h'], [280, 560, 380, 'h'], [700, 560, 900, 'h'], [40, 300, 400, 'v']],
         marken: [
-          { x: 56, y: 96, name: 'Sterbebilder hinter dem Kreuz', refs: ['S4:Die Sterbebilder'], zeigen: ['sterbebild'] },
-          { x: 430, y: 100, name: 'Fremdenbuch an der Theke', refs: ['S3:Das Fremdenbuch'], zeigen: ['fremdenbuch'] },
+          { x: 56, y: 96, name: 'Sterbebilder hinter dem Kreuz', refs: ['D5:Die Sterbebilder', 'S4:Die Sterbebilder'], zeigen: ['sterbebild'] },
+          { x: 430, y: 100, name: 'Fremdenbuch an der Theke', refs: ['D5:Das Fremdenbuch', 'S3:Das Fremdenbuch'], zeigen: ['fremdenbuch'] },
           { x: 430, y: 220, name: 'Schlüsselbrett: Zimmer 1 hängt an der Holzbirne mit der Eins', refs: ['S8:Lindners Zimmer'] },
-          { x: 600, y: 436, name: 'Schuhe putzen', refs: ['S3:Die Bergschuhe'] },
+          { x: 600, y: 436, name: 'Schuhe putzen', refs: ['D5:Der Hausknecht', 'S3:Die Bergschuhe'] },
         ],
         aussen: [{ x: 500, y: 620, text: 'Dorfplatz' }],
       },
@@ -155,10 +156,10 @@ window.LAHNREIT_PLAENE = {
         ],
         fenster: [[80, 510, 220, 'h'], [330, 510, 520, 'h'], [40, 120, 260, 'v']],
         marken: [
-          { x: 534, y: 88, name: 'Kanzleiofen', refs: ['S8:Die Brandreste'], zeigen: ['notizbuch'] },
-          { x: 258, y: 112, name: 'Abgesperrte Schreibtischlade', refs: ['S8:Der Vorvertrag'], zeigen: ['vorvertrag'] },
-          { x: 538, y: 386, name: 'Zigarrenkiste mit den Gesprächszetteln', refs: ['S8:Traudls Gesprächszettel'], zeigen: ['zettel'] },
-          { x: 158, y: 348, name: 'Das einzige Telefon im Dorf', refs: ['S22'], zeigen: ['zettel2'] },
+          { x: 534, y: 88, name: 'Kanzleiofen', refs: ['D6:Die Brandreste im Ofen', 'S8:Die Brandreste'], zeigen: ['notizbuch'] },
+          { x: 258, y: 112, name: 'Abgesperrte Schreibtischlade', refs: ['D6:Der Vorvertrag', 'S8:Der Vorvertrag'], zeigen: ['vorvertrag'] },
+          { x: 538, y: 386, name: 'Zigarrenkiste mit den Gesprächszetteln', refs: ['D6:Traudls Gesprächszettel', 'S8:Traudls Gesprächszettel'], zeigen: ['zettel'] },
+          { x: 158, y: 348, name: 'Das einzige Telefon im Dorf', refs: ['D6:Das Telefon', 'S22'], zeigen: ['zettel2'] },
           { x: 938, y: 78, name: 'Ottilie am Herd', refs: ['S8:Ottilie fragen statt schleichen'] },
         ],
         aussen: [{ x: 300, y: 560, text: 'Dorfplatz' }],

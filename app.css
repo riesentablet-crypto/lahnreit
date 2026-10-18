@@ -137,6 +137,9 @@ body.mit-gespraech .shell { grid-template-columns: 240px minmax(0, 1fr) 440px; }
 .zahl { font: 600 0.75rem var(--font-display); min-width: 1.4rem; text-align: center; border-radius: 99px; padding: 0 0.35rem; background: var(--surface-2); color: var(--ink); }
 .rail .item[aria-current="true"] .zahl { background: var(--accent-ink); color: var(--accent); }
 .plan-zeichen { color: var(--muted); font-size: 0.85em; }
+/* Die Orte des offenen Dorfs, eingerückt unter S9 */
+.rail .item.unter { margin-left: 1rem; padding-top: 0.26rem; padding-bottom: 0.26rem; font-size: 0.86rem; grid-template-columns: 2.3rem 1fr auto; }
+.rail .item.wieder .nm { font-style: italic; }
 
 /* ---------- Seite ---------- */
 .seite { max-width: 1180px; }
@@ -157,21 +160,49 @@ body.mit-gespraech .shell { grid-template-columns: 240px minmax(0, 1fr) 440px; }
 .kk { border: 0; background: none; padding: 0.15rem 0; color: var(--accent); cursor: pointer; font: 500 0.85rem var(--font-display); }
 .klapp.passt .kk { display: none; }
 
-/* Bühne: Bild oder Grundriss, daneben wer da ist */
+/* Bühne: links Vorlesen und Bild, rechts wer da ist */
 .buehne { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(250px, 1fr); gap: 1rem; margin-bottom: 1.25rem; align-items: start; }
+.buehne.ohne-bild { grid-template-columns: minmax(0, 1fr); max-width: 520px; }
+.buehne-haupt { min-width: 0; display: grid; gap: 0.8rem; align-content: start; }
 .medien { min-width: 0; }
-.medien.leer { display: none; }
-.buehne:has(.medien.leer) { grid-template-columns: 1fr; }
-.buehne:has(.medien.mit-plan) { grid-template-columns: 1fr; }
-.medien.mit-plan { container-type: inline-size; }
+.vorlesen-box { background: var(--read); border-left: 4px solid var(--read-line); padding: 0.6rem 1rem 0.35rem; border-radius: 0 10px 10px 0; }
+.vorlesen-box > .etikett { display: block; margin-bottom: 0.25rem; }
+.vorlesen-box .md > p { margin: 0 0 0.5rem; color: var(--muted); font-size: 0.9rem; font-style: italic; }
+.vorlesen-box .md blockquote { margin: 0 0 0.55rem; padding: 0; background: none; border: 0; border-radius: 0; font-style: normal; color: var(--ink); }
+.vorlesen-box .md blockquote p { margin: 0 0 0.55rem; }
+.vorlesen-box details.zeile { margin: 0.35rem 0 0.4rem; background: var(--surface); }
+
+/* Was es hier gibt: ein Abschnitt, in dem jedes Ding nur einmal steht */
+.block.was-hier { max-width: none; container-type: inline-size; }
+.was-hier > :not(.planbox) { max-width: 900px; }
+.teil-kopf { font: 600 0.76rem var(--font-display); text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin: 1rem 0 0.4rem; }
+.was-hier > h2 + .teil-kopf { margin-top: 0.3rem; }
 @container (min-width: 820px) {
-  .planbox { display: grid; grid-template-columns: minmax(0, 1fr) 290px; gap: 0 1rem; align-items: start; }
+  .planbox { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(300px, 1fr); gap: 0 1rem; align-items: start; }
   .planbox > .ebenen { grid-column: 1 / -1; }
   .plan-seite > :first-child { margin-top: 0; }
   .plan-seite .legende { flex-direction: column; align-items: flex-start; }
   .plan-seite .legende .lg-tipp { margin-left: 0; margin-top: 0.4rem; }
-  .marken-liste { grid-template-columns: minmax(0, 1fr); }
 }
+.stellen { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.55rem; margin-top: 0.2rem; }
+.st-gruppe, .stelle, .st-teile { min-width: 0; }
+.st-gruppe + .st-gruppe { border-top: 1px solid var(--line); padding-top: 0.5rem; }
+.st-raum { font: 600 0.76rem var(--font-display); text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); display: flex; gap: 0.4rem; align-items: center; margin-bottom: 0.2rem; }
+.st-raum .art { text-transform: none; letter-spacing: 0; }
+.stelle { border-radius: 10px; padding: 0.1rem 0.2rem 0.05rem; margin: 0 -0.2rem 0.2rem; }
+.stelle.aktiv { background: var(--accent-soft); box-shadow: inset 0 0 0 2px var(--accent); }
+.st-kopf { display: flex; align-items: center; gap: 0.5rem; width: 100%; min-height: 34px; border: 0; background: none; padding: 0.15rem 0; cursor: pointer; text-align: left; font: 500 0.95rem/1.25 var(--font-display); color: var(--ink); }
+.st-kopf:hover .nr, .stelle.aktiv .nr { background: var(--accent); color: var(--accent-ink); }
+.st-zeigen { display: flex; flex-wrap: wrap; gap: 0.3rem; margin: 0 0 0.3rem 2rem; }
+.st-teile { margin-left: 2rem; }
+.st-teile details.zeile { margin-bottom: 0.3rem; }
+.st-teile .bezuege { margin: 0 0 0.35rem; }
+.st-teile details.zeile > summary { min-height: 38px; padding: 0.3rem 0.6rem; }
+.st-teile details.zeile > .inhalt { padding-left: 1.2rem; }
+.st-teile details.zeile > summary { flex-wrap: wrap; row-gap: 0.1rem; }
+.st-teile details.zeile > summary .zt { max-width: none; white-space: normal; flex: 1 1 0; min-width: 8rem; }
+.st-teile details.zeile > summary .vorschau { flex-basis: 100%; padding-left: 1.45rem; white-space: normal; }
+.plan-leer { margin: 0.3rem 0 0.6rem; }
 .medien-tabs, .ebenen { display: flex; gap: 0.3rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
 .medien-tabs button, .ebenen button {
   border: 1px solid var(--line); background: var(--surface); border-radius: 99px; padding: 0.2rem 0.85rem; min-height: 34px;
@@ -242,6 +273,9 @@ details.hinweis > summary .zt::after { content: ''; }
 
 .fund { position: relative; }
 .fund details.zeile > summary { padding-right: 3.2rem; }
+.fund-probe { margin-top: 0.6rem; padding: 0.45rem 0.7rem 0.5rem; border-left: 3px solid var(--st1); background: var(--surface-2); border-radius: 0 8px 8px 0; }
+.fund-probe > .etikett { display: block; margin-bottom: 0.25rem; }
+.fund-zeigen { display: flex; flex-wrap: wrap; gap: 0.3rem; margin: -0.1rem 0 0.5rem 1.6rem; }
 .fund .haken {
   position: absolute; right: 0.45rem; top: 0.45rem; width: 34px; height: 34px; border-radius: 50%;
   border: 1px solid var(--line); background: var(--bg); cursor: pointer; color: transparent; font-weight: 700;
@@ -602,16 +636,6 @@ img.kopf.klein { width: 26px; height: 26px; display: inline-block; vertical-alig
 .aussehen .md p, .aussehen p { margin: 0 0 0.45rem; }
 .aussehen .klapp .kk { margin-top: 0.1rem; }
 .plan-seite { min-width: 0; }
-.marken-liste { list-style: none; margin: 0.6rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 0.25rem 0.6rem; }
-.marken-liste .ml {
-  display: flex; align-items: center; gap: 0.5rem; width: 100%; min-height: 36px; padding: 0.2rem 0.4rem; border: 1px solid transparent;
-  border-radius: 8px; background: transparent; cursor: pointer; text-align: left; font: 0.92rem/1.25 var(--font-display);
-}
-.marken-liste .ml:hover { border-color: var(--line); background: var(--bg); }
-.marken-liste .ml[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
-.marken-liste .ml[aria-pressed="true"] .nr { background: var(--accent); color: var(--accent-ink); }
-.ml-name { flex: 1; min-width: 0; }
-.ml-zeigen { color: var(--accent); flex-shrink: 0; }
 .vb-chip {
   display: inline-flex; align-items: center; gap: 0.35rem; border: 1px solid var(--line); background: var(--bg); color: var(--ink);
   border-radius: 99px; padding: 0.1rem 0.65rem; min-height: 30px; cursor: pointer; font: 0.84rem var(--font-display); text-decoration: none; white-space: nowrap;
@@ -624,13 +648,9 @@ img.kopf.klein { width: 26px; height: 26px; display: inline-block; vertical-alig
 .gibt { margin-bottom: 0.45rem; }
 .gibt > details.zeile { margin-bottom: 0; }
 .gibt > .bezuege { padding: 0.3rem 0 0 2.1rem; }
-.mi-zeigen { margin: 0.35rem 0 0.2rem 2rem; }
-.zum-zeigen { margin: 0 0 1.25rem; max-width: 900px; }
-.zum-zeigen > .etikett { display: block; margin-bottom: 0.35rem; }
 .zz-liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.45rem; }
-.zz-liste li { display: grid; grid-template-columns: minmax(10rem, max-content) minmax(0, 1fr); gap: 0.25rem 0.8rem; align-items: start; padding: 0.45rem 0.6rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.zz-liste li { display: grid; grid-template-columns: minmax(10rem, max-content) minmax(0, 1fr); gap: 0.25rem 0.8rem; align-items: center; padding: 0.35rem 0.6rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
 .zz-liste .req-chip { justify-self: start; text-align: left; }
-.zz-text { display: grid; gap: 0.3rem; min-width: 0; padding-top: 0.2rem; }
 .zz-wann { font-size: 0.93rem; }
 .zz-wo { display: flex; flex-wrap: wrap; gap: 0.3rem; }
 @media (max-width: 860px) {
@@ -707,8 +727,6 @@ img.kopf.klein { width: 26px; height: 26px; display: inline-block; vertical-alig
 :root[data-geraet="tablet"] .vb-chip { min-height: 42px; padding: 0.25rem 0.85rem; font-size: 0.92rem; gap: 0.4rem; }
 :root[data-geraet="tablet"] .bezuege, :root[data-geraet="tablet"] .zz-wo { gap: 0.45rem; }
 :root[data-geraet="tablet"] .req-chip { min-height: 44px; padding: 0.3rem 0.95rem; }
-:root[data-geraet="tablet"] .marken-liste .ml { min-height: 48px; font-size: 1rem; }
-:root[data-geraet="tablet"] .marken-liste .nr { width: 1.8rem; height: 1.8rem; font-size: 0.88rem; }
 :root[data-geraet="tablet"] .pknopf { min-height: 50px; }
 :root[data-geraet="tablet"] .pzeile { min-height: 52px; }
 :root[data-geraet="tablet"] .knopfreihe button { min-height: 46px; }
@@ -725,3 +743,6 @@ img.kopf.klein { width: 26px; height: 26px; display: inline-block; vertical-alig
 :root[data-geraet="tablet"] .kl-aus { min-height: 42px; min-width: 46px; }
 :root[data-geraet="tablet"] .kl-laut input { height: 36px; }
 :root[data-geraet="tablet"] .fr-wirbt { min-height: 46px; font-size: 0.98rem; }
+:root[data-geraet="tablet"] .st-kopf { min-height: 46px; font-size: 1rem; }
+:root[data-geraet="tablet"] .st-kopf .nr { width: 1.8rem; height: 1.8rem; font-size: 0.88rem; }
+:root[data-geraet="tablet"] .rail .item.unter { padding-top: 0.5rem; padding-bottom: 0.5rem; }

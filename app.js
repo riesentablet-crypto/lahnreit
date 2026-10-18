@@ -52,6 +52,7 @@
   const reqFuer = (art, code) => Object.values(RQ).filter((r) => (r[art] || []).includes(code));
   const reqId = (ort) => (/^R-/.test(ort || '') && RQ[ort.slice(2)] ? ort.slice(2) : null);
   const VB = window.LAHNREIT_VERBINDUNGEN || {};
+  const PAF = window.LAHNREIT_PROBEN_AM_FUND || {};
   // Brandls geheimes Ziel: die drei Frauen (data/frauen.js)
   const FR = window.LAHNREIT_FRAUEN || null;
   const FRAU = FR ? Object.fromEntries(FR.frauen.map((f) => [f.pid, f])) : {};
@@ -85,7 +86,7 @@
   }
 
   // Was nur für diesen Augenblick gilt
-  const T = { frage: '', thema: null, alleThemen: false, medien: {}, plan: {}, oeffne: null, resetFrage: false, overlay: null, reqSl: {}, zeigen: null, treffenWahl: null };
+  const T = { frage: '', thema: null, alleThemen: false, medien: {}, plan: {}, s9: 2, oeffne: null, resetFrage: false, overlay: null, reqSl: {}, zeigen: null, treffenWahl: null };
 
   // ---------- Hilfen ----------
   const $ = (sel, el = document) => el.querySelector(sel);
@@ -413,28 +414,9 @@
     }
     return out;
   }
-  // Verweise der Marken auflösen: Fund, Haus, Gespräch, Ortseintrag oder Szene
-  function loese(ref) {
-    const [ort, titel] = ref.split(':');
-    if (SZ[ort]) {
-      const e = SZ[ort].ebenen;
-      if (!titel) return { titel: `${ort} · ${SZ[ort].titel}`, link: '#' + ort };
-      const f = e.funde.find((x) => x.titel === titel) || e.haeuser.flatMap((hs) => hs.funde).find((x) => x.titel === titel);
-      if (f) return { titel: f.titel, html: fundText(f.md), tags: f };
-      const haus = e.haeuser.find((hs) => hs.titel === titel);
-      if (haus) return { titel: `${haus.titel} am Georgivormittag (${ort})`, html: Object.entries(haus.info).map(([k, v]) => `<p><b>${esc(k)}.</b> ${inline(v)}</p>`).join('') };
-      const g = e.gespraeche.find((x) => x.code === titel);
-      if (g) return { titel: `${g.code} · ${g.titel}`, html: md(g.md) };
-    }
-    if (ORTE[ort]) {
-      const g = ORTE[ort].gibt.find((x) => x.titel === titel);
-      if (g) return { titel: g.titel, html: md(g.md) };
-    }
-    return null;
-  }
   const inRaum = (r, m) => m.x >= r.x && m.x <= r.x + r.w && m.y >= r.y && m.y <= r.y + r.h;
 
-  function planSVG(code, eb, leute, sel) {
+  function planSVG(code, eb, leute, sel, vis) {
     const pl = PL[code];
     const E = pl.ebenen[eb];
     const H = E.h;
@@ -496,10 +478,10 @@
       if (a.senkrecht) s += `<text class="aussen-text" transform="translate(${a.x},${a.y}) rotate(-90)">${esc(a.text)}</text>`;
       else s += `<text class="aussen-text" x="${a.x}" y="${a.y}">${esc(a.text)}</text>`;
     }
-    E.marken.forEach((m, i) => {
-      s += `<g class="marke${sel.marke === i ? ' aktiv' : ''}" data-marke="${i}" tabindex="0" role="button" aria-label="${esc(m.name)}">
-        <circle cx="${m.x}" cy="${m.y}" r="${tablet() ? 17 : 12}"/><text x="${m.x}" y="${m.y + (tablet() ? 6 : 5)}">${i + 1}</text></g>`;
-    });
+    for (const { m, i, nr } of vis) {
+      s += `<g class="marke${sel.marke === i ? ' aktiv' : ''}" data-marke="${i}" tabindex="0" role="button" aria-label="${nr}: ${esc(m.name)}">
+        <circle cx="${m.x}" cy="${m.y}" r="${tablet() ? 17 : 12}"/><text x="${m.x}" y="${m.y + (tablet() ? 6 : 5)}">${nr}</text></g>`;
+    }
     // Personen als Schildchen unten im Raum
     const proRaum = {};
     for (const l of leute) (proRaum[l.raum] = proRaum[l.raum] || []).push(l);
@@ -519,52 +501,100 @@
     return s + '</svg>';
   }
   const ARTNAME = { oeffentlich: 'öffentlich', gaeste: 'Gästezimmer', privat: 'privat', aussen: 'draußen' };
-  function planHTML(code, sid) {
+  // Nummern im Grundriss: in einer Szene nur, was in ihr zu finden ist, am Ort alles. Gezählt wird je Stockwerk.
+  const gehoertZu = (ref, sid) => !sid || ref === sid || ref.startsWith(sid + ':');
+  function sichtbareMarken(code, sid, eb) {
+    const vis = PL[code].ebenen[eb].marken.map((m, i) => ({ m, i })).filter(({ m }) => m.refs.some((r) => gehoertZu(r, sid)));
+    vis.forEach((x, k) => { x.nr = k + 1; });
+    return vis;
+  }
+  // Eine Szene schlägt das Stockwerk auf, auf dem es in ihr etwas zu finden gibt, sonst das mit den meisten Leuten
+  function startEbene(code, sid, leute) {
+    let beste = 0, wert = -1;
+    PL[code].ebenen.forEach((E, i) => {
+      const w = sichtbareMarken(code, sid, i).length * 100 + leute.filter((l) => E.raeume.some((r) => r.id === l.raum)).length;
+      if (w > wert) { wert = w; beste = i; }
+    });
+    return beste;
+  }
+  function planHTML(code, sid, mitLeuten = true) {
     const pl = PL[code];
     const key = code + (sid || '');
-    const sel = T.plan[key] = T.plan[key] || { ebene: 0, raum: null, marke: null };
-    const leute = planLeute(code, sid);
+    const leute = mitLeuten ? planLeute(code, sid) : [];
+    if (!T.plan[key]) T.plan[key] = { ebene: sid ? startEbene(code, sid, leute) : 0, raum: null, marke: null };
+    const sel = T.plan[key];
     const E = pl.ebenen[sel.ebene];
-    let h = `<div class="planbox" data-plan="${key}" data-code="${code}" data-sid="${sid || ''}">`;
+    const vis = sichtbareMarken(code, sid, sel.ebene);
+    let h = `<div class="planbox" data-plan="${key}" data-code="${code}" data-sid="${sid || ''}"${mitLeuten ? '' : ' data-ohne-leute="1"'}>`;
     if (pl.ebenen.length > 1) {
       h += `<div class="ebenen" role="group" aria-label="Stockwerk">${pl.ebenen.map((e, i) => {
-        const n = leute.filter((l) => e.raeume.some((r) => r.id === l.raum)).length;
-        return `<button type="button" data-ebene="${i}" aria-pressed="${i === sel.ebene}">${esc(e.name)}${n ? ` <span class="zahl">${n}</span>` : ''}</button>`;
+        const n = sichtbareMarken(code, sid, i).length;
+        return `<button type="button" data-ebene="${i}" aria-pressed="${i === sel.ebene}">${esc(e.name)}${n ? ` <span class="zahl" title="${n} Nummern">${n}</span>` : ''}</button>`;
       }).join('')}</div>`;
     }
-    h += `<div class="plan-rahmen">${planSVG(code, sel.ebene, leute, sel)}</div><div class="plan-seite">`;
+    h += `<div class="plan-rahmen">${planSVG(code, sel.ebene, leute, sel, vis)}</div><div class="plan-seite">`;
     const r = E.raeume.find((x) => x.id === sel.raum);
     if (r) {
       const drin = leute.filter((l) => l.raum === r.id);
-      const marken = E.marken.map((m, i) => ({ m, i })).filter(({ m }) => inRaum(r, m));
-      h += `<div class="raum-info"><div class="ri-kopf"><b>${esc(r.name)}</b><span class="art a-${r.art}">${ARTNAME[r.art]}</span>${r.zu ? '<span class="art a-zu">abgesperrt</span>' : ''}<button type="button" class="leise klein" data-raum="">schließen</button></div>`;
+      h += `<div class="raum-info"><div class="ri-kopf"><b>${esc(r.name)}</b><span class="art a-${r.art}">${ARTNAME[r.art]}</span>${r.zu ? '<span class="art a-zu">abgesperrt</span>' : ''}<button type="button" class="leise klein" data-raum="" aria-label="Raum schließen">×</button></div>`;
       if (r.zuText) h += `<p class="ri-zu">${inline(r.zuText)}</p>`;
       if (r.notiz) h += `<p>${inline(r.notiz)}</p>`;
       if (drin.length) h += `<div class="ri-leute">${drin.map((l) => (l.pid ? personKnopf(l.pid) : `<span class="neben-name">${esc(l.name)}</span>`)).join('')}</div>`;
-      for (const { m, i } of marken) h += markeHTML(m, i, sel.marke === i);
       h += `</div>`;
-    } else if (sel.marke != null && E.marken[sel.marke]) {
-      h += `<div class="raum-info">${markeHTML(E.marken[sel.marke], sel.marke, true)}</div>`;
     }
-    // Legende der Nummern: was wo liegt, ohne erst zu tippen
-    if (E.marken.length) {
-      h += `<ol class="marken-liste">${E.marken.map((m, i) => `<li><button type="button" class="ml" data-marke="${i}" aria-pressed="${sel.marke === i}"><span class="nr">${i + 1}</span><span class="ml-name">${esc(m.name)}</span>${(m.zeigen || []).length ? '<span class="ml-zeigen" title="Hier liegt etwas zum Zeigen">▤</span>' : ''}</button></li>`).join('')}</ol>`;
-    }
-    if (!r && sel.marke == null) {
-      h += `<div class="legende"><span class="lg lg-oeffentlich">öffentlich</span><span class="lg lg-gaeste">Gästezimmer</span><span class="lg lg-privat">privat</span><span class="lg lg-zu">abgesperrt</span><span class="lg-tipp">Raum oder Nummer antippen, Namen öffnen das Gespräch</span></div>`;
-    }
+    const sonst = pl.ebenen.some((x, i) => i !== sel.ebene && sichtbareMarken(code, sid, i).length);
+    h += vis.length ? stellenListe(code, sid, E, vis, sel)
+      : `<p class="klein-text plan-leer">${sonst ? 'Auf diesem Stockwerk gibt es nichts mit Nummer.' : sid ? 'In dieser Szene ist hier nichts versteckt. Der Grundriss zeigt, wer wo ist.' : 'Hier ist nichts verzeichnet.'}</p>`;
+    h += `<div class="legende"><span class="lg lg-oeffentlich">öffentlich</span><span class="lg lg-gaeste">Gästezimmer</span><span class="lg lg-privat">privat</span><span class="lg lg-zu">abgesperrt</span><span class="lg-tipp">Raum antippen zeigt, was dort ist. Namen öffnen das Gespräch.</span></div>`;
     return h + '</div></div>';
   }
-  function markeHTML(m, i, offen) {
-    const teile = m.refs.map(loese).filter(Boolean);
-    let h = `<details class="marke-info" ${offen ? 'open' : ''}><summary><span class="nr">${i + 1}</span>${esc(m.name)}</summary>`;
-    const zeigen = (m.zeigen || []).filter((id) => RQ[id]);
-    if (zeigen.length) h += `<div class="bezuege mi-zeigen">${zeigen.map((id) => reqChip(RQ[id])).join('')}</div>`;
-    for (const t of teile) {
-      if (t.link) h += `<p><a class="ref" href="${t.link}">${esc(t.titel)}</a></p>`;
-      else h += `<div class="mi-teil"><div class="mi-titel">${esc(t.titel)}${t.tags ? tagsHTML(t.tags) : ''}</div>${t.html}</div>`;
+  // Was im Grundriss eine Nummer hat, nach Räumen geordnet. Das ist die einzige Liste dafür auf der Seite.
+  function stellenListe(code, sid, E, vis, sel) {
+    const gruppen = [];
+    for (const x of vis) {
+      const r = E.raeume.find((rr) => inRaum(rr, x.m));
+      let g = gruppen.find((y) => y.r === r);
+      if (!g) gruppen.push((g = { r, xs: [] }));
+      g.xs.push(x);
     }
-    return h + '</details>';
+    return `<div class="stellen">${gruppen.map((g) => `<div class="st-gruppe"><div class="st-raum">${g.r ? esc(g.r.name) : 'Draußen'}${g.r && g.r.zu ? ' <span class="art a-zu">abgesperrt</span>' : ''}</div>${g.xs.map((x) => stelleHTML(code, sid, x, sel.marke === x.i)).join('')}</div>`).join('')}</div>`;
+  }
+  function stelleHTML(code, sid, x, aktiv) {
+    const m = x.m;
+    const refs = m.refs.filter((r) => gehoertZu(r, sid));
+    // Am Ort steht der Ortseintrag; was eine Szene dort finden lässt, ist dann ein Sprung in die Szene
+    const eigen = sid ? [] : refs.filter((r) => r.startsWith(code + ':'));
+    const teile = eigen.length ? [...eigen.map((r) => teilHTML(r, sid)), szenenChips(refs.filter((r) => !eigen.includes(r)))] : refs.map((r) => teilHTML(r, sid));
+    const zeigen = (m.zeigen || []).filter((id) => RQ[id]).map((id) => reqChip(RQ[id])).join('');
+    return `<div class="stelle${aktiv ? ' aktiv' : ''}" data-stelle="${x.i}"><button type="button" class="st-kopf" data-marke="${x.i}" aria-pressed="${aktiv}" title="Im Grundriss zeigen"><span class="nr">${x.nr}</span><span class="st-name">${esc(m.name)}</span></button>${zeigen ? `<div class="st-zeigen">${zeigen}</div>` : ''}<div class="st-teile">${teile.join('')}</div></div>`;
+  }
+  function szenenChips(refs) {
+    const ids = [...new Set(refs.map((r) => r.split(':')[0]))].filter((x) => SZ[x]);
+    return ids.length ? `<div class="bezuege">${ids.map((x) => `<a class="vb-chip" href="#${x}" title="${esc(SZ[x].titel)}">${x} ${esc(SZ[x].titel)}</a>`).join('')}</div>` : '';
+  }
+  // Ein Verweis aus dem Grundriss als Zeile: Fund zum Abhaken, Ortseintrag, Gespräch oder Sprung in eine Szene
+  function teilHTML(ref, sid) {
+    const [ort, titel] = ref.split(':');
+    if (SZ[ort]) {
+      const e = SZ[ort].ebenen, ks = KS(ort);
+      const vor = sid ? '' : `<span class="tok">${ort}</span> `;
+      if (!titel) return szenenChips([ref]);
+      const k = e.funde.findIndex((f) => f.titel === titel);
+      if (k >= 0) return fundZeile(e.funde[k], `${ort}-f${k}`, ort, (ks.funde || [])[k], vor, false);
+      for (let j = 0; j < e.haeuser.length; j++) {
+        const kk = e.haeuser[j].funde.findIndex((f) => f.titel === titel);
+        if (kk >= 0) return fundZeile(e.haeuser[j].funde[kk], `${ort}-hs${j}-f${kk}`, ort, (((ks.haeuser || [])[j] || {}).funde || [])[kk], vor, false);
+      }
+      const j = e.haeuser.findIndex((hs) => hs.titel === titel);
+      if (j >= 0) return `<div class="bezuege"><a class="vb-chip" href="#${ort}" data-ziel="${ort}-hs${j}">${ort} ${esc(e.haeuser[j].titel)}</a></div>`;
+      const g = e.gespraeche.findIndex((x) => x.code === titel);
+      if (g >= 0) { const kk = (ks.gespraeche || [])[g]; return zeile(`${ort}-m${g}`, `${vor}<span class="tok">${titel}</span> ${esc(e.gespraeche[g].titel)}`, kk || saetze(flach(e.gespraeche[g].md), 1), md(e.gespraeche[g].md), kk ? 'mit-kurz' : ''); }
+    }
+    if (ORTE[ort]) {
+      const k = ORTE[ort].gibt.findIndex((g) => g.titel === titel);
+      if (k >= 0) { const g = ORTE[ort].gibt[k], kk = (KO(ort).gibt || [])[k]; return zeile(`${ort}-g${k}`, esc(g.titel), kk || saetze(flach(g.md), 1), md(g.md), kk ? 'mit-kurz' : ''); }
+    }
+    return '';
   }
 
   // ---------- Bausteine ----------
@@ -578,27 +608,35 @@
     if (f.handout) h += `<span class="tag tag-h">${esc(f.handout)}</span>`;
     return h + '</span>';
   }
-  function fundZeile(f, id, sid, kurz) {
+  // mitZeigen: Requisiten am Fund (verbindungen.js). Im Grundriss trägt sie die Nummer, dann ohne.
+  function fundZeile(f, id, sid, kurz, vor = '', mitZeigen = true) {
     const fid = `${sid}:${f.titel}`;
     const hat = !!S.gefunden[fid];
-    return `<div class="fund${hat ? ' gefunden' : ''}"><details class="zeile" id="${id}"><summary><span class="zt">${esc(f.titel)}</span>${tagsHTML(f)}<span class="vorschau ganz">${esc(f.wo)}</span></summary>
-      <div class="inhalt">${kurz ? `<p class="fund-kurz">${inline(kurz)}</p>` : ''}${fundText(f.md)}</div></details>
+    const zz = mitZeigen ? (VB[fid] || []).filter((x) => RQ[x]).map((x) => reqChip(RQ[x])).join('') : '';
+    return `<div class="fund${hat ? ' gefunden' : ''}"><details class="zeile" id="${id}"><summary><span class="zt">${vor}${esc(f.titel)}</span>${tagsHTML(f)}<span class="vorschau ganz">${esc(f.wo)}</span></summary>
+      <div class="inhalt">${kurz ? `<p class="fund-kurz">${inline(kurz)}</p>` : ''}${fundText(f.md)}${probeAmFund(sid, f)}</div></details>${zz ? `<div class="fund-zeigen">${zz}</div>` : ''}
       <button type="button" class="haken" data-haken="${esc(fid)}" aria-pressed="${hat}" title="${hat ? 'gefunden' : 'als gefunden abhaken'}" aria-label="${esc(f.titel)} gefunden">✓</button></div>`;
+  }
+  // Die Probe, die genau diesen Fund aufdeckt (verbindungen.js), mit Erfolg, kritischem Erfolg und Patzer
+  function probeAmFund(sid, f) {
+    const e = SZ[sid] && SZ[sid].ebenen;
+    const k = e ? e.proben.findIndex((p) => p.probe === PAF[`${sid}:${f.titel}`]) : -1;
+    if (k < 0) return '';
+    const p = e.proben[k], kp = (KS(sid).proben || [])[k];
+    const inhalt = kp ? probeKurz(sid, k, kp) : `<dl class="probe"><div><dt>Erfolg</dt><dd>${inline(p.erfolg)}</dd></div><div><dt>Kritischer Erfolg</dt><dd>${inline(p.krit)}</dd></div><div><dt>Patzer</dt><dd>${inline(p.patzer)}</dd></div></dl>`;
+    return `<div class="fund-probe"><div class="etikett">Probe · ${inline(p.probe)}</div>${inhalt}</div>`;
   }
   const zeile = (id, titel, vorschau, inhalt, cls = '') => `<details class="zeile ${cls}" id="${id}"><summary><span class="zt">${titel}</span>${vorschau ? `<span class="vorschau">${esc(vorschau)}</span>` : ''}</summary><div class="inhalt">${inhalt}</div></details>`;
 
-  function medienHTML(viewId, bilder, planCode, sid) {
-    const tabs = [...bilder.map((b) => ({ k: 'bild:' + b.code, name: `Bild ${b.code}`, titel: BILD_TITEL[b.code] || '' })), ...(planCode ? [{ k: 'plan', name: 'Grundriss', titel: '' }] : [])];
-    if (!tabs.length) return '<div class="medien leer"></div>';
+  function medienHTML(viewId, bilder) {
+    if (!bilder.length) return '';
+    const tabs = bilder.map((b) => ({ k: 'bild:' + b.code, name: `Bild ${b.code}`, titel: BILD_TITEL[b.code] || '' }));
     let akt = T.medien[viewId];
     if (!akt || !tabs.some((t) => t.k === akt)) akt = tabs[0].k;
-    let h = `<div class="medien${akt === 'plan' ? ' mit-plan' : ''}">`;
-    if (tabs.length > 1) h += `<div class="medien-tabs" role="group" aria-label="Ansicht">${tabs.map((t) => `<button type="button" data-medien="${viewId}|${t.k}" aria-pressed="${t.k === akt}"${t.titel ? ` title="${esc(t.titel)}"` : ''}>${esc(t.name)}</button>`).join('')}</div>`;
-    if (akt === 'plan') h += planHTML(planCode, sid);
-    else {
-      const b = bilder.find((x) => 'bild:' + x.code === akt);
-      h += bildBox(b.code, b.text, b.titel);
-    }
+    let h = '<div class="medien">';
+    if (tabs.length > 1) h += `<div class="medien-tabs" role="group" aria-label="Bild">${tabs.map((t) => `<button type="button" data-medien="${viewId}|${t.k}" aria-pressed="${t.k === akt}"${t.titel ? ` title="${esc(t.titel)}"` : ''}>${esc(t.name)}</button>`).join('')}</div>`;
+    const b = bilder.find((x) => 'bild:' + x.code === akt);
+    h += bildBox(b.code, b.text, b.titel);
     return h + '</div>';
   }
 
@@ -626,11 +664,26 @@
       for (const t of TEILE) {
         h += `<h3><span>${esc(t.titel.replace(/^Teil (\d) · /, '$1 · '))}</span><button type="button" class="info" data-teil="${t.nr}" title="Teil ${t.nr} auf einen Blick" aria-label="Teil ${t.nr} auf einen Blick">i</button></h3>`;
         for (const sid of t.szenen) {
-          h += `<a class="item" href="#${sid}" aria-current="${S.ort === sid}"><span class="code">${sid}</span><span class="nm">${esc(SZ[sid].titel)}</span>${planFuer(sid) ? '<span class="plan-zeichen" title="mit Grundriss">▦</span>' : '<span></span>'}</a>`;
+          h += `<a class="item" href="#${sid}" aria-current="${S.ort === sid && !(sid === 'S9' && T.s9 === 4)}"${sid === 'S9' ? ' data-s9="2"' : ''}><span class="code">${sid}</span><span class="nm">${esc(SZ[sid].titel)}</span>${planFuer(sid) ? '<span class="plan-zeichen" title="mit Grundriss">▦</span>' : '<span></span>'}</a>`;
+          if (sid === 'S9' && T.s9 !== 4) h += dorfUnterpunkte();
+          // Nach der Leichenschau geht die Gruppe wieder frei durchs Dorf (Teil 4)
+          if (sid === 'S19') {
+            h += `<a class="item wieder" href="#S9" aria-current="${S.ort === 'S9' && T.s9 === 4}" data-s9="4"><span class="code">S9</span><span class="nm">Wieder das offene Dorf</span><span></span></a>`;
+            if (T.s9 === 4) h += dorfUnterpunkte();
+          }
         }
       }
     }
     return h + '</nav>';
+  }
+
+  // Die Orte des offenen Dorfs, eingerückt unter S9, solange man in S9 oder an einem Ort im Dorf ist
+  function dorfUnterpunkte() {
+    if (!(S.ort === 'S9' || (ORTE[S.ort] && !ORTE[S.ort].berg))) return '';
+    return Object.keys(ORTE).filter((c) => c[0] === 'D').map((c) => {
+      const n = leuteAmOrt(c).length;
+      return `<a class="item unter" href="#${c}" aria-current="${S.ort === c}"><span class="code">${c}</span><span class="nm">${esc(ortKurz(c))}${PL[c] ? ' <span class="plan-zeichen" title="mit Grundriss">▦</span>' : ''}</span>${n ? `<span class="zahl" title="${n} Leute um diese Zeit">${n}</span>` : '<span></span>'}</a>`;
+    }).join('');
   }
 
   // ---------- Verknüpfungen ----------
@@ -670,20 +723,9 @@
   }
 
   // ---------- Requisiten ----------
-  // Zum Zeigen: jedes Stück mit dem Satz, wo es liegt, und mit Knöpfen zu Grundriss und Eintrag
-  function reqZeile(liste, code, sid) {
-    if (!liste.length) return '';
-    const planCode = code && PL[code] ? code : (sid ? planFuer(sid) : null);
-    const key = planCode ? planCode + (sid || '') : '';
-    return `<section class="zum-zeigen"><div class="etikett">Zum Zeigen</div><ul class="zz-liste">${liste.map((r) => {
-      const wo = [];
-      if (planCode) for (const x of markenWo(planCode, (m) => (m.zeigen || []).includes(r.id))) wo.push(markeChip(planCode, key, x));
-      if (code && ORTE[code]) ORTE[code].gibt.forEach((g, k) => { if ((VB[`${code}:${g.titel}`] || []).includes(r.id)) wo.push(`<button type="button" class="vb-chip" data-zum-eintrag="${code}-g${k}">${esc(g.titel)}</button>`); });
-      for (const s2 of r.szenen || []) if (SZ[s2] && s2 !== sid) wo.push(`<a class="vb-chip" href="#${s2}" title="${esc(SZ[s2].titel)}">${s2}</a>`);
-      for (const c of r.orte || []) if (ORTE[c] && c !== code) wo.push(`<a class="vb-chip" href="#${c}" title="${esc(ORTE[c].name)}">${c} ${esc(ortKurz(c))}</a>`);
-      return `<li><button type="button" class="req-chip" data-req="${r.id}">${esc(r.titel)}</button><div class="zz-text"><span class="zz-wann">${inline(r.wann || '')}</span>${wo.length ? `<span class="zz-wo">${wo.join('')}</span>` : ''}</div></li>`;
-    }).join('')}</ul></section>`;
-  }
+  // Zum Zeigen: der Knopf und der eine Satz, wann es auf den Tisch kommt
+  const zeigenListe = (liste) => `<ul class="zz-liste">${liste.map((r) => `<li><button type="button" class="req-chip" data-req="${r.id}">${esc(r.titel)}</button><span class="zz-wann">${inline(r.wann || '')}</span></li>`).join('')}</ul>`;
+  const teilKopf = (t) => `<div class="teil-kopf">${t}</div>`;
   function reqInhalt(r) {
     let h = tipp(`r|${r.id}`, `<span class="etikett">Wann</span> ${inline(r.wann)}`, 'anfang');
     const sl = !!(r.sl && T.reqSl[r.id]);
@@ -835,56 +877,105 @@
     if (s.worum) h += ks.worum ? tipp(`s|${sid}|worum`, inline(ks.worum), 'worum') : `<div class="worum">${klapp(inline(s.worum), 2)}</div>`;
 
     const bilder = s.bilder.map((b) => ({ code: b.code, text: b.text }));
-    h += `<div class="buehne">${medienHTML(sid, bilder, planFuer(sid), sid)}<aside class="leute-box"><h2>${sid === 'S9' ? `Im Dorf · ${uhrName()}` : 'Wer ist da'}</h2>${leuteBox(s)}</aside></div>`;
-    h += reqZeile(reqFuer('szenen', sid), null, sid);
-
-    if (e.vorlesen.length) {
-      h += `<section class="block"><h2>Vorlesen</h2>${e.vorlesen.map((v, k) => zeile(`${sid}-v${k}`, esc(v.titel), saetze(flach(v.md).replace(/^Lies das, bevor du das Bild ansiehst: /, ''), 1), md(v.md), 'vorlesen')).join('')}</section>`;
-    }
-    if (sid === 'S9') h += dorfRaster();
+    const haupt = vorlesenHTML(sid) + medienHTML(sid, bilder);
+    h += `<div class="buehne${haupt ? '' : ' ohne-bild'}">${haupt ? `<div class="buehne-haupt">${haupt}</div>` : ''}<aside class="leute-box"><h2>${sid === 'S9' ? `Im Dorf · ${uhrName()}` : 'Wer ist da'}</h2>${leuteBox(s)}</aside></div>`;
     if (e.ablauf.length || e.ablauf_md || e.hinweise.length) {
       h += `<section class="block"><h2>Ablauf</h2>`;
-      if (e.ablauf_md) h += ks.ablauf_text && ks.ablauf_text.length ? tipp(`s|${sid}|ablauf`, stich(ks.ablauf_text), 'ablauf-text') : `<div class="ablauf-text">${klapp(md(e.ablauf_md), 3)}</div>`;
+      // Gibt es Schritte, steht der freie Text danach: Er sagt, wie es weitergeht (S1).
+      const text = e.ablauf_md ? (ks.ablauf_text && ks.ablauf_text.length ? tipp(`s|${sid}|ablauf`, stich(ks.ablauf_text), 'ablauf-text') : `<div class="ablauf-text">${klapp(md(e.ablauf_md), 3)}</div>`) : '';
+      if (!e.ablauf.length) h += text;
       if (e.ablauf.length) {
         h += `<ol class="ablauf">${e.ablauf.map((a, k) => {
           const kk = (ks.ablauf || [])[k];
           const kurz = a.kurz || kk || saetze(flach(a.md), 1);
           const rest = a.kurz ? (kk || saetze(flach(a.md), 1)) : '';
           return `<li>${zeile(`${sid}-a${k}`, esc(kurz), rest, md(a.md), kk ? 'mit-kurz' : '')}</li>`;
-        }).join('')}</ol>`;
+        }).join('')}</ol>${text}`;
       }
       if (e.hinweise.length) h += `<div class="hinweise">${e.hinweise.map((x, k) => { const kk = (ks.hinweise || [])[k]; return zeile(`${sid}-h${k}`, esc(x.titel), kk || saetze(flach(x.md), 1), md(x.md), kk ? 'hinweis mit-kurz' : 'hinweis'); }).join('')}</div>`;
       h += `</section>`;
     }
-    if (e.funde.length) {
-      const n = e.funde.filter((f) => S.gefunden[`${sid}:${f.titel}`]).length;
-      h += `<section class="block"><h2>Was man finden kann <span class="zaehler">${n} von ${e.funde.length} gefunden</span></h2>${e.funde.map((f, k) => fundZeile(f, `${sid}-f${k}`, sid, (ks.funde || [])[k])).join('')}</section>`;
-    }
-    if (e.haeuser.length) {
-      h += `<section class="block"><h2>Die Häuser</h2>${e.haeuser.map((hs, j) => {
-        const kh = (ks.haeuser || [])[j];
-        const info = kh
-          ? tipp(`s|${sid}|haus|${j}`, `<p class="haus-info"><span class="etikett">Hinein</span> ${inline(kh.hinein || '')}</p><p class="haus-info"><span class="etikett">Erwischt</span> ${inline(kh.erwischt || '')}</p>`, 'haus-kurz')
-          : Object.entries(hs.info).map(([k, v]) => `<p class="haus-info"><span class="etikett">${esc(k)}</span> ${inline(v)}</p>`).join('');
-        const funde = hs.funde.map((f, k) => fundZeile(f, `${sid}-hs${j}-f${k}`, sid, kh && (kh.funde || [])[k])).join('');
-        const liegt = hs.liegt && !kh ? `<p class="haus-info"><span class="etikett">Was dort liegt</span> ${inline(hs.liegt)}</p>` : '';
-        const planKnopf = PL[hs.ort] ? `<button type="button" class="knopf klein" data-planol="${hs.ort}">Grundriss ${hs.ort} zeigen</button>` : '';
-        return zeile(`${sid}-hs${j}`, `<span class="code">${hs.ort}</span> ${esc(hs.titel)}`, (kh && kh.wer) || flach(hs.info['Wer zurückgeblieben ist'] || ''), `${planKnopf}${info}${liegt}${funde}`, kh ? 'haus mit-kurz' : 'haus');
-      }).join('')}</section>`;
-    }
-    if (e.proben.length) {
-      h += `<section class="block"><h2>Proben</h2>${e.proben.map((p, k) => { const kp = (ks.proben || [])[k]; return kp ? zeile(`${sid}-p${k}`, inline(p.probe), kp.erfolg ? `Erfolg: ${kp.erfolg}` : '', probeKurz(sid, k, kp), 'probe-zeile mit-kurz') : zeile(`${sid}-p${k}`, inline(p.probe), '', `<dl class="probe">
-        <div><dt>Erfolg</dt><dd>${inline(p.erfolg)}</dd></div><div><dt>Kritischer Erfolg</dt><dd>${inline(p.krit)}</dd></div><div><dt>Patzer</dt><dd>${inline(p.patzer)}</dd></div></dl>`, 'probe-zeile'); }).join('')}${e.proben_md ? `<div class="klein-text">${md(e.proben_md)}</div>` : ''}</section>`;
-    }
-    if (e.gespraeche.length) {
-      h += `<section class="block"><h2>Gespräche zum Abspielen</h2>${e.gespraeche.map((g, k) => { const kk = (ks.gespraeche || [])[k]; return zeile(`${sid}-m${k}`, `<span class="tok">${g.code}</span> ${esc(g.titel)}`, kk || saetze(flach(g.md), 1), md(g.md), kk ? 'mit-kurz' : ''); }).join('')}</section>`;
-    }
+    if (sid === 'S9') h += dorfRaster();
+    h += wasHierSzene(sid);
     const mehr = e.mehr.map((x, k) => ({ x, k })).filter(({ x }) => !(sid === 'S9' && x.titel === 'Wohin sie gehen können'));
     if (mehr.length || e.haengt) {
       h += `<section class="block"><h2>Mehr zur Szene</h2>${e.haengt ? zeile(`${sid}-haengt`, 'Wenn es hängt', ks.haengt || saetze(flach(e.haengt), 1), md(e.haengt), ks.haengt ? 'haengt mit-kurz' : 'haengt') : ''}${mehr.map(({ x, k }) => { const kk = (ks.mehr || [])[k]; return zeile(`${sid}-x${k}`, esc(x.titel), kk || saetze(flach(x.md), 1), md(x.md), kk ? 'mit-kurz' : ''); }).join('')}</section>`;
     }
     if (e.weiter) h += ks.weiter ? tipp(`s|${sid}|weiter`, `<span class="etikett">Weiter</span> ${inline(ks.weiter)}`, 'weiter') : `<div class="weiter"><span class="etikett">Weiter</span> ${inline(e.weiter)}</div>`;
     return h + '</article>';
+  }
+  // Vorlesen steht offen oben. Weitere Vorlesetexte (Geständnis, Enden) klappen darunter auf.
+  function vorlesenHTML(sid) {
+    const v = SZ[sid].ebenen.vorlesen;
+    if (!v.length) return '';
+    const [erst, ...rest] = v;
+    return `<section class="vorlesen-box" id="${sid}-v0"><div class="etikett">Vorlesen</div>${md(erst.md)}${rest.map((x, k) => zeile(`${sid}-v${k + 1}`, esc(x.titel), saetze(flach(x.md), 1), md(x.md), 'vorlesen')).join('')}</section>`;
+  }
+  // Alles, was die Spieler in einer Szene finden, prüfen, hören oder gezeigt bekommen, jedes nur einmal
+  function wasHierSzene(sid) {
+    const e = SZ[sid].ebenen, ks = KS(sid);
+    const planCode = planFuer(sid);
+    const imPlan = new Set(), zeigenImPlan = new Set();
+    if (planCode) for (const E of PL[planCode].ebenen) for (const m of E.marken) {
+      const eigen = m.refs.filter((r) => r.startsWith(sid + ':'));
+      if (!eigen.length) continue;
+      for (const r of eigen) imPlan.add(r.slice(sid.length + 1));
+      for (const id of m.zeigen || []) zeigenImPlan.add(id);
+    }
+    const funde = e.funde.map((f, k) => ({ f, k })).filter(({ f }) => !imPlan.has(f.titel));
+    // Requisiten, die an einem Fund hängen, stehen dort und nicht noch einmal unter »Zum Zeigen«
+    const amFund = new Set([...funde.map(({ f }) => f), ...e.haeuser.flatMap((hs) => hs.funde)].flatMap((f) => VB[`${sid}:${f.titel}`] || []));
+    const props = reqFuer('szenen', sid).filter((r) => !zeigenImPlan.has(r.id) && !amFund.has(r.id));
+    let h = '';
+    if (props.length) h += teilKopf('Zum Zeigen') + zeigenListe(props);
+    if (planCode) h += teilKopf('Grundriss') + planHTML(planCode, sid);
+    if (funde.length) h += teilKopf(imPlan.size ? 'Weitere Funde' : 'Funde') + funde.map(({ f, k }) => fundZeile(f, `${sid}-f${k}`, sid, (ks.funde || [])[k])).join('');
+    if (e.haeuser.length) {
+      h += teilKopf('Die Häuser') + e.haeuser.map((hs, j) => {
+        const kh = (ks.haeuser || [])[j];
+        const info = kh
+          ? tipp(`s|${sid}|haus|${j}`, `<p class="haus-info"><span class="etikett">Hinein</span> ${inline(kh.hinein || '')}</p><p class="haus-info"><span class="etikett">Erwischt</span> ${inline(kh.erwischt || '')}</p>`, 'haus-kurz')
+          : Object.entries(hs.info).map(([k, v]) => `<p class="haus-info"><span class="etikett">${esc(k)}</span> ${inline(v)}</p>`).join('');
+        const funde = hs.funde.map((f, k) => fundZeile(f, `${sid}-hs${j}-f${k}`, sid, kh && (kh.funde || [])[k])).join('');
+        const liegt = hs.liegt && !kh ? `<p class="haus-info"><span class="etikett">Was dort liegt</span> ${inline(hs.liegt)}</p>` : '';
+        const planKnopf = PL[hs.ort] ? `<button type="button" class="knopf klein" data-planol="${hs.ort}|${sid}">Grundriss ${hs.ort} zeigen</button>` : '';
+        return zeile(`${sid}-hs${j}`, `<span class="code">${hs.ort}</span> ${esc(hs.titel)}`, (kh && kh.wer) || flach(hs.info['Wer zurückgeblieben ist'] || ''), `${planKnopf}${info}${liegt}${funde}`, kh ? 'haus mit-kurz' : 'haus');
+      }).join('');
+    }
+    const probenAmFund = new Set([...e.funde, ...e.haeuser.flatMap((hs) => hs.funde)].map((f) => PAF[`${sid}:${f.titel}`]).filter(Boolean));
+    const proben = e.proben.map((p, k) => ({ p, k })).filter(({ p }) => !probenAmFund.has(p.probe));
+    if (proben.length || e.proben_md) {
+      h += teilKopf(probenAmFund.size ? 'Weitere Proben' : 'Proben') + proben.map(({ p, k }) => { const kp = (ks.proben || [])[k]; return kp ? zeile(`${sid}-p${k}`, inline(p.probe), kp.erfolg ? `Erfolg: ${kp.erfolg}` : '', probeKurz(sid, k, kp), 'probe-zeile mit-kurz') : zeile(`${sid}-p${k}`, inline(p.probe), '', `<dl class="probe">
+        <div><dt>Erfolg</dt><dd>${inline(p.erfolg)}</dd></div><div><dt>Kritischer Erfolg</dt><dd>${inline(p.krit)}</dd></div><div><dt>Patzer</dt><dd>${inline(p.patzer)}</dd></div></dl>`, 'probe-zeile'); }).join('') + (e.proben_md ? `<div class="klein-text">${md(e.proben_md)}</div>` : '');
+    }
+    // Ein Gespräch, das im Grundriss eine Nummer hat, steht dort
+    const mitschnitte = e.gespraeche.map((g, k) => ({ g, k })).filter(({ g }) => !imPlan.has(g.code));
+    if (mitschnitte.length) {
+      h += teilKopf('Zum Abspielen') + mitschnitte.map(({ g, k }) => { const kk = (ks.gespraeche || [])[k]; return zeile(`${sid}-m${k}`, `<span class="tok">${g.code}</span> ${esc(g.titel)}`, kk || saetze(flach(g.md), 1), md(g.md), kk ? 'mit-kurz' : ''); }).join('');
+    }
+    if (!h) return '';
+    const n = e.funde.filter((f) => S.gefunden[`${sid}:${f.titel}`]).length;
+    return `<section class="block was-hier"><h2>Was es hier gibt${e.funde.length ? ` <span class="zaehler">${n} von ${e.funde.length} gefunden</span>` : ''}</h2>${h}</section>`;
+  }
+  // Am Ort: Grundriss mit Nummern, die übrigen Einträge, und was es zu zeigen gibt, jedes nur einmal
+  function wasHierOrt(code) {
+    const o = ORTE[code];
+    const planCode = PL[code] ? code : null;
+    const imPlan = new Set(), zeigenImPlan = new Set();
+    if (planCode) for (const E of PL[code].ebenen) for (const m of E.marken) {
+      for (const r of m.refs) if (r.startsWith(code + ':')) imPlan.add(r.slice(code.length + 1));
+      for (const id of m.zeigen || []) zeigenImPlan.add(id);
+    }
+    const gibt = o.gibt.map((g, k) => ({ g, k })).filter(({ g }) => !imPlan.has(g.titel));
+    const inGibt = new Set(gibt.flatMap(({ g }) => VB[`${code}:${g.titel}`] || []));
+    const props = reqFuer('orte', code).filter((r) => !zeigenImPlan.has(r.id) && !inGibt.has(r.id));
+    let h = '';
+    if (props.length) h += teilKopf('Zum Zeigen') + zeigenListe(props);
+    if (planCode) h += teilKopf('Grundriss') + planHTML(code, null);
+    if (gibt.length || o.gibt_md) {
+      h += (planCode ? teilKopf('Außerdem') : '') + (o.gibt_md ? `<p>${inline(o.gibt_md)}</p>` : '') + gibt.map(({ g, k }) => { const kk = (KO(code).gibt || [])[k]; return `<div class="gibt">${zeile(`${code}-g${k}`, esc(g.titel), kk || saetze(flach(g.md), 1), md(g.md), kk ? 'mit-kurz' : '')}${bezuege(code, g, k)}</div>`; }).join('');
+    }
+    return h ? `<section class="block was-hier"><h2>Was es hier gibt</h2>${h}</section>` : '';
   }
   function leuteBox(s) {
     if (s.id === 'S9') {
@@ -914,12 +1005,14 @@
   function ortSeite(code) {
     const o = ORTE[code];
     const szenen = SZENEN.filter((s) => new RegExp(`\\b${code}\\b`).test(s.meta['Wo'] || '')).map((s) => `<a class="ref" href="#${s.id}" title="${esc(s.titel)}">${s.id}</a>`);
+    const frei = o.berg ? '' : `${szenen.length ? ' · ' : ''}sonst frei im offenen Dorf, <a class="ref" href="#S9" title="${esc(SZ.S9.titel)}">S9</a>`;
     let h = `<article class="seite" data-view="${code}">
       <header class="kopf"><div><div class="ueber">${code} · ${o.berg ? 'Am Berg' : 'Im Dorf'}</div><h1>${esc(o.name)}</h1>
-      <div class="eck">${szenen.length ? `Szenen hier: ${szenen.join(' ')}` : ''}</div>${KO(code).kurz ? `<div class="ort-kurz">${inline(KO(code).kurz)}</div>` : ''}</div></header>`;
+      <div class="eck">${szenen.length ? `Szenen hier: ${szenen.join(' ')}` : ''}${frei}</div>${KO(code).kurz ? `<div class="ort-kurz">${inline(KO(code).kurz)}</div>` : ''}</div></header>`;
     h += klangLeiste(code);
-    // Wie es hier aussieht: das, was man den Spielern vorliest, ganz oben
-    if (o.beschreibung) h += `<section class="aussehen"><div class="etikett">So sieht es aus</div>${o.beschreibung.length > 520 ? klapp(md(o.beschreibung), 3) : md(o.beschreibung)}</section>`;
+    // Was man den Spielern sagt, steht oben: wie es aussieht, und wie ein Besuch anfängt
+    if (o.beschreibung) h += `<section class="aussehen"><div class="etikett">So sieht es aus</div>${md(o.beschreibung)}</section>`;
+    if (o.anfang) h += KO(code).anfang ? tipp(`o|${code}|anfang`, `<span class="etikett">So fängt es an</span> ${inline(KO(code).anfang)}`, 'anfang') : `<div class="anfang"><span class="etikett">So fängt es an</span> ${inline(o.anfang)}</div>`;
     const bilder = ortBilder(o);
     const jetzt = leuteAmOrt(code), neben = nebenAmOrt(code);
     let box = '';
@@ -936,14 +1029,9 @@
         return kn ? tipp(`n|${i}`, `${nk}<b>${esc(kurzNeben(x.wer))}</b> ${inline(kn)}${mk}`, 'nb') : `<div class="nb">${klapp(`<b>${esc(x.wer)}</b>, ${inline(x.wo)}. ${inline(x.wozu)}`, 1)}${mk}</div>`;
       }).join('')}</div>`;
     }
-    const planCode = PL[code] ? code : null;
-    if (planCode && !T.medien[code]) T.medien[code] = 'plan';
-    h += `<div class="buehne">${medienHTML(code, bilder, planCode, null)}<aside class="leute-box"><h2>${o.berg ? 'Wer hier ist' : `Jetzt hier · ${uhrName()}`}</h2>${box}</aside></div>`;
-    h += reqZeile(reqFuer('orte', code), code, null);
-    if (o.anfang) h += KO(code).anfang ? tipp(`o|${code}|anfang`, `<span class="etikett">So fängt es an</span> ${inline(KO(code).anfang)}`, 'anfang') : `<div class="anfang"><span class="etikett">So fängt es an</span> ${inline(o.anfang)}</div>`;
-    if (o.gibt.length || o.gibt_md) {
-      h += `<section class="block"><h2>Was es hier gibt</h2>${o.gibt_md ? `<p>${inline(o.gibt_md)}</p>` : ''}${o.gibt.map((g, k) => { const kk = (KO(code).gibt || [])[k]; return `<div class="gibt">${zeile(`${code}-g${k}`, esc(g.titel), kk || saetze(flach(g.md), 1), md(g.md), kk ? 'mit-kurz' : '')}${bezuege(code, g, k)}</div>`; }).join('')}</section>`;
-    }
+    const haupt = medienHTML(code, bilder);
+    h += `<div class="buehne${haupt ? '' : ' ohne-bild'}">${haupt ? `<div class="buehne-haupt">${haupt}</div>` : ''}<aside class="leute-box"><h2>${o.berg ? 'Wer hier ist' : `Jetzt hier · ${uhrName()}`}</h2>${box}</aside></div>`;
+    h += wasHierOrt(code);
     const mehr = [];
     if (o.dorf) mehr.push(['Was die Gruppe hier bekommen kann', `<p>${inline(o.dorf.bekommt)}</p><p><span class="etikett">Führt zu</span> ${inline(o.dorf.fuehrt)}</p>`, KO(code).bekommt]);
     for (const [k, v] of Object.entries(o.felder)) {
@@ -1145,8 +1233,9 @@
     const t = TEILE.find((x) => x.nr === nr);
     return olKopf(`Teil ${nr} auf einen Blick`, esc(t.titel)) + `<div class="ol-inhalt">${md(t.intro.replace(/^## Teil \d auf einen Blick\s*/, ''))}</div>`;
   }
-  function planOverlay(code) {
-    return olKopf(`${code} · Grundriss`, esc(PL[code].titel)) + `<div class="ol-inhalt">${planHTML(code, null)}<p class="klein-text">Die Leute stehen dort, wo sie um diese Zeit sind (${uhrName()}). <a class="ref" href="#${code}">Zum Ort ${code}</a></p></div>`;
+  function planOverlay(arg) {
+    const [code, sid] = String(arg).split('|');
+    return olKopf(`${code} · Grundriss${sid ? ` in ${sid}` : ''}`, esc(PL[code].titel)) + `<div class="ol-inhalt">${planHTML(code, sid || null, !sid)}${sid ? '' : `<p class="klein-text">Die Leute stehen dort, wo sie um diese Zeit sind (${uhrName()}). <a class="ref" href="#${code}">Zum Ort ${code}</a></p>`}</div>`;
   }
   function suchErgebnisse(q) {
     const nq = fold(q);
@@ -1166,7 +1255,14 @@
       e.hinweise.forEach((x, k) => pruefe(x.titel + ' ' + x.md, { href: '#' + s.id, ziel: `${s.id}-h${k}`, titel: `${s.id} · ${x.titel}` }));
       e.funde.forEach((x, k) => pruefe(x.titel + ' ' + x.md, { href: '#' + s.id, ziel: `${s.id}-f${k}`, titel: `${s.id} · ${x.titel}` }));
       e.haeuser.forEach((hs, j) => hs.funde.forEach((x) => pruefe(x.titel + ' ' + x.md, { href: '#' + s.id, ziel: `${s.id}-hs${j}`, titel: `${s.id} · ${hs.titel} · ${x.titel}` })));
-      e.proben.forEach((x, k) => pruefe(Object.values(x).join(' '), { href: '#' + s.id, ziel: `${s.id}-p${k}`, titel: `${s.id} · Probe: ${flach(x.probe)}` }));
+      // Eine Probe, die im Fund steht, führt zu diesem Fund
+      const fundVon = (x) => {
+        const k = e.funde.findIndex((f) => PAF[`${s.id}:${f.titel}`] === x.probe);
+        if (k >= 0) return `${s.id}-f${k}`;
+        const j = e.haeuser.findIndex((hs) => hs.funde.some((f) => PAF[`${s.id}:${f.titel}`] === x.probe));
+        return j >= 0 ? `${s.id}-hs${j}` : null;
+      };
+      e.proben.forEach((x, k) => pruefe(Object.values(x).join(' '), { href: '#' + s.id, ziel: fundVon(x) || `${s.id}-p${k}`, titel: `${s.id} · Probe: ${flach(x.probe)}` }));
       e.gespraeche.forEach((x, k) => pruefe(x.md, { href: '#' + s.id, ziel: `${s.id}-m${k}`, titel: `${s.id} · ${x.code} ${x.titel}` }));
       e.mehr.forEach((x, k) => pruefe(x.titel + ' ' + x.md, { href: '#' + s.id, ziel: `${s.id}-x${k}`, titel: `${s.id} · ${x.titel}` }));
     }
@@ -1383,7 +1479,8 @@
     document.documentElement.dataset.theme = S.theme;
     zeichneHaupt();
     zeichneGespraech();
-    if (T.overlay) zeichneOverlay();
+    // Ein Sprung auf eine andere Seite schließt ein offenes Fenster
+    if (T.overlay || !$('#overlay').hidden) zeichneOverlay();
   }
 
   // ---------- Wege ----------
@@ -1396,9 +1493,14 @@
     }
     if (SZ[h] || ORTE[h] || reqId(h)) {
       if (S.ort !== h) {
+        // Aus dem offenen Dorf (S9 und seine Orte in der Liste) bleibt die Liste beim Ablauf
+        const imDorf = (c) => c === 'S9' || (ORTE[c] && c.startsWith('D'));
+        const bleib = S.rail === 'szenen' && imDorf(S.ort) && imDorf(h);
         S.ort = h;
         if (SZENEN_UHR[h]) S.uhr = SZENEN_UHR[h];
-        S.rail = SZ[h] ? 'szenen' : ORTE[h] ? 'orte' : 'requisiten';
+        // Das offene Dorf ist nachmittags oder abends; kommt man aus dem Georgimorgen, stellt die Uhr auf Nachmittag
+        if (h === 'S9' && S.uhr !== 'nachmittags' && S.uhr !== 'abends') S.uhr = 'nachmittags';
+        S.rail = SZ[h] || bleib ? 'szenen' : ORTE[h] ? 'orte' : 'requisiten';
       }
       T.overlay = null;
       sichern();
@@ -1413,7 +1515,7 @@
   // ---------- Bedienung ----------
   function neuPlan(box) {
     const neu = document.createElement('div');
-    neu.innerHTML = planHTML(box.dataset.code, box.dataset.sid || null);
+    neu.innerHTML = planHTML(box.dataset.code, box.dataset.sid || null, !box.dataset.ohneLeute);
     box.replaceWith(neu.firstElementChild);
   }
   document.addEventListener('click', (ev) => {
@@ -1464,7 +1566,7 @@
       const E = PL[code].ebenen[Number(eb)];
       const rm = E.raeume.find((x) => inRaum(x, E.marken[Number(i)]));
       Object.assign(sel, { ebene: Number(eb), marke: Number(i), raum: rm ? rm.id : null });
-      T.medien[S.ort] = 'plan'; zeichneHaupt();
+      zeichneHaupt();
       const box = $(`.planbox[data-plan="${key}"]`);
       if (box) { const oben = $('.bar') ? $('.bar').offsetHeight : 0; window.scrollTo({ top: box.getBoundingClientRect().top + window.scrollY - oben - 12, behavior: 'smooth' }); }
       return;
@@ -1499,6 +1601,7 @@
     const a = t.closest('a[href^="#"]');
     if (a) {
       if (a.dataset.ziel) T.oeffne = a.dataset.ziel;
+      if (a.dataset.s9) T.s9 = Number(a.dataset.s9);
       if (a.getAttribute('href') === '#' + S.ort) { ev.preventDefault(); schliesseOverlay(); zeichneHaupt(); }
       return;
     }
@@ -1512,12 +1615,17 @@
       sel.ebene = Number(el.dataset.ebene); sel.raum = null; sel.marke = null; neuPlan(box); return;
     }
     if ((el = t.closest('[data-marke]'))) {
-      const box = el.closest('.planbox'); const sel = T.plan[box.dataset.plan];
+      const box = el.closest('.planbox'); const key = box.dataset.plan; const sel = T.plan[key];
       const i = Number(el.dataset.marke);
-      const E = PL[box.dataset.code].ebenen[sel.ebene];
-      const r = E.raeume.find((x) => inRaum(x, E.marken[i]));
-      if (sel.marke === i) { sel.marke = null; } else { sel.marke = i; sel.raum = r ? r.id : null; }
-      neuPlan(box); return;
+      sel.marke = sel.marke === i ? null : i; sel.raum = null;
+      neuPlan(box);
+      const st = sel.marke == null ? null : $(`.planbox[data-plan="${key}"] .stelle[data-stelle="${i}"]`);
+      if (st) {
+        const d = $$('details.zeile', st);
+        if (d.length === 1) d[0].open = true;
+        if (!el.closest('.stelle')) st.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+      return;
     }
     if ((el = t.closest('[data-raum]'))) {
       const box = el.closest('.planbox'); const sel = T.plan[box.dataset.plan];

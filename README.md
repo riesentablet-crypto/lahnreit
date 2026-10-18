@@ -22,6 +22,7 @@ Oben stehen nur Stichpunkte. Wer den ganzen Text braucht, tippt den Stichpunkt a
 - **Alles über eine Person**, die Teilübersichten und die Suche liegen als Fenster darüber.
 - **Requisiten:** Ortsplan und Wanderkarte (je für die Spieler und für dich), die Ansichtskarten und alle Handouts, jeweils mit »Wann« und »Den Spielern zeigen« im Vollbild. Antippen vergrößert. Szenen und Orte zeigen unter »Zum Zeigen«, welche Papiere dort auftauchen.
 - **3D-Figuren:** Wo es ein Modell gibt, steht neben dem Namen »3D«. Die Figur lässt sich drehen, umdrehen und im Vollbild zeigen.
+- **Klang:** Oben auf jeder Szene und jedem Ort steht eine Klangleiste. ▶ startet, was leise darunter läuft (zum Beispiel »Die volle Stube«); hat ein Ort mehrere Lagen, ist die zur Tageszeit passende umrandet. Ein zweiter Druck blendet aus, eine andere Lage blendet über. Die Knöpfe darunter spielen einzelne Klänge, so wie sie im Buch vorkommen (»Gegen elf: Glocken draußen«, »20 Uhr: Schritte, Klopfen«). Der Klang läuft weiter, wenn man in der App blättert. Das ♪ oben öffnet Lautstärke, »Alles ausblenden«, die Klänge für die Dorfgeschichten G7 und G10 und alle Einzelklänge.
 
 ## Ordner
 
@@ -36,5 +37,8 @@ Oben stehen nur Stichpunkte. Wer den ganzen Text braucht, tippt den Stichpunkt a
 - `quellen/handbuch/` die Reiter des Spielleiterhandbuchs als Markdown.
 - `data/lahnreit-daten.js` die Daten der App. Erzeugt mit `python3 tools/build_data.py` (zusammen mit `tools/ebenen.py`), nicht von Hand ändern.
 - `data/grundrisse.js` die Grundrisse, von Hand gezeichnet: Räume, Möbel, Türen, Fundstellen und wer in welchem Raum steht.
+- `klang/` die Klänge als MP3, jede in einer `.js`-Datei (base64), damit sie auch ohne Server laden. `L-…` sind Schleifen, `C-…` Einzelklänge. Gemischt aus Daniels ElevenLabs-Aufnahmen K01 bis K114 (Klangliste im Projekt; K86 und K87 sind gegenüber der ersten Liste getauscht). `klang.js` spielt sie ab.
+- `data/klang.js` welche Schleifen auf welcher Seite laufen, wie laut, welche Klänge von selbst kommen und welche Knöpfe es gibt. Hier ändert man die Mischung.
+- `data/klang-dateien.js` Liste der Klangdateien mit Schleifenpunkten. Erzeugt mit `tools/klang/bau_klang.py`, nicht von Hand ändern.
 
 Wenn sich das Handbuch ändert: die Reiter neu als Markdown nach `quellen/handbuch/` legen, `python3 tools/build_data.py` laufen lassen und danach `python3 tools/kurz.py`. Meldet das zweite Skript Abweichungen, die betroffenen Stichpunkte in `quellen/kurz/` nachziehen.

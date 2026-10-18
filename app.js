@@ -52,11 +52,13 @@
   const reqFuer = (art, code) => Object.values(RQ).filter((r) => (r[art] || []).includes(code));
   const reqId = (ort) => (/^R-/.test(ort || '') && RQ[ort.slice(2)] ? ort.slice(2) : null);
   const VB = window.LAHNREIT_VERBINDUNGEN || {};
+  // Klang: Schleifen unter der Szene und Einzelklänge (klang.js)
+  const KL = window.LahnreitKlang && window.LahnreitKlang.moeglich ? window.LahnreitKlang : null;
 
   // ---------- Zustand, nur in diesem Browser gespeichert ----------
   const KEY = 'lahnreit-spielleitung-v1';
   const leer = () => ({ wer: 'B', tat: {}, probe: {}, schloss: {}, ausnahme: {}, treffen: {}, uhr: 'abends', ort: 'S1',
-    gespraech: null, kontext: null, gefunden: {}, theme: 'dark', rail: 'szenen', geraet: null });
+    gespraech: null, kontext: null, gefunden: {}, theme: 'dark', rail: 'szenen', geraet: null, klang: { laut: 0.8 } });
   let S = leer();
   try {
     const roh = localStorage.getItem(KEY);
@@ -744,6 +746,66 @@
   }
 
   // ---------- Szene ----------
+  // ---------- Klang ----------
+  function seitenName(id) {
+    if (SZ[id]) return `${id} ${SZ[id].titel}`;
+    if (ORTE[id]) return `${id} ${ORTE[id].name.replace(/^(Der|Die|Das) /, '')}`;
+    const e = KL && KL.erzaehlungen().find((x) => x.id === id);
+    return e ? `${id} ${e.name}` : id;
+  }
+  // Oben auf jeder Szene und jedem Ort: was darunter laufen kann (Lagen) und was man von Hand spielt (Knöpfe)
+  function klangLeiste(id) {
+    if (!KL) return '';
+    const rz = KL.rezept(id);
+    if (!rz || (!rz.lagen.length && !rz.knoepfe.length)) return '';
+    return `<section class="klang" data-klang="${id}" aria-label="Klang">${klangInnen(id)}</section>`;
+  }
+  function klangInnen(id, ohneAnderswo) {
+    const rz = KL.rezept(id), st = KL.status();
+    const vor = KL.vorschlag(id, S.uhr);
+    const etikett = ohneAnderswo ? '' : `<span class="etikett">Klang</span>`;
+    const lagen = rz.lagen.map((L, i) => {
+      const an = st.seite === id && st.nr === i;
+      const zeichen = an ? (st.bereit ? '■' : '…') : '▶';
+      return `<button type="button" class="kl-lage${an ? ' an' : ''}${i === vor && rz.lagen.length > 1 ? ' vorschlag' : ''}" data-kl-lage="${id}|${i}" aria-pressed="${an}" title="${an ? 'Ausblenden' : 'Leise darunter laufen lassen'}"><span class="kl-z" aria-hidden="true">${zeichen}</span>${esc(L.name)}</button>`;
+    }).join('');
+    const anderswo = !ohneAnderswo && st.seite && st.seite !== id ? `<span class="kl-anderswo">Es läuft: ${esc(seitenName(st.seite))} · ${esc(st.name)}<button type="button" class="kl-aus" data-kl-aus title="Ausblenden" aria-label="Ausblenden">■</button></span>` : '';
+    const knoepfe = rz.knoepfe.map((k) => klangKnopf(KL.knopfId(k), Array.isArray(k) && k[1] ? k[1] : KL.titel(KL.knopfId(k)), (Array.isArray(k) && k[2]) || 0, st)).join('');
+    // Ohne Lage stehen die Knöpfe gleich in der ersten Reihe
+    let h = rz.lagen.length ? `<div class="kl-reihe">${etikett}${lagen}${anderswo}</div>${knoepfe ? `<div class="kl-knoepfe">${knoepfe}</div>` : ''}` : `<div class="kl-reihe">${etikett}${knoepfe}${anderswo}</div>`;
+    if (st.fehler) h += `<p class="kl-fehler">${esc(st.fehler)}</p>`;
+    return h;
+  }
+  function klangKnopf(id, name, pegel, st) {
+    const an = st.knoepfe.includes(id);
+    return `<button type="button" class="kl-knopf${an ? ' an' : ''}" data-kl-knopf="${id}|${pegel}" aria-pressed="${an}">${esc(name)}</button>`;
+  }
+  function klangKopf(st) {
+    return `<div class="etikett">Klang</div><h2>${st.seite ? esc(st.name) : 'Es ist still'}</h2><div class="klein-text">${st.seite ? esc(seitenName(st.seite)) : 'Auf jeder Szene und jedem Ort oben: ▶ startet, was darunter läuft.'}</div>`;
+  }
+  function alleKnoepfe() {
+    const st = KL.status();
+    return KL.alleKnoepfe().map((k) => klangKnopf(k.id, k.titel, 0, st)).join('');
+  }
+  function klangOverlay() {
+    const st = KL.status();
+    let h = `<div class="ol-kopf"><div id="kl-ol-kopf">${klangKopf(st)}</div><button type="button" class="zu-knopf" data-ol-zu aria-label="Schließen">×</button></div><div class="ol-inhalt">`;
+    h += `<div class="kl-steuer"><button type="button" class="knopf" data-kl-still>■ Alles ausblenden</button><label class="kl-laut">Lautstärke <input type="range" min="0" max="100" step="1" value="${Math.round(S.klang.laut * 100)}" data-kl-laut aria-label="Lautstärke"></label></div>`;
+    h += `<h3>Dorfgeschichten</h3>${KL.erzaehlungen().map((e) => `<div class="kl-geschichte"><div class="kl-gtitel"><span class="code">${e.id}</span> ${esc(e.name)}</div><section class="klang" data-klang="${e.id}" data-klang-ohne="1">${klangInnen(e.id, true)}</section></div>`).join('')}`;
+    h += `<h3>Alle Einzelklänge</h3><div class="kl-knoepfe kl-alle" data-klang-alle>${alleKnoepfe()}</div>`;
+    return h + '</div>';
+  }
+  function aktualisiereKlang() {
+    const st = KL.status();
+    $$('.klang[data-klang]').forEach((el) => { el.innerHTML = klangInnen(el.dataset.klang, el.dataset.klangOhne === '1'); });
+    const k = $('#klang-knopf');
+    if (k) k.classList.toggle('an', !!st.seite || st.knoepfe.length > 0);
+    const kopf = $('#kl-ol-kopf');
+    if (kopf) kopf.innerHTML = klangKopf(st);
+    const alle = $('[data-klang-alle]');
+    if (alle) alle.innerHTML = alleKnoepfe();
+  }
+
   function szeneSeite(sid) {
     const s = SZ[sid], e = s.ebenen;
     const teil = TEILE.find((t) => t.nr === s.teil);
@@ -753,6 +815,7 @@
     let h = `<article class="seite" data-view="${sid}">
       <header class="kopf"><div><div class="ueber">${sid} · ${esc(teil.titel)}</div><h1>${esc(s.titel)}</h1><div class="eck">${eck}</div></div>
       <div class="blaettern">${vor ? `<a class="knopf" href="#${vor.id}" title="${esc(vor.titel)}">‹ ${vor.id}</a>` : ''}${nach ? `<a class="knopf" href="#${nach.id}" title="${esc(nach.titel)}">${nach.id} ›</a>` : ''}</div></header>`;
+    h += klangLeiste(sid);
     const ks = KS(sid);
     if (s.worum) h += ks.worum ? tipp(`s|${sid}|worum`, inline(ks.worum), 'worum') : `<div class="worum">${klapp(inline(s.worum), 2)}</div>`;
 
@@ -839,6 +902,7 @@
     let h = `<article class="seite" data-view="${code}">
       <header class="kopf"><div><div class="ueber">${code} · ${o.berg ? 'Am Berg' : 'Im Dorf'}</div><h1>${esc(o.name)}</h1>
       <div class="eck">${szenen.length ? `Szenen hier: ${szenen.join(' ')}` : ''}</div>${KO(code).kurz ? `<div class="ort-kurz">${inline(KO(code).kurz)}</div>` : ''}</div></header>`;
+    h += klangLeiste(code);
     // Wie es hier aussieht: das, was man den Spielern vorliest, ganz oben
     if (o.beschreibung) h += `<section class="aussehen"><div class="etikett">So sieht es aus</div>${o.beschreibung.length > 520 ? klapp(md(o.beschreibung), 3) : md(o.beschreibung)}</section>`;
     const bilder = o.bild ? [{ code: o.bild, text: o.bild_md || `Siehe ${o.bild}.`, titel: o.name }] : [];
@@ -1099,6 +1163,7 @@
     else if (art === 'suche') inner = suchErgebnisse(arg);
     else if (art === 'modell') inner = modellOverlay(arg);
     else if (art === 'req') inner = reqOverlay(arg);
+    else if (art === 'klang') inner = klangOverlay();
     ol.innerHTML = `<div class="ol-box${art === 'plan' || art === 'req' ? ' breit' : ''}" role="dialog" aria-modal="true">${inner}</div>`;
     ol.hidden = false;
     document.body.classList.add('mit-overlay');
@@ -1229,6 +1294,7 @@
     const klappOffen = $$('.klapp', view).map((k) => k.classList.contains('offen'));
     const scroll = document.scrollingElement.scrollTop;
     view.innerHTML = aktuelleAnsicht();
+    if (KL && alt !== S.ort) KL.vorladen(S.ort, S.uhr);
     if (alt === S.ort) {
       offen.forEach((id) => { const d = document.getElementById(id); if (d) d.open = true; });
       $$('.klapp', view).forEach((k, i) => { if (klappOffen[i]) { k.classList.add('offen'); $('.kk', k).textContent = 'weniger'; } });
@@ -1327,6 +1393,15 @@
     if ((el = t.closest('[data-zeigen]'))) { const [id, i, nur] = el.dataset.zeigen.split('|'); zeige(id, Number(i), nur === 'spieler'); return; }
     if ((el = t.closest('[data-req-sl]'))) { const [id, v] = el.dataset.reqSl.split('|'); T.reqSl[id] = v === '1'; if (T.overlay) zeichneOverlay(); else zeichneHaupt(); return; }
     if ((el = t.closest('[data-req]'))) { zeigeOverlay('req', el.dataset.req); return; }
+    if ((el = t.closest('[data-kl-lage]'))) {
+      const [id, nr] = el.dataset.klLage.split('|');
+      const st = KL.status();
+      if (st.seite === id && st.nr === Number(nr)) KL.lageAus(); else KL.lageAn(id, Number(nr));
+      return;
+    }
+    if ((el = t.closest('[data-kl-knopf]'))) { const [id, p] = el.dataset.klKnopf.split('|'); KL.knopf(id, Number(p) || 0); return; }
+    if (t.closest('[data-kl-aus]')) { KL.lageAus(); return; }
+    if (t.closest('[data-kl-still]')) { KL.allesAus(); return; }
     if ((el = t.closest('[data-voll]')) && !t.closest('a, [data-pid], button')) { zeigeKontext(el); return; }
     if (!t.closest('#kontext')) schliesseKontext();
     if ((el = t.closest('[data-klapp]'))) {
@@ -1433,6 +1508,7 @@
     }
   });
   document.addEventListener('input', (ev) => {
+    if (KL && ev.target.matches('[data-kl-laut]')) { S.klang.laut = ev.target.value / 100; KL.laut(S.klang.laut); sichern(); return; }
     if (ev.target.id === 'g-frage') {
       T.frage = ev.target.value; T.thema = null;
       $('#g-antwort').innerHTML = antwortBereich(P[S.gespraech]);
@@ -1464,6 +1540,14 @@
   $('#suche').addEventListener('keydown', (ev) => { if (ev.key === 'Enter') suchen(); });
   $('#suche-knopf').addEventListener('click', suchen);
   $('#personen-knopf').addEventListener('click', () => zeigeOverlay('personen'));
+  if (KL) {
+    if (!S.klang || typeof S.klang.laut !== 'number') S.klang = { laut: 0.8 };
+    KL.laut(S.klang.laut);
+    KL.beiAenderung(aktualisiereKlang);
+    $('#klang-knopf').addEventListener('click', () => zeigeOverlay('klang'));
+  } else {
+    $('#klang-knopf').hidden = true;
+  }
   $('#thema-knopf').addEventListener('click', () => { S.theme = S.theme === 'dark' ? 'light' : 'dark'; sichern(); document.documentElement.dataset.theme = S.theme; });
   $('#rail-knopf').addEventListener('click', () => document.body.classList.toggle('rail-offen'));
   $('#geraet-knopf').addEventListener('click', () => { S.geraet = tablet() ? 'laptop' : 'tablet'; sichern(); setzeGeraet(); zeichne(); });

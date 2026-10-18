@@ -638,6 +638,33 @@ img.kopf.klein { width: 26px; height: 26px; display: inline-block; vertical-alig
   .gibt > .bezuege { padding-left: 1rem; }
 }
 
+/* ---------- Klang: oben auf Szene und Ort ---------- */
+.klang { display: grid; gap: 0.45rem; margin: 0.1rem 0 1rem; padding: 0.5rem 0.65rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.kl-reihe, .kl-knoepfe { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; }
+.kl-reihe > .etikett { margin-right: 0.15rem; }
+.kl-lage { border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 99px; padding: 0.15rem 0.8rem 0.15rem 0.6rem; min-height: 32px; cursor: pointer; font: 0.88rem var(--font-display); display: inline-flex; align-items: center; gap: 0.35em; }
+.kl-lage .kl-z { color: var(--accent); font-size: 0.78em; width: 1em; text-align: center; }
+.kl-lage.vorschlag { border-color: var(--accent); }
+.kl-lage.an { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.kl-lage.an .kl-z { color: inherit; }
+.kl-knopf { border: 1px dashed var(--line); background: transparent; color: var(--ink); border-radius: 7px; padding: 0.1rem 0.6rem; min-height: 30px; cursor: pointer; font: 0.85rem var(--font-display); }
+.kl-knopf::before { content: "♪ "; color: var(--accent); }
+.kl-knopf.an { background: var(--accent-soft); border-style: solid; border-color: var(--accent); }
+.kl-lage:hover, .kl-knopf:hover { border-color: var(--accent); }
+.kl-anderswo { margin-left: auto; display: inline-flex; align-items: center; gap: 0.4rem; font: 0.84rem var(--font-display); color: var(--muted); }
+.kl-aus { border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 7px; min-height: 30px; min-width: 34px; cursor: pointer; font-size: 0.8rem; }
+.kl-fehler { margin: 0; font-size: 0.85rem; color: var(--st0); }
+#klang-knopf { font-size: 1.05rem; }
+#klang-knopf.an { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.kl-steuer { display: flex; flex-wrap: wrap; gap: 0.6rem 1.2rem; align-items: center; margin: 0.4rem 0 0.6rem; }
+.kl-laut { display: inline-flex; align-items: center; gap: 0.6rem; font: 0.95rem var(--font-display); }
+.kl-laut input { width: min(280px, 55vw); accent-color: var(--accent); }
+.kl-geschichte { margin-bottom: 0.7rem; }
+.kl-geschichte .klang { margin: 0.25rem 0 0; }
+.kl-gtitel { font-family: var(--font-display); font-weight: 500; }
+.kl-alle { gap: 0.3rem; }
+@media (max-width: 720px) { .kl-anderswo { margin-left: 0; flex-basis: 100%; } }
+
 /* ---------- Tablet: größere Tippflächen ---------- */
 #geraet-knopf[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
 :root[data-geraet="tablet"] button, :root[data-geraet="tablet"] a, :root[data-geraet="tablet"] summary, :root[data-geraet="tablet"] .plan g[role="button"] { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
@@ -668,3 +695,7 @@ img.kopf.klein { width: 26px; height: 26px; display: inline-block; vertical-alig
 :root[data-geraet="tablet"] .req-fassung button { min-height: 42px; }
 :root[data-geraet="tablet"] .plan .marke text { font-size: 18px; }
 :root[data-geraet="tablet"] .kontext .kx-text { font-size: 1.02rem; }
+:root[data-geraet="tablet"] .kl-lage { min-height: 44px; padding: 0.3rem 1rem 0.3rem 0.75rem; font-size: 0.95rem; }
+:root[data-geraet="tablet"] .kl-knopf { min-height: 42px; padding: 0.25rem 0.85rem; font-size: 0.92rem; }
+:root[data-geraet="tablet"] .kl-aus { min-height: 42px; min-width: 46px; }
+:root[data-geraet="tablet"] .kl-laut input { height: 36px; }

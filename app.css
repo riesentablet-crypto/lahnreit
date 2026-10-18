@@ -179,7 +179,7 @@ body.mit-gespraech .shell { grid-template-columns: 240px minmax(0, 1fr) 440px; }
 }
 .medien-tabs button[aria-pressed="true"], .ebenen button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .ebenen .zahl { margin-left: 0.2rem; }
-.bildbox { margin: 0; border-radius: 12px; overflow: hidden; background: var(--surface-2); aspect-ratio: 16 / 10; border: 1px solid var(--line); }
+.bildbox { margin: 0; border-radius: 12px; overflow: hidden; background: var(--surface-2); aspect-ratio: 3 / 2; border: 1px solid var(--line); }
 .bildbox img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .bild-fehlt { height: 100%; overflow-y: auto; padding: 1rem 1.2rem; }
 .bf-kopf { font: 600 0.8rem var(--font-display); text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.4rem; }

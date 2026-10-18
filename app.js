@@ -340,8 +340,19 @@
   const kurzNeben = (wer) => wer.split(',')[0].replace(/^(der|die) /, '');
 
   // ---------- Bilder ----------
-  const ENDUNGEN = ['png', 'jpg', 'webp'];
+  const ENDUNGEN = ['webp', 'png', 'jpg'];
   const BILDTEXT = {};
+  const BILD_TITEL = Object.fromEntries((D.bilder || []).map((b) => [b.code, b.titel]));
+  // Alle Bilder, die das Handbuch bei einem Ort nennt. »S15« steht für S15a und S15b.
+  function ortBilder(o) {
+    const codes = [];
+    for (const c of (o.bild_md || '').match(/\b[SDB]\d+[ab]?\b/g) || []) {
+      const teile = BILD_TITEL[c] ? [c] : [c + 'a', c + 'b'].filter((x) => BILD_TITEL[x]);
+      for (const x of teile) if (!codes.includes(x)) codes.push(x);
+    }
+    if (!codes.length && o.bild) codes.push(o.bild);
+    return codes.map((c) => ({ code: c, text: o.bild_md || `Siehe ${c}.`, titel: BILD_TITEL[c] || o.name }));
+  }
   // Solange ein Bild fehlt: erster Satz und »Worauf du zeigst«, der Rest beim Antippen
   function bildKurz(text) {
     const t = flach(text || '');
@@ -352,7 +363,7 @@
   function bildBox(code, text, titel) {
     BILDTEXT[code] = { text: text || '', titel: titel || '' };
     return `<figure class="bildbox">
-      <img src="bilder/szenen/${esc(code)}.png" alt="${esc(titel || 'Bild ' + code)}" data-code="${esc(code)}" data-versuch="0">
+      <img src="bilder/szenen/${esc(code)}.webp" alt="${esc(titel || 'Bild ' + code)}" data-code="${esc(code)}" data-versuch="0">
       <div class="bild-fehlt" hidden><div class="bf-kopf">Bild ${esc(code)} fehlt noch</div>${tipp(`b|${code}`, `<div class="bf-text">${inline(bildKurz(text))}</div>`, 'bf-tipp')}</div>
     </figure>`;
   }
@@ -573,12 +584,12 @@
   const zeile = (id, titel, vorschau, inhalt, cls = '') => `<details class="zeile ${cls}" id="${id}"><summary><span class="zt">${titel}</span>${vorschau ? `<span class="vorschau">${esc(vorschau)}</span>` : ''}</summary><div class="inhalt">${inhalt}</div></details>`;
 
   function medienHTML(viewId, bilder, planCode, sid) {
-    const tabs = [...bilder.map((b) => ({ k: 'bild:' + b.code, name: `Bild ${b.code}` })), ...(planCode ? [{ k: 'plan', name: 'Grundriss' }] : [])];
+    const tabs = [...bilder.map((b) => ({ k: 'bild:' + b.code, name: `Bild ${b.code}`, titel: BILD_TITEL[b.code] || '' })), ...(planCode ? [{ k: 'plan', name: 'Grundriss', titel: '' }] : [])];
     if (!tabs.length) return '<div class="medien leer"></div>';
     let akt = T.medien[viewId];
     if (!akt || !tabs.some((t) => t.k === akt)) akt = tabs[0].k;
     let h = `<div class="medien${akt === 'plan' ? ' mit-plan' : ''}">`;
-    if (tabs.length > 1) h += `<div class="medien-tabs" role="group" aria-label="Ansicht">${tabs.map((t) => `<button type="button" data-medien="${viewId}|${t.k}" aria-pressed="${t.k === akt}">${esc(t.name)}</button>`).join('')}</div>`;
+    if (tabs.length > 1) h += `<div class="medien-tabs" role="group" aria-label="Ansicht">${tabs.map((t) => `<button type="button" data-medien="${viewId}|${t.k}" aria-pressed="${t.k === akt}"${t.titel ? ` title="${esc(t.titel)}"` : ''}>${esc(t.name)}</button>`).join('')}</div>`;
     if (akt === 'plan') h += planHTML(planCode, sid);
     else {
       const b = bilder.find((x) => 'bild:' + x.code === akt);
@@ -905,7 +916,7 @@
     h += klangLeiste(code);
     // Wie es hier aussieht: das, was man den Spielern vorliest, ganz oben
     if (o.beschreibung) h += `<section class="aussehen"><div class="etikett">So sieht es aus</div>${o.beschreibung.length > 520 ? klapp(md(o.beschreibung), 3) : md(o.beschreibung)}</section>`;
-    const bilder = o.bild ? [{ code: o.bild, text: o.bild_md || `Siehe ${o.bild}.`, titel: o.name }] : [];
+    const bilder = ortBilder(o);
     const jetzt = leuteAmOrt(code), neben = nebenAmOrt(code);
     let box = '';
     if (o.berg) {

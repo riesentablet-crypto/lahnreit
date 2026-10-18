@@ -52,13 +52,17 @@
   const reqFuer = (art, code) => Object.values(RQ).filter((r) => (r[art] || []).includes(code));
   const reqId = (ort) => (/^R-/.test(ort || '') && RQ[ort.slice(2)] ? ort.slice(2) : null);
   const VB = window.LAHNREIT_VERBINDUNGEN || {};
+  // Brandls geheimes Ziel: die drei Frauen (data/frauen.js)
+  const FR = window.LAHNREIT_FRAUEN || null;
+  const FRAU = FR ? Object.fromEntries(FR.frauen.map((f) => [f.pid, f])) : {};
   // Klang: Schleifen unter der Szene und Einzelklänge (klang.js)
   const KL = window.LahnreitKlang && window.LahnreitKlang.moeglich ? window.LahnreitKlang : null;
 
   // ---------- Zustand, nur in diesem Browser gespeichert ----------
   const KEY = 'lahnreit-spielleitung-v1';
   const leer = () => ({ wer: 'B', tat: {}, probe: {}, schloss: {}, ausnahme: {}, treffen: {}, uhr: 'abends', ort: 'S1',
-    gespraech: null, kontext: null, gefunden: {}, theme: 'dark', rail: 'szenen', geraet: null, klang: { laut: 0.8 } });
+    gespraech: null, kontext: null, gefunden: {}, theme: 'dark', rail: 'szenen', geraet: null, klang: { laut: 0.8 },
+    frauen: { wirbt: {}, auf: false } });
   let S = leer();
   try {
     const roh = localStorage.getItem(KEY);
@@ -983,6 +987,7 @@
         `<button type="button" data-schloss="${v}" aria-pressed="${!!S.schloss[pid] === v}">${t}</button>`).join('')}</span></div>`;
     }
     if (pid === 'P5') h += `<label class="gs-check"><input type="checkbox" data-ausnahme ${S.ausnahme.P5 ? 'checked' : ''}> Maxi ist am Berg gestorben (S17)</label>`;
+    if (FRAU[pid]) h += frauZeile(pid);
     if (pr === 'ein') h += `<p class="gs-hinweis">${Pron(p)} redet jetzt eine Stufe höher. Wenn das Gespräch endet, fällt ${er} dauerhaft eine Stufe${g === 0 ? `. ${Pron(p)} ist schon feindselig, also gilt »Wenn es kippt«` : ''}.</p>`;
     const steigt = feld(p, /steigt und fällt/);
     if (kp && (kp.steigt || kp.faellt)) {
@@ -1085,7 +1090,7 @@
   }
   function personenListe() {
     let h = olKopf(`P1 bis P22 · ${uhrName()}`, 'Personen') + `<div class="ol-inhalt">
-      <p class="klein-text">Die Punkte zeigen die Haltung zu Brandl, Hagedorn und Hias. Rechts steht, wo die Person um diese Zeit ist.</p><div class="pliste">`;
+      <p class="klein-text">Die Punkte zeigen die Haltung zu Brandl, Hagedorn und Hias. Rechts steht, wo die Person um diese Zeit ist.</p>${FR ? '<div class="knopfzeile"><button type="button" class="knopf" data-frauen>Brandls Frauen</button></div>' : ''}<div class="pliste">`;
     const GRUPPEN = ['Der Täter und seine Tochter', 'Die Lauten', 'Helfer und Zeugen', 'Berg und Rand'];
     const gruppen = [...GRUPPEN, ...new Set(PERSONEN.map((p) => p.gruppe).filter((g) => !GRUPPEN.includes(g)))];
     for (const gname of gruppen) {
@@ -1101,6 +1106,39 @@
     }
     h += `</div><h3>Neuer Abend</h3><p class="klein-text">Setzt alle Haltungen, Schlösser und Funde auf den Anfang.</p>
       <div class="knopfzeile"><button type="button" class="knopf gefahr" data-reset>${T.resetFrage ? 'Wirklich alles zurücksetzen?' : 'Alles auf den Anfang'}</button>${T.resetFrage ? '<button type="button" class="knopf" data-reset-nein>Lieber nicht</button>' : ''}</div></div>`;
+    return h;
+  }
+  // Brandls Frauen: um wen er wirbt, was es kostet, was beim Auffliegen geschieht
+  const wirbtUm = () => FR.frauen.filter((f) => S.frauen.wirbt[f.pid]);
+  function frauZeile(pid) {
+    const an = !!S.frauen.wirbt[pid];
+    const andere = wirbtUm().filter((f) => f.pid !== pid).map((f) => f.name);
+    let h = `<div class="gs-reihe"><span class="gs-was">Brandl</span><span class="knopfreihe"><button type="button" data-fr-wirbt="${pid}" aria-pressed="${an}">wirbt um ${akk(P[pid])}</button><button type="button" data-frauen>Brandls Frauen</button></span></div>`;
+    if (an && andere.length) h += `<p class="gs-hinweis">Er wirbt auch um ${esc(andere.join(' und '))}. ${S.frauen.auf ? 'Es ist aufgeflogen' : 'Fliegt es auf'}: ${inline(FRAU[pid].auf)}</p>`;
+    return h;
+  }
+  function frauenOverlay() {
+    const n = wirbtUm().length;
+    let h = olKopf('Brandls geheimes Ziel', 'Brandls Frauen') + `<div class="ol-inhalt">
+      <p class="fr-ziel"><b>Ziel:</b> ${inline(FR.ziel)}. ${inline(FR.lohn)}</p><div class="fr-karten">`;
+    for (const f of FR.frauen) {
+      const p = P[f.pid], kp = KP(f.pid) || {}, an = !!S.frauen.wirbt[f.pid], st = stufe(f.pid, 'B');
+      h += `<section class="fr-karte${an ? ' an' : ''}${an && S.frauen.auf ? ' auf' : ''}">
+        <div class="fr-kopf">${kopfBild(f.pid, 'klein')}<div><div class="ueber">${f.pid}</div><h3>${esc(kurzName(p))}</h3></div><span class="fr-stufe">zu Brandl <b class="st-t-${st}">${STUFEN[st]}</b></span></div>
+        <button type="button" class="fr-wirbt" data-fr-wirbt="${f.pid}" aria-pressed="${an}">${an ? '✓ ' : ''}Brandl wirbt um ${akk(p)}</button>
+        <dl class="fr-liste">
+          <div><dt>Preis</dt><dd>${inline(f.preis)}</dd></div>
+          ${kp.steigt ? `<div><dt><span class="gb-pf hoch" title="steigt">▲</span></dt><dd>${reihe(kp.steigt)}</dd></div>` : ''}
+          ${kp.faellt ? `<div><dt><span class="gb-pf runter" title="fällt">▼</span></dt><dd>${reihe(kp.faellt)}</dd></div>` : ''}
+          <div class="fr-aufzeile"><dt>Fliegt es auf</dt><dd>${inline(f.auf)}</dd></div>
+          <div><dt>Donnerstag</dt><dd>${inline(f.donnerstag)}</dd></div>
+        </dl>
+        <button type="button" class="knopf leise" data-pid="${f.pid}">Gespräch mit ${esc(f.name)}</button>
+      </section>`;
+    }
+    h += `</div><div class="fr-unten">${n > 1 ? `<p class="fr-warn">Er wirbt um ${n === 3 ? 'alle drei' : 'zwei'}. ${inline(FR.mehrere)}</p>` : ''}
+      <label class="gs-check"><input type="checkbox" data-fr-auf ${S.frauen.auf ? 'checked' : ''}> Es ist aufgeflogen, dass er um mehrere wirbt</label>
+      <p class="klein-text">Wodurch es auffliegt, lässt das Buch dir. Wenn keine gewonnen ist: ${inline(FR.keine)}</p></div></div>`;
     return h;
   }
   function teilUeberblick(nr) {
@@ -1175,7 +1213,8 @@
     else if (art === 'modell') inner = modellOverlay(arg);
     else if (art === 'req') inner = reqOverlay(arg);
     else if (art === 'klang') inner = klangOverlay();
-    ol.innerHTML = `<div class="ol-box${art === 'plan' || art === 'req' ? ' breit' : ''}" role="dialog" aria-modal="true">${inner}</div>`;
+    else if (art === 'frauen' && FR) inner = frauenOverlay();
+    ol.innerHTML = `<div class="ol-box${art === 'plan' || art === 'req' || art === 'frauen' ? ' breit' : ''}" role="dialog" aria-modal="true">${inner}</div>`;
     ol.hidden = false;
     document.body.classList.add('mit-overlay');
     if (art === 'suche') markiere($('.ol-inhalt', ol), arg);
@@ -1502,6 +1541,12 @@
     }
     if ((el = t.closest('[data-alle-themen]'))) { T.alleThemen = !T.alleThemen; zeichneGespraech(); return; }
     if ((el = t.closest('[data-alles]'))) { zeigeOverlay('alles', el.dataset.alles); return; }
+    if (t.closest('[data-frauen]')) { zeigeOverlay('frauen'); return; }
+    if ((el = t.closest('[data-fr-wirbt]'))) {
+      const w = S.frauen.wirbt, pid = el.dataset.frWirbt;
+      if (w[pid]) delete w[pid]; else w[pid] = true;
+      sichern(); zeichneGespraech(); if (T.overlay) zeichneOverlay(); return;
+    }
     // Overlay
     if (t.closest('[data-ol-zu]') || t.id === 'overlay') { schliesseOverlay(); return; }
     if ((el = t.closest('[data-reset]'))) {
@@ -1513,6 +1558,7 @@
   });
   document.addEventListener('change', (ev) => {
     if (ev.target.matches('[data-ausnahme]')) { S.ausnahme.P5 = ev.target.checked; sichern(); zeichneGespraech(); zeichneHaupt(); }
+    if (ev.target.matches('[data-fr-auf]')) { S.frauen.auf = ev.target.checked; sichern(); zeichneOverlay(); zeichneGespraech(); }
     if (ev.target.id === 'treffen-wahl' && ev.target.value) {
       S.treffen[S.uhr] = Object.assign({}, S.treffen[S.uhr], { [ev.target.value]: ev.target.dataset.ort });
       T.treffenWahl = null; sichern(); zeichne();

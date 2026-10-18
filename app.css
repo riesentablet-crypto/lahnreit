@@ -665,6 +665,31 @@ img.kopf.klein { width: 26px; height: 26px; display: inline-block; vertical-alig
 .kl-alle { gap: 0.3rem; }
 @media (max-width: 720px) { .kl-anderswo { margin-left: 0; flex-basis: 100%; } }
 
+/* ---------- Brandls Frauen ---------- */
+.fr-ziel { margin: 0 0 0.8rem; }
+.fr-karten { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 0.7rem; }
+.fr-karte { border: 1px solid var(--line); border-radius: 12px; padding: 0.7rem 0.8rem; background: var(--bg); display: flex; flex-direction: column; gap: 0.55rem; }
+.fr-karte.an { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.fr-kopf { display: flex; align-items: center; gap: 0.5rem; }
+.fr-kopf img.kopf.klein { width: 40px; height: 40px; margin: 0; }
+.fr-kopf h3 { margin: 0; font-size: 1.05rem; }
+.fr-stufe { margin-left: auto; font: 0.8rem var(--font-display); color: var(--muted); text-align: right; }
+.fr-stufe b { font-weight: 500; font-size: 0.88rem; }
+.fr-wirbt {
+  border: 1px solid var(--line); background: var(--surface); border-radius: 8px; min-height: 38px; padding: 0.2rem 0.65rem;
+  cursor: pointer; font: 0.9rem var(--font-display); text-align: left;
+}
+.fr-wirbt[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.fr-liste { margin: 0; display: grid; gap: 0.35rem; font-size: 0.92rem; }
+.fr-liste > div { display: grid; grid-template-columns: 6.9rem 1fr; gap: 0.4rem; align-items: baseline; }
+.fr-liste dt { font: 600 0.74rem var(--font-display); text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+.fr-liste dd { margin: 0; }
+.fr-karte.auf .fr-aufzeile dd { color: var(--st0); font-weight: 600; }
+.fr-karte > .knopf { align-self: flex-start; margin-top: auto; }
+.fr-unten { margin-top: 0.9rem; display: grid; gap: 0.45rem; }
+.fr-unten p { margin: 0; }
+.fr-warn { color: var(--st1); font-family: var(--font-display); }
+
 /* ---------- Tablet: größere Tippflächen ---------- */
 #geraet-knopf[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
 :root[data-geraet="tablet"] button, :root[data-geraet="tablet"] a, :root[data-geraet="tablet"] summary, :root[data-geraet="tablet"] .plan g[role="button"] { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
@@ -699,3 +724,4 @@ img.kopf.klein { width: 26px; height: 26px; display: inline-block; vertical-alig
 :root[data-geraet="tablet"] .kl-knopf { min-height: 42px; padding: 0.25rem 0.85rem; font-size: 0.92rem; }
 :root[data-geraet="tablet"] .kl-aus { min-height: 42px; min-width: 46px; }
 :root[data-geraet="tablet"] .kl-laut input { height: 36px; }
+:root[data-geraet="tablet"] .fr-wirbt { min-height: 46px; font-size: 0.98rem; }

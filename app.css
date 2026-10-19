@@ -783,6 +783,11 @@ img.kopf.klein { width: 26px; height: 26px; display: inline-block; vertical-alig
 .su-hinweis p { margin: 0.25rem 0 0.5rem; font-size: 0.9rem; }
 .su-hinweis .knopfzeile { gap: 0.4rem; }
 .knopf.voll { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+/* Die dritte Figur: Hias oder Hanni */
+.dritte-wahl { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin: 0 0 0.5rem; }
+.dritte-wahl button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.gh-hanni { margin: 0.45rem 0 0; font-size: 0.92rem; color: var(--muted); }
+.gh-hanni .etikett { margin-right: 0.4em; }
 /* Tafel */
 .su-summe { margin: 0 0 0.8rem; }
 .su-weg { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.8rem; margin-bottom: 0.6rem; }

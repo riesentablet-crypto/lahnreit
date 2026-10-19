@@ -7,10 +7,46 @@
   const D = window.LAHNREIT;
   const PL = window.LAHNREIT_PLAENE || {};
   const STUFEN = ['feindselig', 'skeptisch', 'neutral', 'kooperativ', 'freundlich'];
+  // Die dritte Figur: Hias oder Hanni (data/hanni.js). Gewählt wird vor dem Laden, danach liest jeder Text mit ihr.
+  const HN = window.LAHNREIT_HANNI || null;
+  const DRITTE = (() => {
+    try { return HN && JSON.parse(localStorage.getItem('lahnreit-spielleitung-v1') || '{}').dritte === 'hanni' ? 'hanni' : 'hias'; } catch (e) { return 'hias'; }
+  })();
+  if (DRITTE === 'hanni') hanniEinlesen();
+  function hanniEinlesen() {
+    const regeln = HN.regeln.map(([a, b]) => [new RegExp(a, 'g'), b]);
+    const pfad = /^[\w./-]+\.(webp|png|jpe?g|js|mp3)$/;
+    const um = (t) => {
+      if (pfad.test(t)) return t;
+      for (const [a, b] of HN.saetze) if (t.indexOf(a) >= 0) t = t.split(a).join(b);
+      if (t.indexOf('Hias') >= 0) for (const [a, b] of regeln) t = t.replace(a, b);
+      return t;
+    };
+    const lauf = (o, f) => {
+      if (Array.isArray(o)) { for (let i = 0; i < o.length; i++) { if (typeof o[i] === 'string') o[i] = f(o[i]); else if (o[i] && typeof o[i] === 'object') lauf(o[i], f); } } else if (o && typeof o === 'object') {
+        for (const k of Object.keys(o)) { if (typeof o[k] === 'string') o[k] = f(o[k]); else if (o[k] && typeof o[k] === 'object') lauf(o[k], f); }
+      }
+    };
+    // Startwerte und »Haltung zu Beginn« der zehn Figuren, die ihr anders begegnen
+    const kurzP = (window.LAHNREIT_KURZ && window.LAHNREIT_KURZ.personen) || {};
+    for (const p of D.personen.personen) {
+      const neu = HN.start[p.id];
+      if (!neu) continue;
+      const alt = p.start.Hs;
+      p.hiasStart = alt;
+      p.start.Hs = neu[0];
+      const f = (t) => t.split(`Hias ${alt}`).join(`Hias ${neu[0]}`);
+      lauf(p, f);
+      if (kurzP[p.id]) lauf(kurzP[p.id], f);
+    }
+    for (const k of ['LAHNREIT', 'LAHNREIT_KURZ', 'LAHNREIT_REQUISITEN', 'LAHNREIT_ANHANG', 'LAHNREIT_FRAUEN', 'LAHNREIT_PLAENE', 'LAHNREIT_VERBINDUNGEN', 'LAHNREIT_KLANG', 'LAHNREIT_SPIELUHR']) if (window[k]) lauf(window[k], um);
+    // Wiesingers Zettel und das Hüttenbuch gibt es mit ihrem Namen
+    if (window.LAHNREIT_REQUISITEN) lauf(window.LAHNREIT_REQUISITEN, (t) => HN.bilder[t] || t);
+  }
   const ERM = [
     { k: 'B', name: 'Brandl' },
     { k: 'Hd', name: 'Hagedorn' },
-    { k: 'Hs', name: 'Hias' },
+    { k: 'Hs', name: DRITTE === 'hanni' ? HN.name : 'Hias' },
   ];
   const THEMEN = ['Lindner', 'Donnerstag, der 19.', 'Die Föhnnacht', 'Kasermandl', 'Das Hotel',
     'Der Bürgermeister', 'Der Pfarrer', 'Leni', 'Der Gschwendtner', 'Martl und die Burschen', 'Der Korbi',
@@ -69,7 +105,7 @@
   const suLeer = () => ({ an: false, laeuft: false, phase: null, weg: null, zeit: {}, seit: 0, plus: {}, min: {}, um: {} });
   const leer = () => ({ wer: 'B', tat: {}, probe: {}, schloss: {}, ausnahme: {}, treffen: {}, uhr: 'abends', ort: 'S1',
     gespraech: null, kontext: null, gefunden: {}, theme: 'dark', rail: 'szenen', geraet: null, klang: { laut: 0.8 },
-    frauen: { wirbt: {}, auf: false }, su: suLeer() });
+    frauen: { wirbt: {}, auf: false }, su: suLeer(), dritte: 'hias' });
   let S = leer();
   try {
     const roh = localStorage.getItem(KEY);
@@ -1108,7 +1144,7 @@
       const i = stufe(pid, e.k);
       return `<button type="button" data-wer="${e.k}" aria-pressed="${k === e.k}"><span class="gw-name">${e.name}</span><span class="gw-stufe st-t-${i}">${STUFEN[i]}</span></button>`;
     }).join('')}</div>`;
-    h += `<div class="g-haltung st-b-${st}"><div class="gh-zeile"><span class="gh-stufe">${STUFEN[st]}</span><span class="gh-wuerfel">${wuerfel(st)}</span></div>${leiterText ? `<p class="gh-leiter">${inline(leiterText)}</p>` : ''}</div>`;
+    h += `<div class="g-haltung st-b-${st}"><div class="gh-zeile"><span class="gh-stufe">${STUFEN[st]}</span><span class="gh-wuerfel">${wuerfel(st)}</span></div>${leiterText ? `<p class="gh-leiter">${inline(leiterText)}</p>` : ''}${hanniGrund(pid, k)}</div>`;
 
     // Spielmechanik
     const tat = S.tat[pid] || 0;
@@ -1208,7 +1244,7 @@
       if (/^Haltung zu Beginn/.test(kk)) continue;
       h += `<p class="feld"><b>${esc(kk)}.</b> ${inline(v)}</p>`;
     }
-    h += `<p class="feld"><b>Haltung zu Beginn.</b> ${ERM.map((e) => `${e.name} ${p.start[e.k]}`).join(' · ')}</p>`;
+    h += `<p class="feld"><b>Haltung zu Beginn.</b> ${ERM.map((e) => `${e.name} ${p.start[e.k]}`).join(' · ')}${p.hiasStart ? ` <span class="klein-text">(zu Hias ${esc(p.hiasStart)})</span>` : ''}</p>${hanniGrund(p.id, 'Hs')}`;
     if (p.leiter.length) {
       const jetzt = STUFEN[stufe(pid, k)];
       h += `<h3>Was ${er} auf jeder Stufe tut</h3><div class="leiter">${p.leiter.map((z) => `<div class="lz" data-jetzt="${z.stufe === jetzt}"><span class="st-t-${STUFEN.indexOf(z.stufe)}">${z.stufe}</span><div>${inline(z.text)}</div></div>`).join('')}</div>`;
@@ -1224,9 +1260,22 @@
     for (const t of p.tabellen || []) h += tabelle(t.kopf, t.zeilen);
     return h + '</div>';
   }
+  // Warum eine Figur Hanni anders begegnet als Hias
+  function hanniGrund(pid, k) {
+    if (DRITTE !== 'hanni' || k !== 'Hs' || !HN.start[pid]) return '';
+    return `<p class="gh-hanni"><span class="etikett">Zu Hanni</span> ${esc(HN.start[pid][0])} statt ${esc(P[pid].hiasStart)}: ${esc(HN.start[pid][1])}</p>`;
+  }
+  // Wer die dritte Figur spielt: Hias oder Hanni. Die Seite lädt danach neu.
+  const dritteWahl = () => (HN ? `<div class="dritte-wahl" role="group" aria-label="Die dritte Figur"><span class="etikett">Dritte Figur</span>${[['hias', 'Hias'], ['hanni', HN.name]].map(([w, n]) => `<button type="button" class="knopf klein" data-dritte="${w}" aria-pressed="${DRITTE === w}">${n}</button>`).join('')}</div>` : '');
+  function dritteSetzen(w) {
+    if (!HN || w === DRITTE) return;
+    S.dritte = w;
+    sichern();
+    location.reload();
+  }
   function personenListe() {
     let h = olKopf(`P1 bis P22 · ${uhrName()}`, 'Personen') + `<div class="ol-inhalt">
-      <p class="klein-text">Die Punkte zeigen die Haltung zu Brandl, Hagedorn und Hias. Rechts steht, wo die Person um diese Zeit ist.</p>${FR ? '<div class="knopfzeile"><button type="button" class="knopf" data-frauen>Brandls Frauen</button></div>' : ''}<div class="pliste">`;
+      ${dritteWahl()}<p class="klein-text">Die Punkte zeigen die Haltung zu ${ERM.map((e) => e.name).join(', ').replace(/, ([^,]*)$/, ' und $1')}. Rechts steht, wo die Person um diese Zeit ist.</p>${FR ? '<div class="knopfzeile"><button type="button" class="knopf" data-frauen>Brandls Frauen</button></div>' : ''}<div class="pliste">`;
     const GRUPPEN = ['Der Täter und seine Tochter', 'Die Lauten', 'Helfer und Zeugen', 'Berg und Rand'];
     const gruppen = [...GRUPPEN, ...new Set(PERSONEN.map((p) => p.gruppe).filter((g) => !GRUPPEN.includes(g)))];
     for (const gname of gruppen) {
@@ -1510,7 +1559,12 @@
   }
   function suKnopf(was) {
     const p = suPh();
-    if (was === 'start') { S.su = suLeer(); suWechsel(SU.phasen[0].id); return; }
+    if (was === 'start' && HN) { T.suHinweis = { art: 'wahl' }; zeichneSpieluhr(); return; }
+    if (was === 'start' || was === 'start-hias' || was === 'start-hanni') {
+      S.su = suLeer(); suWechsel(SU.phasen[0].id);
+      if (was !== 'start') dritteSetzen(was.slice(6));
+      return;
+    }
     if (was === 'tafel') { zeigeOverlay('spieluhr'); return; }
     if (was === 'zurueck' || was === 'weiter') { const q = suNachbar(was === 'weiter' ? 1 : -1); if (q) suWechsel(q.id); return; }
     if (was === 'pause') {
@@ -1583,8 +1637,9 @@
   }
   function suHinweisHTML() {
     const h = T.suHinweis;
-    if (!h || !S.su.an) return '';
     const kopf = (t) => `<div class="su-h-kopf"><b>${t}</b><button type="button" class="zu-knopf klein" data-su="hinweis-zu" aria-label="Hinweis schließen">×</button></div>`;
+    if (h && h.art === 'wahl' && !S.su.an) return kopf('Wer spielt die dritte Figur?') + `<p>Hias oder ${esc(HN.voll)}: gleiche Werte, gleiches Geheimnis. Zehn Leute im Dorf begegnen ihr anders.</p><div class="knopfzeile">${[['hias', 'Hias'], ['hanni', HN.name]].map(([w, n]) => `<button type="button" class="knopf klein${DRITTE === w ? ' voll' : ''}" data-su="start-${w}">Mit ${n} beginnen</button>`).join('')}</div>`;
+    if (!h || !S.su.an) return '';
     if (h.art === 'info') return kopf('Spieluhr') + `<p>${esc(h.text)}</p><div class="knopfzeile"><button type="button" class="knopf klein" data-su="pause">Weiterlaufen lassen</button></div>`;
     const p = suPh(h.id);
     if (!p) return '';
@@ -1803,6 +1858,7 @@
     let el;
     if (t.closest('[data-kontext-zu]')) { schliesseKontext(); return; }
     if ((el = t.closest('[data-su]'))) { suKnopf(el.dataset.su); return; }
+    if ((el = t.closest('[data-dritte]'))) { if (el.dataset.dritte !== DRITTE) dritteSetzen(el.dataset.dritte); return; }
     if ((el = t.closest('[data-su-zu]')) || (el = t.closest('[data-su-phase]'))) { suWechsel(el.dataset.suZu || el.dataset.suPhase); return; }
     if ((el = t.closest('[data-su-min]'))) {
       const [id, d] = el.dataset.suMin.split('|'), p = suPh(id);

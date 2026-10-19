@@ -58,12 +58,16 @@
   const FRAU = FR ? Object.fromEntries(FR.frauen.map((f) => [f.pid, f])) : {};
   // Klang: Schleifen unter der Szene und Einzelklänge (klang.js)
   const KL = window.LahnreitKlang && window.LahnreitKlang.moeglich ? window.LahnreitKlang : null;
+  // Spieluhr: Tageszeiten mit Richtzeit am Tisch (data/spieluhr.js)
+  const SU = window.LAHNREIT_SPIELUHR && window.LAHNREIT_SPIELUHR.phasen ? window.LAHNREIT_SPIELUHR : null;
 
   // ---------- Zustand, nur in diesem Browser gespeichert ----------
   const KEY = 'lahnreit-spielleitung-v1';
+  // zeit: gespielte Sekunden je Tageszeit, seit: wann die laufende zuletzt gezählt wurde, um: deren Zeit schon abgelaufen ist
+  const suLeer = () => ({ an: false, laeuft: false, phase: null, weg: null, zeit: {}, seit: 0, plus: {}, min: {}, um: {} });
   const leer = () => ({ wer: 'B', tat: {}, probe: {}, schloss: {}, ausnahme: {}, treffen: {}, uhr: 'abends', ort: 'S1',
     gespraech: null, kontext: null, gefunden: {}, theme: 'dark', rail: 'szenen', geraet: null, klang: { laut: 0.8 },
-    frauen: { wirbt: {}, auf: false } });
+    frauen: { wirbt: {}, auf: false }, su: suLeer() });
   let S = leer();
   try {
     const roh = localStorage.getItem(KEY);
@@ -86,7 +90,7 @@
   }
 
   // Was nur für diesen Augenblick gilt
-  const T = { frage: '', thema: null, alleThemen: false, medien: {}, plan: {}, s9: 2, oeffne: null, resetFrage: false, overlay: null, reqSl: {}, zeigen: null, treffenWahl: null };
+  const T = { frage: '', thema: null, alleThemen: false, medien: {}, plan: {}, s9: 2, oeffne: null, resetFrage: false, overlay: null, reqSl: {}, zeigen: null, treffenWahl: null, suHinweis: null, suReset: false };
 
   // ---------- Hilfen ----------
   const $ = (sel, el = document) => el.querySelector(sel);
@@ -1294,7 +1298,7 @@
     T.overlay = { art, arg };
     zeichneOverlay();
   }
-  function schliesseOverlay() { if (window.LahnreitModell) window.LahnreitModell.stopp(); T.overlay = null; T.resetFrage = false; zeichneOverlay(); }
+  function schliesseOverlay() { if (window.LahnreitModell) window.LahnreitModell.stopp(); T.overlay = null; T.resetFrage = false; T.suReset = false; zeichneOverlay(); }
   function zeichneOverlay() {
     const ol = $('#overlay');
     if (!T.overlay) { ol.hidden = true; ol.innerHTML = ''; document.body.classList.remove('mit-overlay'); return; }
@@ -1310,6 +1314,7 @@
     else if (art === 'req') inner = reqOverlay(arg);
     else if (art === 'klang') inner = klangOverlay();
     else if (art === 'frauen' && FR) inner = frauenOverlay();
+    else if (art === 'spieluhr' && SU) inner = spieluhrTafel();
     ol.innerHTML = `<div class="ol-box${art === 'plan' || art === 'req' || art === 'frauen' ? ' breit' : ''}" role="dialog" aria-modal="true">${inner}</div>`;
     ol.hidden = false;
     document.body.classList.add('mit-overlay');
@@ -1408,6 +1413,231 @@
     return `<div class="probe-kurz">${N.filter(([f]) => kp[f]).map(([f, t]) => tipp(`s|${sid}|probe|${k}.${f}`, `<span class="pk-t">${t}</span><span>${inline(kp[f])}</span>`, 'pk-z')).join('')}</div>`;
   }
 
+  // ---------- Spieluhr ----------
+  // Zählt die Zeit am Tisch je Tageszeit. Läuft eine ab, geht es innerhalb des Tages von selbst weiter, mit Hinweis;
+  // in die Nacht und aus ihr heraus erst, wenn die Spielleitung es bestätigt. Die Seite behält ihre Tageszeit,
+  // bis man die Szene wechselt; dann stellt sie sich auf die Tageszeit der Spieluhr.
+  const IKON = {
+    zurueck: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 2h2v12h-2zM14 2v12L5.5 8z"/></svg>',
+    weiter: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11.5 2h2v12h-2zM2 2v12l8.5-6z"/></svg>',
+    pause: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 2h3v12h-3zM9.5 2h3v12h-3z"/></svg>',
+    los: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2v12l10-6z"/></svg>',
+  };
+  const suPh = (id) => (SU ? SU.phasen.find((p) => p.id === (id === undefined ? S.su.phase : id)) || null : null);
+  const suPos = (p) => SU.phasen.indexOf(p);
+  const suFolge = (weg = S.su.weg) => SU.phasen.filter((p) => !p.weg || p.weg === (weg || 'georgi'));
+  const suNachbar = (d) => { const f = suFolge(), i = f.indexOf(suPh()); return i < 0 ? null : f[i + d] || null; };
+  const suPlan = (p) => ((S.su.min[p.id] ?? p.min) + (S.su.plus[p.id] || 0)) * 60;
+  const suZeit = (p) => (S.su.zeit[p.id] || 0) + (S.su.laeuft && S.su.phase === p.id ? (Date.now() - S.su.seit) / 1000 : 0);
+  const suUhrName = (k) => (UHR.find((u) => u.k === k) || { name: k }).name;
+  const suTag = (p, weg = S.su.weg) => { const t = SU.tage[p.tag]; return Array.isArray(t) ? t[weg === 'berg' ? 1 : 0] : t; };
+  const suName = (p, weg) => `${suTag(p, weg)} · ${p.titel || suUhrName(p.uhr)}`;
+  const suGrenze = (a, b) => a.tag !== b.tag || a.uhr === 'nachts' || b.uhr === 'nachts';
+  const suJetzt = () => (SU && S.su.an && suPh() ? suPh().uhr : null);
+  const uhrText = (s) => { s = Math.floor(s); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`; };
+  const dauer = (s) => { const m = Math.round(s / 60); return m >= 60 ? `${Math.floor(m / 60)} Std. ${m % 60} Min.` : `${m} Min.`; };
+  const suSzenen = (p) => (p.szenen || []).filter((s) => SZ[s]).map((s) => `<a class="ref" href="#${s}">${s}</a>`).join(' ');
+  // Wer vor Georgi schon in den Bergtag springt, ist gleich auf den Berg gegangen
+  function suWegNach(alt, neu) {
+    if (neu.weg) return neu.weg;
+    const g = SU.phasen.findIndex((p) => p.id === 'mo-georgi'), n = SU.phasen.findIndex((p) => p.id === 'mo-nacht');
+    if (alt && suPos(alt) <= g && suPos(neu) > n) return 'berg';
+    return S.su.weg;
+  }
+  function suFalten() {
+    if (!S.su.laeuft || !S.su.phase) return;
+    const jetzt = Date.now();
+    S.su.zeit[S.su.phase] = (S.su.zeit[S.su.phase] || 0) + Math.max(0, jetzt - S.su.seit) / 1000;
+    S.su.seit = jetzt;
+  }
+  function suWechsel(id, vonSelbst) {
+    const alt = suPh(), neu = suPh(id);
+    if (!neu) return;
+    if (!S.su.an) Object.assign(S.su, { an: true, laeuft: true });
+    suFalten();
+    S.su.weg = suWegNach(alt, neu);
+    S.su.phase = id;
+    S.su.seit = Date.now();
+    // Von Hand gilt die neue Tageszeit sofort; von selbst erst beim nächsten Szenenwechsel
+    if (!vonSelbst) S.uhr = neu.uhr;
+    T.suHinweis = { art: 'neu', id, vonSelbst: !!vonSelbst, bis: Date.now() + (vonSelbst || neu.schlaf ? 30000 : 9000) };
+    sichern(); zeichne();
+  }
+  function suKnopf(was) {
+    const p = suPh();
+    if (was === 'start') { S.su = suLeer(); suWechsel(SU.phasen[0].id); return; }
+    if (was === 'tafel') { zeigeOverlay('spieluhr'); return; }
+    if (was === 'zurueck' || was === 'weiter') { const q = suNachbar(was === 'weiter' ? 1 : -1); if (q) suWechsel(q.id); return; }
+    if (was === 'pause') {
+      if (S.su.laeuft) { suFalten(); S.su.laeuft = false; } else { S.su.laeuft = true; S.su.seit = Date.now(); }
+      if (T.suHinweis && T.suHinweis.art === 'info') T.suHinweis = null;
+    } else if (was === 'plus5' && p) {
+      // Noch fünf Minuten von jetzt an
+      const drueber = Math.max(0, Math.ceil((suZeit(p) - suPlan(p)) / 60));
+      S.su.plus[p.id] = (S.su.plus[p.id] || 0) + drueber + 5;
+      S.su.um[p.id] = false;
+      T.suHinweis = null;
+    } else if (was === 'umstellen' && p) {
+      S.uhr = p.uhr; T.suHinweis = null; sichern(); zeichne(); return;
+    } else if (was === 'hinweis-zu') {
+      T.suHinweis = null;
+    } else if (was === 'reset') {
+      if (!T.suReset) { T.suReset = true; zeichneOverlay(); return; }
+      S.su = suLeer(); T.suReset = false; T.suHinweis = null; sichern(); schliesseOverlay(); zeichne(); return;
+    } else if (was === 'reset-nein') {
+      T.suReset = false;
+    }
+    sichern(); zeichneSpieluhr();
+    if (T.overlay && T.overlay.art === 'spieluhr') zeichneOverlay();
+  }
+  // Ruft man eine Szene aus einer späteren Tageszeit auf, bietet der Hinweis an, die Uhr vorzustellen
+  function suVorschlag(h) {
+    if (!SU || !S.su.an) return;
+    if (T.suHinweis && T.suHinweis.art !== 'um') T.suHinweis = null;
+    const p = suPh();
+    if (!SZ[h] || !p || T.suHinweis || (p.szenen || []).includes(h)) return;
+    for (const q of SU.phasen.slice(suPos(p) + 1)) {
+      if (q.weg && S.su.weg && q.weg !== S.su.weg) continue;
+      if ((q.szenen || []).includes(h)) { T.suHinweis = { art: 'vor', id: q.id, sid: h, weg: suWegNach(p, q) }; return; }
+    }
+  }
+  let suLetzter = Date.now(), suGesichert = Date.now();
+  function suTick() {
+    if (!S.su.an) return;
+    const jetzt = Date.now(), p = suPh();
+    if (!p) return;
+    // Hat der Rechner geschlafen, zählt die Lücke nicht
+    if (S.su.laeuft && jetzt - suLetzter > 5 * 60000) {
+      S.su.zeit[p.id] = (S.su.zeit[p.id] || 0) + Math.max(0, suLetzter - S.su.seit) / 1000;
+      S.su.laeuft = false;
+      T.suHinweis = { art: 'info', text: 'Die Spieluhr hat angehalten, solange der Rechner geschlafen hat.' };
+      suLetzter = jetzt; sichern(); zeichneSpieluhr(); return;
+    }
+    suLetzter = jetzt;
+    if (S.su.laeuft && !S.su.um[p.id] && suZeit(p) >= suPlan(p)) {
+      S.su.um[p.id] = true;
+      const n = suNachbar(1);
+      if (n && !suGrenze(p, n)) { suWechsel(n.id, true); return; }
+      T.suHinweis = { art: 'um', id: p.id };
+      suFalten(); sichern(); zeichneSpieluhr(); return;
+    }
+    if (T.suHinweis && T.suHinweis.bis && jetzt > T.suHinweis.bis) { T.suHinweis = null; zeichneSpieluhr(); }
+    if (S.su.laeuft && jetzt - suGesichert > 15000) { suFalten(); sichern(); suGesichert = jetzt; }
+    suZeitZeichnen();
+  }
+  function spieluhrHTML() {
+    if (!S.su.an) return `<button type="button" class="su-start" data-su="start" title="Startet die Spieluhr mit Sonntag · Abend">${IKON.los}<span>Spiel beginnen</span></button>`;
+    const p = suPh(), v = suNachbar(-1), n = suNachbar(1);
+    const vT = v ? `Zurück zu ${suName(v)}` : 'Das ist die erste Tageszeit';
+    const nT = n ? (p.schlaf ? `Nacht überspringen, weiter zu ${suName(n)}` : `Weiter zu ${suName(n)}`) : 'Das ist die letzte Tageszeit';
+    const pT = S.su.laeuft ? 'Spieluhr anhalten' : 'Spieluhr weiterlaufen lassen';
+    return `<button type="button" class="su-pfeil" data-su="zurueck" ${v ? '' : 'disabled'} title="${esc(vT)}" aria-label="${esc(vT)}">${IKON.zurueck}</button>`
+      + `<button type="button" class="su-anzeige" data-su="tafel" title="Alle Tageszeiten und Zeiten"><span class="su-name">${esc(`${suTag(p)} · ${suUhrName(p.uhr)}`)}</span><span class="su-zeit"></span></button>`
+      + `<button type="button" class="su-pause" data-su="pause" title="${pT}" aria-label="${pT}" aria-pressed="${!S.su.laeuft}">${S.su.laeuft ? IKON.pause : IKON.los}</button>`
+      + `<button type="button" class="su-pfeil${p.schlaf && n ? ' su-schlaf' : ''}" data-su="weiter" ${n ? '' : 'disabled'} title="${esc(nT)}" aria-label="${esc(nT)}">${p.schlaf && n ? '<span>Nacht überspringen</span>' : ''}${IKON.weiter}</button>`;
+  }
+  function suHinweisHTML() {
+    const h = T.suHinweis;
+    if (!h || !S.su.an) return '';
+    const kopf = (t) => `<div class="su-h-kopf"><b>${t}</b><button type="button" class="zu-knopf klein" data-su="hinweis-zu" aria-label="Hinweis schließen">×</button></div>`;
+    if (h.art === 'info') return kopf('Spieluhr') + `<p>${esc(h.text)}</p><div class="knopfzeile"><button type="button" class="knopf klein" data-su="pause">Weiterlaufen lassen</button></div>`;
+    const p = suPh(h.id);
+    if (!p) return '';
+    if (h.art === 'um') {
+      const n = suNachbar(1);
+      const wohin = n ? `<button type="button" class="knopf klein voll" data-su="weiter">${p.schlaf ? 'Nacht vorbei, weiter' : 'Weiter'} zu ${esc(suName(n))}</button>` : '';
+      return kopf(`Die Zeit für ${esc(suName(p))} ist um.`) + `<p>Bring zu Ende, was gerade läuft. Dann:</p><div class="knopfzeile">${wohin}<button type="button" class="knopf klein" data-su="plus5">Noch 5 Minuten</button></div>`;
+    }
+    if (h.art === 'vor') {
+      return kopf(`${esc(h.sid)} gehört zu ${esc(suName(p, h.weg))}.`) + `<div class="knopfzeile"><button type="button" class="knopf klein voll" data-su-zu="${p.id}">Uhr vorstellen</button><button type="button" class="knopf klein" data-su="hinweis-zu">Nein, so lassen</button></div>`;
+    }
+    // neu: eine neue Tageszeit hat begonnen
+    let x = kopf(`Jetzt: ${esc(suName(p))}`);
+    const sz = suSzenen(p);
+    if (sz) x += `<p>Hierher gehört ${sz}.</p>`;
+    const knoepfe = [];
+    if (h.vonSelbst && S.uhr !== p.uhr) {
+      x += `<p>Die Seite zeigt noch ${esc(suUhrName(S.uhr))}, bis du die Szene wechselst.</p>`;
+      knoepfe.push(`<button type="button" class="knopf klein voll" data-su="umstellen">Jetzt auf ${esc(suUhrName(p.uhr))}</button>`);
+    }
+    const v = suNachbar(-1);
+    if (h.vonSelbst && v) knoepfe.push(`<button type="button" class="knopf klein" data-su="zurueck">Noch ${esc(v.titel || suUhrName(v.uhr))}</button>`);
+    if (p.schlaf && suNachbar(1)) {
+      x += '<p>Schlafen alle, dann überspring die Nacht.</p>';
+      knoepfe.push('<button type="button" class="knopf klein" data-su="weiter">Nacht überspringen</button>');
+    }
+    return x + (knoepfe.length ? `<div class="knopfzeile">${knoepfe.join('')}</div>` : '');
+  }
+  function suZeitZeichnen() {
+    const box = $('#spieluhr');
+    if (!box || !S.su.an) return;
+    const p = suPh(), rest = suPlan(p) - suZeit(p);
+    const el = $('.su-zeit', box);
+    if (el) el.textContent = rest > -1 ? `noch ${uhrText(Math.max(0, rest))}` : `${uhrText(-rest)} drüber`;
+    box.classList.toggle('ueber', rest <= -1);
+    if (T.overlay && T.overlay.art === 'spieluhr') {
+      const s = $('[data-su-lauf="summe"]'), z = $('[data-su-lauf="phase"]');
+      if (s) s.textContent = dauer(SU.phasen.reduce((a, q) => a + suZeit(q), 0));
+      if (z) z.textContent = uhrText(suZeit(p));
+    }
+  }
+  function zeichneSpieluhr() {
+    const box = $('#spieluhr'), hw = $('#su-hinweis');
+    if (!box || !SU) return;
+    box.innerHTML = spieluhrHTML();
+    box.classList.toggle('an', S.su.an);
+    box.classList.toggle('pause', S.su.an && !S.su.laeuft);
+    document.body.classList.toggle('mit-spieluhr', S.su.an);
+    const html = suHinweisHTML();
+    hw.innerHTML = html;
+    hw.hidden = !html;
+    hw.className = `su-hinweis${T.suHinweis ? ' ' + T.suHinweis.art : ''}`;
+    if (html) {
+      // Unter die Spieluhr, aber nicht über den Rand
+      const bar = $('.bar'), w = hw.offsetWidth;
+      hw.style.left = Math.max(16, Math.min(box.offsetLeft, bar.clientWidth - w - 16)) + 'px';
+    }
+    const j = suJetzt();
+    $$('.uhr [data-uhr]').forEach((b) => {
+      b.classList.toggle('jetzt', b.dataset.uhr === j);
+      b.title = b.dataset.uhr === j ? 'Tageszeit der Spieluhr' : '';
+    });
+    suZeitZeichnen();
+  }
+  function spieluhrTafel() {
+    const f = suFolge(), jetzt = S.su.an ? suPh() : null;
+    const gespielt = SU.phasen.reduce((a, p) => a + suZeit(p), 0), geplant = f.reduce((a, p) => a + suPlan(p), 0);
+    let h = olKopf('Spieluhr', 'Der Abend in Tageszeiten') + '<div class="ol-inhalt">';
+    h += `<p class="su-summe">Gespielt <b data-su-lauf="summe">${dauer(gespielt)}</b>, geplant ${dauer(geplant)} ohne Pausen. Das Handbuch rät zu einer Pause nach Teil 2 und einer nach Teil 3.</p>`;
+    h += `<div class="su-weg"><span class="etikett">In S6 entscheidet die Gruppe</span><div class="knopfreihe"><button type="button" data-su-weg="georgi" aria-pressed="${S.su.weg !== 'berg'}">Erst Georgi</button><button type="button" data-su-weg="berg" aria-pressed="${S.su.weg === 'berg'}">Gleich auf den Berg</button></div></div>`;
+    let tag = null;
+    for (const p of f) {
+      if (p.tag !== tag) {
+        if (tag) h += '</div>';
+        tag = p.tag;
+        h += `<h3 class="su-tag">${esc(suTag(p))}${SU.zusatz[p.tag] ? ` <span>${esc(SU.zusatz[p.tag])}</span>` : ''}</h3><div class="su-liste">`;
+      }
+      const ist = jetzt === p, z = suZeit(p), plan = suPlan(p) / 60, vorbei = !ist && z >= 1;
+      h += `<div class="su-zeile${ist ? ' jetzt' : ''}${vorbei ? ' vorbei' : ''}">`
+        + `<button type="button" class="su-ph" data-su-phase="${p.id}" aria-current="${ist}" title="${ist ? 'Jetzt' : 'Die Spieluhr hierher stellen'}">${esc(p.titel || suUhrName(p.uhr))}${ist ? ' <span class="su-jetzt">jetzt</span>' : ''}</button>`
+        + `<span class="su-sz">${suSzenen(p)}</span>`
+        + `<span class="su-gebraucht"${ist ? ' data-su-lauf="phase"' : ''}>${ist || vorbei ? uhrText(z) : ''}</span>`
+        + `<span class="su-plan"><button type="button" class="knopf klein" data-su-min="${p.id}|-5" aria-label="5 Minuten weniger">−</button><span>${plan} Min.</span><button type="button" class="knopf klein" data-su-min="${p.id}|5" aria-label="5 Minuten mehr">+</button></span>`
+        + '</div>';
+    }
+    h += '</div>';
+    if (S.su.an) {
+      h += `<div class="knopfzeile su-tafel-knoepfe"><button type="button" class="knopf" data-su="zurueck" ${suNachbar(-1) ? '' : 'disabled'}>${IKON.zurueck} Zurück</button><button type="button" class="knopf" data-su="pause">${S.su.laeuft ? `${IKON.pause} Pause` : `${IKON.los} Weiterlaufen lassen`}</button><button type="button" class="knopf" data-su="weiter" ${suNachbar(1) ? '' : 'disabled'}>Weiter ${IKON.weiter}</button></div>`;
+      h += T.suReset
+        ? '<div class="knopfzeile su-reset"><span>Alle Zeiten löschen und von vorn?</span><button type="button" class="knopf klein gefahr" data-su="reset">Ja, zurücksetzen</button><button type="button" class="knopf klein" data-su="reset-nein">Nein</button></div>'
+        : '<div class="knopfzeile su-reset"><button type="button" class="knopf klein" data-su="reset">Spieluhr zurücksetzen</button></div>';
+    } else {
+      h += `<div class="knopfzeile su-tafel-knoepfe"><button type="button" class="knopf" data-su="start">${IKON.los} Spiel beginnen</button></div>`;
+    }
+    h += '<p class="klein-text">Die Minuten sind die »Wie lange« der Szenen im Handbuch. Wie sich S9 auf Nachmittag und Abend verteilt, hat die App angenommen. Innerhalb eines Tages wechselt die Uhr von selbst und sagt es. In die Nacht und aus ihr heraus fragt sie erst. Eine Zeile antippen stellt die Uhr dorthin.</p>';
+    return h + '</div>';
+  }
+
   // ---------- Zeichnen ----------
   function nachZeichnen(root) {
     $$('img[data-req-bild]', root).forEach((img) => {
@@ -1479,6 +1709,7 @@
     document.documentElement.dataset.theme = S.theme;
     zeichneHaupt();
     zeichneGespraech();
+    zeichneSpieluhr();
     // Ein Sprung auf eine andere Seite schließt ein offenes Fenster
     if (T.overlay || !$('#overlay').hidden) zeichneOverlay();
   }
@@ -1497,10 +1728,14 @@
         const imDorf = (c) => c === 'S9' || (ORTE[c] && c.startsWith('D'));
         const bleib = S.rail === 'szenen' && imDorf(S.ort) && imDorf(h);
         S.ort = h;
+        // Szenen mit fester Uhrzeit im Buch zeigen ihre Tageszeit, alles andere die der Spieluhr
+        const jetzt = suJetzt();
         if (SZENEN_UHR[h]) S.uhr = SZENEN_UHR[h];
+        else if (jetzt) S.uhr = jetzt;
         // Das offene Dorf ist nachmittags oder abends; kommt man aus dem Georgimorgen, stellt die Uhr auf Nachmittag
         if (h === 'S9' && S.uhr !== 'nachmittags' && S.uhr !== 'abends') S.uhr = 'nachmittags';
         S.rail = SZ[h] || bleib ? 'szenen' : ORTE[h] ? 'orte' : 'requisiten';
+        suVorschlag(h);
       }
       T.overlay = null;
       sichern();
@@ -1522,6 +1757,22 @@
     const t = ev.target;
     let el;
     if (t.closest('[data-kontext-zu]')) { schliesseKontext(); return; }
+    if ((el = t.closest('[data-su]'))) { suKnopf(el.dataset.su); return; }
+    if ((el = t.closest('[data-su-zu]')) || (el = t.closest('[data-su-phase]'))) { suWechsel(el.dataset.suZu || el.dataset.suPhase); return; }
+    if ((el = t.closest('[data-su-min]'))) {
+      const [id, d] = el.dataset.suMin.split('|'), p = suPh(id);
+      S.su.min[id] = Math.max(5, (S.su.min[id] ?? p.min) + (S.su.plus[id] || 0) + Number(d));
+      delete S.su.plus[id];
+      S.su.um[id] = suZeit(p) >= suPlan(p) && S.su.um[id];
+      sichern(); zeichneOverlay(); zeichneSpieluhr(); return;
+    }
+    if ((el = t.closest('[data-su-weg]'))) {
+      S.su.weg = el.dataset.suWeg;
+      // Gilt die laufende Tageszeit auf dem anderen Weg nicht, geht es zur nächsten, die gilt
+      const p = suPh();
+      if (p && p.weg && p.weg !== S.su.weg) { const q = SU.phasen.slice(suPos(p)).find((x) => !x.weg || x.weg === S.su.weg); if (q) { suWechsel(q.id); return; } }
+      sichern(); zeichneOverlay(); zeichneSpieluhr(); return;
+    }
     if ((el = t.closest('[data-modell]'))) { schliesseKontext(); zeigeOverlay('modell', el.dataset.modell); return; }
     if ((el = t.closest('[data-m]'))) {
       const M = window.LahnreitModell;
@@ -1718,6 +1969,19 @@
   $('#geraet-knopf').addEventListener('click', () => { S.geraet = tablet() ? 'laptop' : 'tablet'; sichern(); setzeGeraet(); zeichne(); });
   if (FINGER && FINGER.addEventListener) FINGER.addEventListener('change', () => { if (!S.geraet) { setzeGeraet(); zeichne(); } });
   $('.uhr').innerHTML = UHR.map((u) => `<button type="button" data-uhr="${u.k}" aria-pressed="${S.uhr === u.k}">${u.name}</button>`).join('');
+  if (SU) {
+    S.su = Object.assign(suLeer(), S.su && typeof S.su === 'object' ? S.su : {});
+    if (S.su.an && !suPh()) S.su = suLeer();
+    // War die App länger zu, hat die Spieluhr Pause gemacht
+    if (S.su.laeuft && Date.now() - S.su.seit > 5 * 60000) {
+      S.su.laeuft = false;
+      T.suHinweis = { art: 'info', text: 'Die Spieluhr hat angehalten, solange die App zu war.' };
+    }
+    setInterval(suTick, 1000);
+    document.addEventListener('visibilitychange', () => { if (document.hidden && S.su.laeuft) { suFalten(); sichern(); } });
+  } else {
+    $('#spieluhr').hidden = true;
+  }
 
   window.addEventListener('hashchange', route);
   document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement && T.zeigen) schliesseZeigen(); });

@@ -85,7 +85,7 @@ button:focus-visible, a:focus-visible, summary:focus-visible, input:focus-visibl
 
 /* ---------- Leiste ---------- */
 .bar {
-  position: sticky; top: 0; z-index: 30; height: var(--bar-h);
+  position: sticky; top: 0; z-index: 41; height: var(--bar-h);
   display: flex; align-items: center; gap: 1rem; padding: 0 16px;
   background: var(--surface); border-bottom: 1px solid var(--line);
 }
@@ -746,3 +746,97 @@ img.kopf.klein { width: 26px; height: 26px; display: inline-block; vertical-alig
 :root[data-geraet="tablet"] .st-kopf { min-height: 46px; font-size: 1rem; }
 :root[data-geraet="tablet"] .st-kopf .nr { width: 1.8rem; height: 1.8rem; font-size: 0.88rem; }
 :root[data-geraet="tablet"] .rail .item.unter { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+
+/* ---------- Spieluhr ---------- */
+.spieluhr { display: flex; align-items: stretch; flex-shrink: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.spieluhr:not(.an) { border: 0; }
+.spieluhr button {
+  border: 0; background: transparent; color: var(--ink); min-height: 38px; padding: 0 0.6rem; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 0.35rem; font-family: var(--font-display); font-size: 0.88rem;
+}
+.spieluhr button + button { border-left: 1px solid var(--line); }
+.spieluhr button:hover:not(:disabled) { background: var(--surface-2); }
+.spieluhr button:disabled { color: var(--line); cursor: default; }
+.spieluhr svg { width: 13px; height: 13px; fill: currentColor; flex-shrink: 0; }
+.spieluhr .su-start { border: 1px solid var(--line); border-radius: 10px; padding: 0 0.85rem; font-size: 0.92rem; }
+.spieluhr .su-start svg { color: var(--accent); }
+.su-anzeige { flex-direction: column; align-items: flex-start !important; justify-content: center; gap: 0 !important; line-height: 1.1; min-width: 8.2rem; }
+.su-name { font-size: 0.72rem; color: var(--muted); white-space: nowrap; }
+.su-zeit { font-weight: 600; font-size: 0.98rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.spieluhr.ueber .su-zeit { color: var(--st1); }
+.spieluhr.pause .su-zeit { color: var(--muted); }
+.spieluhr.pause .su-pause { background: var(--accent); color: var(--accent-ink); }
+.spieluhr .su-schlaf span { font-size: 0.82rem; white-space: nowrap; }
+/* Die Tageszeit der Spieluhr: ein Punkt unter dem Reiter */
+.uhr button { position: relative; }
+.uhr button.jetzt::after { content: ''; position: absolute; left: 50%; bottom: 4px; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%; background: currentColor; opacity: 0.8; }
+.uhr button.jetzt:not([aria-pressed="true"])::after { background: var(--st1); opacity: 1; }
+.su-hinweis {
+  position: absolute; top: calc(100% + 8px); left: 16px; width: min(400px, calc(100vw - 32px)); z-index: 2;
+  background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-left: 4px solid var(--accent);
+  border-radius: 10px; box-shadow: 0 12px 34px rgba(0, 0, 0, 0.3); padding: 0.55rem 0.75rem 0.7rem; font-family: var(--font-display);
+}
+.su-hinweis.um { border-left-color: var(--st1); }
+.su-hinweis.info { border-left-color: var(--muted); }
+.su-h-kopf { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.6rem; }
+.su-h-kopf b { font-weight: 600; font-size: 0.98rem; padding-top: 0.2rem; }
+.su-hinweis p { margin: 0.25rem 0 0.5rem; font-size: 0.9rem; }
+.su-hinweis .knopfzeile { gap: 0.4rem; }
+.knopf.voll { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+/* Tafel */
+.su-summe { margin: 0 0 0.8rem; }
+.su-weg { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.8rem; margin-bottom: 0.6rem; }
+.su-tag { margin: 1rem 0 0.35rem; font: 600 1rem var(--font-display); }
+.su-tag span { font-weight: 400; font-size: 0.85rem; color: var(--muted); margin-left: 0.3rem; }
+.su-liste { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.su-zeile { display: grid; grid-template-columns: minmax(8rem, 1.2fr) minmax(0, 1.4fr) 3.6rem auto; align-items: center; gap: 0.5rem; padding: 0.3rem 0.5rem; border-top: 1px solid var(--line); }
+.su-zeile:first-child { border-top: 0; }
+.su-zeile.jetzt { background: var(--accent-soft); }
+.su-ph { border: 0; background: none; text-align: left; padding: 0.35rem 0.2rem; min-height: 36px; cursor: pointer; font: 500 0.95rem var(--font-display); color: var(--ink); }
+.su-ph:hover { color: var(--accent); }
+.su-jetzt { font-size: 0.72rem; font-weight: 600; color: var(--accent-ink); background: var(--accent); border-radius: 99px; padding: 0.05rem 0.45rem; margin-left: 0.2rem; }
+.su-sz { font-size: 0.85rem; display: flex; flex-wrap: wrap; gap: 0.1rem 0.45rem; }
+.su-gebraucht { font: 0.85rem var(--font-display); font-variant-numeric: tabular-nums; color: var(--muted); text-align: right; }
+.su-zeile.jetzt .su-gebraucht { color: var(--ink); font-weight: 600; }
+.su-plan { display: inline-flex; align-items: center; gap: 0.3rem; font: 0.88rem var(--font-display); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.su-plan span { min-width: 3.6rem; text-align: center; }
+.su-plan .knopf { min-width: 32px; justify-content: center; padding: 0.1rem 0.4rem; }
+.su-tafel-knoepfe { margin-top: 1rem; }
+.su-tafel-knoepfe svg { width: 12px; height: 12px; fill: currentColor; }
+.su-reset { margin-top: 0.6rem; align-items: center; }
+@media (max-width: 1440px) {
+  body.mit-spieluhr .brand span { display: none; }
+  /* Schmaler: Nacht überspringen nur als Zeichen, der Hinweis sagt es in Worten */
+  .spieluhr .su-schlaf span { display: none; }
+}
+@media (max-width: 1400px) { #suche-knopf { display: none; } }
+@media (max-width: 1180px) { .brand { display: none; } }
+@media (max-width: 1100px) {
+  .bar { gap: 0.6rem; }
+  .uhr button, :root[data-geraet="tablet"] .uhr button { padding: 0 0.5rem; }
+  .spieluhr button, :root[data-geraet="tablet"] .spieluhr button { padding: 0 0.5rem; }
+}
+/* Zwischen Tablet hochkant und Laptop: Spieluhr und Tageszeiten oben, Suche und Knöpfe darunter */
+@media (min-width: 861px) and (max-width: 1000px) {
+  :root { --bar-h: 104px; }
+  :root[data-geraet="tablet"] { --bar-h: 120px; }
+  .bar { flex-wrap: wrap; align-content: center; row-gap: 8px; column-gap: 0.5rem; }
+  .uhr { flex: 1; }
+  .uhr button { flex: 1; padding: 0 0.4rem; }
+  .bar-rechts { margin-left: 0; width: 100%; }
+  .suche { flex: 1; }
+  .suche input { width: 100%; flex: 1; }
+  #suche-knopf { display: inline-flex; }
+}
+@media (max-width: 1280px) { body.mit-spieluhr .brand { display: none; } }
+@media (max-width: 860px) {
+  .su-zeile { grid-template-columns: 1fr auto; }
+  .su-sz { grid-column: 1 / -1; grid-row: 2; padding-left: 0.2rem; }
+  .su-gebraucht { grid-row: 1; grid-column: 2; }
+  .su-plan { grid-column: 1 / -1; justify-content: flex-end; }
+  .spieluhr.an { flex: 1; }
+  .spieluhr .su-anzeige { flex: 1; }
+}
+:root[data-geraet="tablet"] .spieluhr button { min-height: 46px; padding: 0 0.75rem; }
+:root[data-geraet="tablet"] .su-ph { min-height: 46px; }
+:root[data-geraet="tablet"] .su-plan .knopf { min-width: 42px; }

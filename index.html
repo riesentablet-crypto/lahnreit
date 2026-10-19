@@ -13,6 +13,7 @@
 <header class="bar">
   <button type="button" class="leise nur-schmal" id="rail-knopf" aria-controls="rail">Liste</button>
   <div class="brand"><b>Lahnreit 1956</b><span>Spielleitung</span></div>
+  <div class="spieluhr" id="spieluhr" role="group" aria-label="Spieluhr"></div>
   <div class="uhr" role="group" aria-label="Tageszeit"></div>
   <div class="bar-rechts">
     <div class="suche"><input id="suche" type="search" placeholder="Suchen, z. B. Knopf" aria-label="Im ganzen Abenteuer suchen" autocomplete="off"><button type="button" class="leise" id="suche-knopf">Suchen</button></div>
@@ -21,6 +22,7 @@
     <button type="button" class="leise" id="klang-knopf" aria-label="Klang" title="Klang: was läuft, Lautstärke, Dorfgeschichten">♪</button>
     <button type="button" class="leise" id="thema-knopf" aria-label="Hell oder dunkel" title="Hell oder dunkel">◐</button>
   </div>
+  <div class="su-hinweis" id="su-hinweis" role="status" hidden></div>
 </header>
 <div class="shell">
   <aside class="rail" id="rail" aria-label="Ablauf, Orte und Requisiten"></aside>
@@ -37,6 +39,7 @@
 <script src="data/requisiten.js"></script>
 <script src="data/verbindungen.js"></script>
 <script src="data/frauen.js"></script>
+<script src="data/spieluhr.js"></script>
 <script src="data/klang-dateien.js"></script>
 <script src="data/klang.js"></script>
 <script src="klang.js"></script>

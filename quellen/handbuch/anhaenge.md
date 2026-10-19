@@ -403,6 +403,43 @@ Unter die Tabelle schreibst du im Spiel drei Listen. Lass dafür auf dem Ausdruc
 
 **Stabilität.** Pro Ermittler eine Spalte, und darunter die Verluste mit Szenennummer. Das brauchst du am Ende: Wer sein geheimes Ziel erreicht, bekommt in S25 1W6 zurück.
 
+## Hanni statt Hias
+
+Spielt eine Frau die dritte Figur, nimm statt Hias **Johanna Schwaighofer, die Hanni**. Sie hat denselben Nachnamen, dieselben Werte, dieselbe Ausrüstung und dasselbe Geheimnis: Die Gesellschaft bezahlt sie, und wenn die Bahn gebaut ist, soll sie Betriebsleiterin werden. Alles, was das Buch über Hias sagt, gilt für sie. Anders ist nur, wie ihr das Dorf begegnet.
+
+**Wer sie ist.** 37, aus Krün, Skilehrerin, die ohne Patent Touren führt. Ein Bergführerpatent bekommt 1956 in Bayern keine Frau; die erste staatlich geprüfte Bergführerin Deutschlands war 1988 Gudrun Weikert. Im Krieg, als die Bergführer an der Front waren, hat Hanni die Gäste ihrer Mutter selbst geführt, nach dem Krieg den amerikanischen Offizieren in Garmisch das Skifahren beigebracht. Im März war sie mit Seefried und Lindner auf dem Sattel, genau wie Hias.
+
+**Was du vor dem Spiel tust.**
+
+- **App:** beim Spielstart »Mit Hanni beginnen« wählen oder unter Personen oben umschalten. Danach liest jeder Text mit Hanni, und im Gespräch steht bei den zehn Figuren unten, warum sie ihr anders begegnen.
+- **Bögen:** Hannis Vorder- und Rückseite, dazu die Rückseiten von Brandl und Hagedorn »wenn Hanni mitspielt«. Sie stehen auf der Leinwand der Charakterbögen neben den anderen.
+- **Handouts:** Seite 2 (Wiesingers Zettel) und Seite 18 (Hüttenbuch) aus der Datei Lahnreit-Handouts-1956-Hanni.pdf statt der normalen. Alles andere bleibt; auf den Stücken aus der Joppe steht nur der Nachname.
+- **Ihr Bild:** der Prompt »Hanni Schwaighofer: Fotopostkarte, 1953« in »Die drei Ermittler«, Reiter Bildprompts.
+
+**Wie ihr das Dorf begegnet.** Fünf Figuren stehen eine Stufe wärmer zu ihr als zu Hias, fünf eine Stufe kälter. In der Summe gleicht es sich aus. Die Frauen, die selbst von ihrer Arbeit leben oder fortwollen, mögen sie; die alten Männer, der Pfarrer und die Burschen nicht. Trag diese Werte im Haltungsbogen in die Spalte der dritten Figur ein.
+
+| Figur | zu Hias | zu Hanni | Warum |
+| --- | --- | --- | --- |
+| P1 Schwester Benedikta | neutral | kooperativ | Eine Frau, die allein mit ihrer Arbeit unterwegs ist wie sie selbst. Das achtet sie. |
+| P8 Die Lahnwirtin | neutral | kooperativ | Sie führt das Haus allein, seit ihr Mann gefallen ist. Eine Frau, die sich nichts sagen lässt, ist ihr recht. |
+| P9 Leni | skeptisch | neutral | Einer Frau gegenüber ist sie weniger auf der Hut. Ihr Schloss bleibt trotzdem zu. |
+| P16 Die Rosl | kooperativ | freundlich | Eine Frau in Kniebundhosen, die mit Männern auf den Berg geht: So wäre sie gern. |
+| P19 Die Traudl | skeptisch | neutral | Sie will selbst fort und in München arbeiten. Eine, die von daheim weg ist und davon lebt, interessiert sie. |
+| P2 Der Bürgermeister | skeptisch | feindselig | Gemeindesachen bespricht er nicht mit einem Weiberleut, auch nicht mit einer aus Werdenfels. |
+| P7 Die Kramerin | kooperativ | neutral | Eine Frau in Hosen gibt im Laden zu reden, und sie redet mit. |
+| P10 Der Martl | neutral | skeptisch | Für die Burschen gehört eine Frau nicht auf den Berg und nicht in Männersachen. |
+| P13 Der Moar-Kaspar | skeptisch | feindselig | Ein Weiberleut am Berg bringt Unglück. Das war schon so, als er jung war. |
+| P14 Der Pfarrer | skeptisch | feindselig | In der Fastenzeit hat er über Frauenzimmer in Mannsbildhosen gepredigt. Eine ledige, die mit zwei fremden Männern im Wirtshaus wohnt, ist für ihn die nächste. |
+
+**Was im Spiel anders klingt.** Sonst ändert sich nur der Name.
+
+- Mit einer Frau in der Gruppe sagen die Leute »die Herrschaften« statt »die Herren«. Rauch grüßt in S2 »die Dame, die Herren«.
+- Der Bürgermeister grüßt in S4 trotzdem »die Herren aus München« und schaut Hanni dabei nicht an.
+- Der Jäger zieht vor ihr den Hut und redet mit ihr wie mit einer Kollegin.
+- Maxi fragt im Gespräch »Du bist d'Hanni?« statt »Du bist der Bergführer?«.
+- Seefried beginnt am Telefon (S22) mit »Fräulein Schwaighofer« und nennt sie danach beim Vornamen.
+- Im Ausgang (S25) bekommt sie die Stelle nicht: Betriebsleiter wird ein Mann.
+
 ## Werte für Proben und Kampf
 
 Dieses Abenteuer ist eine Ermittlung, kein Gefecht. An drei Stellen kann es trotzdem körperlich werden, und für diese drei stehen hier Zahlen: der Abend im Sturm, wenn Maxi das Gewehr hebt (S17), die Schlägerei um den Maibaum (N8) und der Hang über dem Lahngraben (S13 und S24). Alles andere lässt sich mit einer Probe und einem Satz erzählen.

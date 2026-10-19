@@ -113,7 +113,7 @@ Ein Berliner Kurgast liegt tot unter dem Sattel über dem Bergdorf Lahnreit. Das
 | --- | --- |
 | **Wo** | Lahnreit, ein Bergdorf im Landkreis Miesbach, 950 Meter hoch, rund 180 Einwohner. Darüber liegen die Hochalm, der Sattel und der Mandlkopf mit 1790 Metern. |
 | **Wann** | Sonntag, 22., bis Donnerstag, 26. April 1956. Der Föhn ist vorbei, Neuschnee liegt bis ins Dorf, der Mond ist fast voll. |
-| **Wer ermittelt** | Max Brandl, 28, Kriminalkommissar. Dr. Ernst Hagedorn, 54, Gerichtsarzt. Hias Schwaighofer, 37, Bergführer. |
+| **Wer ermittelt** | Max Brandl, 28, Kriminalkommissar. Dr. Ernst Hagedorn, 54, Gerichtsarzt. Hias Schwaighofer, 37, Bergführer. Spielt eine Frau die dritte Figur, wird daraus Hanni Schwaighofer, Skilehrerin (Anhänge, »Hanni statt Hias«). |
 | **Der Tote** | Rolf Lindner, 37, aus Berlin. Er wohnte seit dem 7. April beim Lahnwirt, angeblich zur Erholung. In Wahrheit vermaß er für eine Münchner Bergbahn-Gesellschaft das Gelände für Lift und Hotel. |
 | **Der Täter** | Sebastian Gschwendtner, 52, Bauer und Witwer. Er ist der Vater von Leni, mit der sich Lindner heimlich traf. |
 | **Die Frist** | Am Donnerstag um sieben fährt der Wagen zurück nach München. Was bis dahin nicht bewiesen ist, bleibt offen. |

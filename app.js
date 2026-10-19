@@ -865,18 +865,18 @@
   }
   const wannInnen = (sid, ids, st = KL.status()) => ids.map((x) => wannKnopf(sid, x, st)).join('');
   const wannHTML = (sid, ids, tag = 'span', cls = 'kl-wann') => `<${tag} class="${cls}" data-kl-wann="${sid}|${ids.join(',')}">${wannInnen(sid, ids)}</${tag}>`;
-  // Im Ablauf: die Klänge zu Schritt nr (ab 1)
-  function wannSchritt(sid, nr) {
+  // An einer festen Stelle: Schritt nr im Ablauf (ab 1), '#haengt', '#anfang', '#haus:D6' oder '@P9' (hinter der Person unter »Jetzt hier«)
+  function wannSchritt(sid, nr, tag = 'div', cls = 'kl-wann kl-schritt') {
     if (!KL || !KW[sid]) return '';
     const ids = KW[sid].filter((w) => w[0] === nr).flatMap((w) => w.slice(1));
-    return ids.length ? wannHTML(sid, ids, 'div', 'kl-wann kl-schritt') : '';
+    return ids.length ? wannHTML(sid, ids, tag, cls) : '';
   }
-  // Im Vorlesetext: hinter das Satzstück; was nicht gefunden wird, steht am Ende
+  // Im Text: hinter das Satzstück ('' heißt: vor den Text); was nicht gefunden wird, steht am Ende
   function wannImText(sid, html) {
     if (!KL || !KW[sid]) return html;
     let rest = [];
     for (const [bei, ...ids] of KW[sid]) {
-      if (typeof bei !== 'string') continue;
+      if (typeof bei !== 'string' || /^[#@]/.test(bei)) continue;
       const i = html.indexOf(bei);
       if (i < 0) { rest = rest.concat(ids); continue; }
       const j = i + bei.length;
@@ -895,7 +895,7 @@
     const st = KL.status();
     let h = `<div class="ol-kopf"><div id="kl-ol-kopf">${klangKopf(st)}</div><button type="button" class="zu-knopf" data-ol-zu aria-label="Schließen">×</button></div><div class="ol-inhalt">`;
     h += `<div class="kl-steuer"><button type="button" class="knopf" data-kl-still>■ Alles ausblenden</button><label class="kl-laut">Lautstärke <input type="range" min="0" max="100" step="1" value="${Math.round(S.klang.laut * 100)}" data-kl-laut aria-label="Lautstärke"></label></div>`;
-    h += `<h3>Dorfgeschichten</h3>${KL.erzaehlungen().map((e) => `<div class="kl-geschichte"><div class="kl-gtitel"><span class="code">${e.id}</span> ${esc(e.name)}</div><section class="klang" data-klang="${e.id}" data-klang-ohne="1">${klangInnen(e.id, true)}</section></div>`).join('')}`;
+    h += `<h3>Dorfgeschichten</h3>${KL.erzaehlungen().map((e) => `<div class="kl-geschichte"><div class="kl-gtitel">${ANH[e.id] ? `<span class="tok tok-anh" data-voll="a|${e.id}" role="button" tabindex="0" title="Die Geschichte lesen, mit den Klängen an ihrer Stelle">${e.id}</span>` : `<span class="code">${e.id}</span>`} ${esc(e.name)}</div><section class="klang" data-klang="${e.id}" data-klang-ohne="1">${klangInnen(e.id, true)}</section></div>`).join('')}`;
     h += `<h3>Alle Einzelklänge</h3><div class="kl-knoepfe kl-alle" data-klang-alle>${alleKnoepfe()}</div>`;
     return h + '</div>';
   }
@@ -947,7 +947,7 @@
     h += wasHierSzene(sid);
     const mehr = e.mehr.map((x, k) => ({ x, k })).filter(({ x }) => !(sid === 'S9' && x.titel === 'Wohin sie gehen können'));
     if (mehr.length || e.haengt) {
-      h += `<section class="block"><h2>Mehr zur Szene</h2>${e.haengt ? zeile(`${sid}-haengt`, 'Wenn es hängt', ks.haengt || saetze(flach(e.haengt), 1), md(e.haengt), ks.haengt ? 'haengt mit-kurz' : 'haengt') : ''}${mehr.map(({ x, k }) => { const kk = (ks.mehr || [])[k]; return zeile(`${sid}-x${k}`, esc(x.titel), kk || saetze(flach(x.md), 1), md(x.md), kk ? 'mit-kurz' : ''); }).join('')}</section>`;
+      h += `<section class="block"><h2>Mehr zur Szene</h2>${e.haengt ? zeile(`${sid}-haengt`, 'Wenn es hängt', ks.haengt || saetze(flach(e.haengt), 1), md(e.haengt), ks.haengt ? 'haengt mit-kurz' : 'haengt') + wannSchritt(sid, '#haengt') : ''}${mehr.map(({ x, k }) => { const kk = (ks.mehr || [])[k]; return zeile(`${sid}-x${k}`, esc(x.titel), kk || saetze(flach(x.md), 1), md(x.md), kk ? 'mit-kurz' : ''); }).join('')}</section>`;
     }
     if (e.weiter) h += ks.weiter ? tipp(`s|${sid}|weiter`, `<span class="etikett">Weiter</span> ${inline(ks.weiter)}`, 'weiter') : `<div class="weiter"><span class="etikett">Weiter</span> ${inline(e.weiter)}</div>`;
     return h + '</article>';
@@ -987,7 +987,7 @@
         const funde = hs.funde.map((f, k) => fundZeile(f, `${sid}-hs${j}-f${k}`, sid, kh && (kh.funde || [])[k])).join('');
         const liegt = hs.liegt && !kh ? `<p class="haus-info"><span class="etikett">Was dort liegt</span> ${inline(hs.liegt)}</p>` : '';
         const planKnopf = PL[hs.ort] ? `<button type="button" class="knopf klein" data-planol="${hs.ort}|${sid}">Grundriss ${hs.ort} zeigen</button>` : '';
-        return zeile(`${sid}-hs${j}`, `<span class="code">${hs.ort}</span> ${esc(hs.titel)}`, (kh && kh.wer) || flach(hs.info['Wer zurückgeblieben ist'] || ''), `${planKnopf}${info}${liegt}${funde}`, kh ? 'haus mit-kurz' : 'haus');
+        return zeile(`${sid}-hs${j}`, `<span class="code">${hs.ort}</span> ${esc(hs.titel)}`, (kh && kh.wer) || flach(hs.info['Wer zurückgeblieben ist'] || ''), `${wannSchritt(sid, `#haus:${hs.ort}`)}${planKnopf}${info}${liegt}${funde}`, kh ? 'haus mit-kurz' : 'haus');
       }).join('');
     }
     const probenAmFund = new Set([...e.funde, ...e.haeuser.flatMap((hs) => hs.funde)].map((f) => PAF[`${sid}:${f.titel}`]).filter(Boolean));
@@ -1059,17 +1059,17 @@
       <div class="eck">${szenen.length ? `Szenen hier: ${szenen.join(' ')}` : ''}${frei}</div>${KO(code).kurz ? `<div class="ort-kurz">${inline(KO(code).kurz)}</div>` : ''}</div></header>`;
     h += klangLeiste(code);
     // Was man den Spielern sagt, steht oben: wie es aussieht, und wie ein Besuch anfängt
-    if (o.beschreibung) h += `<section class="aussehen"><div class="etikett">So sieht es aus</div>${md(o.beschreibung)}</section>`;
-    if (o.anfang) h += KO(code).anfang ? tipp(`o|${code}|anfang`, `<span class="etikett">So fängt es an</span> ${inline(KO(code).anfang)}`, 'anfang') : `<div class="anfang"><span class="etikett">So fängt es an</span> ${inline(o.anfang)}</div>`;
+    if (o.beschreibung) h += `<section class="aussehen"><div class="etikett">So sieht es aus</div>${wannImText(code, md(o.beschreibung))}</section>`;
+    if (o.anfang) h += (KO(code).anfang ? tipp(`o|${code}|anfang`, `<span class="etikett">So fängt es an</span> ${inline(KO(code).anfang)}`, 'anfang') : `<div class="anfang"><span class="etikett">So fängt es an</span> ${inline(o.anfang)}</div>`) + wannSchritt(code, '#anfang');
     const bilder = ortBilder(o);
     const jetzt = leuteAmOrt(code), neben = nebenAmOrt(code);
     let box = '';
     if (o.berg) {
       box += `<div class="klein-text">${klapp(inline(o.felder['Wer hier ist'] || ''), 6)}</div>`;
-      if (jetzt.length) box += `<ul class="leute">${jetzt.map((l) => (l.treffen ? treffenZeile(l) : `<li>${personKnopf(l.pid)}<div class="tut">${inline(l.text)}</div></li>`)).join('')}</ul>`;
+      if (jetzt.length) box += `<ul class="leute">${jetzt.map((l) => (l.treffen ? treffenZeile(l) : `<li>${personKnopf(l.pid)}<div class="tut">${inline(l.text)}${wannSchritt(code, `@${l.pid}`, 'span', 'kl-wann')}</div></li>`)).join('')}</ul>`;
       box += treffenHTML(code);
     } else {
-      box += jetzt.length ? `<ul class="leute">${jetzt.map((l) => (l.treffen ? treffenZeile(l) : `<li>${personKnopf(l.pid)}<div class="tut">${inline(l.text)}</div></li>`)).join('')}</ul>` : `<p class="klein-text">Um diese Zeit ist hier niemand von den 22.</p>`;
+      box += jetzt.length ? `<ul class="leute">${jetzt.map((l) => (l.treffen ? treffenZeile(l) : `<li>${personKnopf(l.pid)}<div class="tut">${inline(l.text)}${wannSchritt(code, `@${l.pid}`, 'span', 'kl-wann')}</div></li>`)).join('')}</ul>` : `<p class="klein-text">Um diese Zeit ist hier niemand von den 22.</p>`;
       box += treffenHTML(code);
       if (neben.length) box += `<div class="nebenliste"><div class="etikett">Außerdem</div>${neben.map((x) => {
         const i = SONST.indexOf(x), kn = KZ.nebenfiguren[i], mk = modellKnopf(modellNeben(x.wer));
@@ -1370,7 +1370,7 @@
   // ---------- Kontextfenster: der ganze Text hinter einer Kurzfassung ----------
   function vollText(key) {
     const [art, id, was, nr] = key.split('|');
-    if (art === 'a') return ANH[id] ? { titel: ANH[id].titel, html: md(ANH[id].md) } : null;
+    if (art === 'a') return ANH[id] ? { titel: ANH[id].titel, html: wannImText(id, md(ANH[id].md)) } : null;
     if (art === 'p') {
       const p = P[id];
       if (!p) return null;

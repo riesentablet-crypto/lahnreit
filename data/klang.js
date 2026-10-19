@@ -69,14 +69,14 @@
           { name: 'In der Kirche', s: [['L-kirche', -6], ['L-mauern', -20, FERN]] },
           { name: 'Auf dem Platz', s: [['L-leute', -8], ['L-roesser', -12], BACH_FERN] },
         ],
-        knoepfe: ['C-orgel', 'C-motorrad', 'C-hufe', 'C-blasmusik', ['C-boeller', 'Ein Böller'], ['C-stute', 'Die Stute steigt'], ['C-laeuten', 'Die Glocken läuten']],
+        knoepfe: ['C-orgel', 'C-hufe', 'C-blasmusik', ['C-boeller', 'Ein Böller'], ['C-stute', 'Die Stute steigt'], ['C-laeuten', 'Die Glocken läuten']],
       },
       S8: {
         lagen: [
           { name: 'Das leere Dorf', s: [...DORF_TAG, ['L-roesser', -22]], zufall: [['C-kette', -10, 30, 80]] },
           { name: 'In einem Haus', s: [['L-ofen', -12], ['L-uhr', -14]] },
         ],
-        knoepfe: [['C-orgel-dumpf', 'Orgel aus der Kirche'], 'C-gesang-dumpf', 'C-kirchentuer', ['C-viertel', 'Die Uhr schlägt Viertel'], 'C-kette', 'C-ottilie', 'C-hund-kette', 'C-balken', ['C-laeuten', 'Halb elf: die Glocken']],
+        knoepfe: [['C-orgel-dumpf', 'Orgel aus der Kirche'], 'C-gesang-dumpf', 'C-kirchentuer', ['C-viertel', 'Die Uhr schlägt Viertel'], 'C-kette', ['C-motorrad', 'Um acht: Rauch kommt'], 'C-ottilie', 'C-hund-kette', 'C-balken', ['C-laeuten', 'Halb elf: die Glocken']],
       },
       S9: {
         lagen: [
@@ -85,7 +85,7 @@
           { name: 'Am Abend', s: [...DORF_NACHT, ['L-feuer', -10]], zufall: [HUND_FERN] },
         ],
         uhr: { abends: 2, nachts: 2 },
-        knoepfe: [['C-vier', 'Es schlägt vier'], 'C-kuh', ['C-laeuten', 'Um sechs: Rosenkranz'], 'C-viertel', 'C-ziehharmonika'],
+        knoepfe: [['C-vier', 'Es schlägt vier'], 'C-kuh', ['C-laeuten', 'Um sechs: Rosenkranz'], ['C-viertel', 'Zeit vergeht: Viertelschlag'], 'C-ziehharmonika'],
       },
       // ---------- Teil 3: der Berg ----------
       S10: {
@@ -350,7 +350,8 @@
       ],
       S8: [
         ['gedämpft wie aus einem Keller,', 'L0', 'C-orgel-dumpf'], ['dann der Gesang,', 'C-gesang-dumpf'], ['Irgendwo rasselt eine Kette.', 'C-kette'],
-        ['die die Viertelstunden schlägt.', 'C-viertel'], [1, 'C-kirchentuer'], [2, 'C-laeuten'], [4, 'L1'],
+        ['die die Viertelstunden schlägt.', 'C-viertel'], [1, 'C-kirchentuer'], [2, 'C-laeuten'], [3, 'C-motorrad'], [4, 'L1'],
+        ['#haus:D6', 'C-ottilie'], ['#haus:D10', 'C-hund-kette', 'C-balken'],
       ],
       S9: [
         ['Am Georginachmittag:', 'L0'], ['einen Walzer, den heute keiner tanzen wird.', 'C-ziehharmonika'], ['Um vier schlägt die Kirchturmuhr,', 'C-vier'],
@@ -358,10 +359,10 @@
       ],
       S10: [['In der Küche zischt Wasser auf dem Herd.', 'L0', 'C-zischen'], ['Draußen auf dem Platz kräht ein Hahn,', 'C-hahn'], [4, 'L1']],
       S11: [['bis auf das Knirschen eurer Schritte.', 'L0'], ['Dann hechelt ein Hund,', 'C-hasso'], [5, 'C-ast']],
-      S12: [['Unter dem Eis gluckert der Bach, sonst ist es still.', 'L0'], [4, 'C-ausrutschen']],
+      S12: [['Unter dem Eis gluckert der Bach, sonst ist es still.', 'L0'], [4, 'C-ausrutschen'], ['#haengt', 'C-haeher', 'C-ast']],
       S13: [['Unter den Schuhnägeln kratzt der Harsch,', 'L0'], ['wie ein Balken im Haus.', 'C-hang'], [4, 'C-lahn']],
       S14: [['Die Tür ist nur mit einem Holzriegel zu,', 'L0'], ['der schwer in seiner Führung sitzt.', 'C-riegel'], ['Drinnen ist es kälter als draußen.', 'L1'], [4, 'L0']],
-      S15: [['Hier oben hört der Wind nicht auf.', 'L0'], ['ein hohles, kehliges Klonk,', 'C-raben']],
+      S15: [['Hier oben hört der Wind nicht auf.', 'L0'], ['ein hohles, kehliges Klonk,', 'C-raben'], ['#haengt', 'C-rabe']],
       S16: [['Der Wind dreht.', 'L0', 'C-boee'], ['hart wie Erbsen.', 'L1'], ['Weit unten bellt ein Hund,', 'C-hund-fern'], ['und danach ist nur noch Brausen.', 'L2']],
       S17: [
         ['Um vier ist es draußen dunkel wie in der Nacht.', 'L0'], ['dass die Balken knacken,', 'C-knacken'], ['bis die Augen tränen.', 'C-rauch'],
@@ -378,9 +379,19 @@
         ['mit einem leisen Klack.', 'L0', 'C-klappe'], ['Aus dem Kopfhörer rauscht es,', 'L1'], ['Traudl dreht die Kurbel', 'C-kurbel'],
         [2, 'C-bleistift'], [3, 'L2'], [4, 'L2'],
       ],
-      S23: [['Die Pendeluhr tickt laut in der stillen Stube.', 'L0']],
-      S24: [[1, 'L0'], ['Der eigene Atem pfeift.', 'L1'], ['Irgendwo im Hang knackt es, tief,', 'C-hang'], [4, 'C-lahn', 'C-lahn-wald', 'C-sterbe-hand']],
-      S25: [['Der Motor springt im Frost erst beim dritten Mal an', 'L0', 'C-motor'], ['Vom Kirchturm schlägt es sieben.', 'C-sieben'], [1, 'C-wagendach', 'C-bus-ab']],
+      S23: [['', 'C-hund-kette'], ['Die Pendeluhr tickt laut in der stillen Stube.', 'L0']],
+      S24: [[1, 'L0'], ['Der eigene Atem pfeift.', 'L1'], ['Irgendwo im Hang knackt es, tief,', 'C-hang'], [4, 'C-lahn', 'C-lahn-wald', 'C-sterbe-hand'], ['#haengt', 'C-scheibe']],
+      S25: [['', 'C-autotuer'], ['Der Motor springt im Frost erst beim dritten Mal an', 'L0', 'C-motor'], ['Vom Kirchturm schlägt es sieben.', 'C-sieben'], [1, 'C-wagendach', 'C-bus-ab']],
+      // Orte: Satzstück in »So sieht es aus«, '#anfang' hinter »So fängt es an«, '@P9' hinter der Person unter »Jetzt hier«
+      D1: [['das gelbe Schild der Posthaltestelle.', 'C-bus-ab']],
+      D6: [['ein Klappenschrank mit Kabeln und Stöpseln,', 'C-klappe', 'C-kurbel'], ['in die Küche des Hofs.', 'C-ottilie']],
+      D10: [['der jeden Fremden bis ans Ende der Kette verbellt.', 'C-hund-kette'], ['Nebenan wohnen die alten Hübls.', 'C-scheibe']],
+      D11: [['#anfang', 'C-stock']],
+      D14: [['und einem Zwinger daneben.', 'C-hund-kette']],
+      D15: [['@P9', 'C-handwagen']],
+      // Dorfgeschichten: Satzstück im Text des Anhangs (G7 antippen)
+      G7: [['kalbte beim Bichler die beste Kuh, in Steißlage.', 'L0', 'C-vieh', 'C-heulen'], ['schlug das Sterbeglöckerl einmal.', 'C-sterbe-schlag']],
+      G10: [['hallte ein einzelner Schuss durchs Tal.', 'C-schuss-tal']],
     },
   };
 })();

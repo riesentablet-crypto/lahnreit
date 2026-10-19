@@ -53,6 +53,8 @@
   const reqId = (ort) => (/^R-/.test(ort || '') && RQ[ort.slice(2)] ? ort.slice(2) : null);
   const VB = window.LAHNREIT_VERBINDUNGEN || {};
   const PAF = window.LAHNREIT_PROBEN_AM_FUND || {};
+  // Falsche Fährten G und Nebenstränge N aus dem Anhang, zum Antippen (data/anhang.js)
+  const ANH = window.LAHNREIT_ANHANG || {};
   // Brandls geheimes Ziel: die drei Frauen (data/frauen.js)
   const FR = window.LAHNREIT_FRAUEN || null;
   const FRAU = FR ? Object.fromEntries(FR.frauen.map((f) => [f.pid, f])) : {};
@@ -112,7 +114,7 @@
   }
   function verweise(html) {
     return html.replace(/\b([PSDB])(\d{1,2})([ab])?\b|\b([HGNM]\d{1,2}[ab]?)\b/g, (m, art, nr, buchst, tok) => {
-      if (tok) return `<span class="tok">${tok}</span>`;
+      if (tok) return ANH[tok] ? `<span class="tok tok-anh" data-voll="a|${tok}" role="button" tabindex="0" title="${esc(ANH[tok].titel)}">${tok}</span>` : `<span class="tok">${tok}</span>`;
       const id = art + nr;
       if (art === 'P' && P[id]) return `<a class="ref" href="#${id}" data-pid="${id}">${m}</a>`;
       if (art === 'S' && SZ[id]) return `<a class="ref" href="#${id}">${m}</a>`;
@@ -264,6 +266,12 @@
     return [...g.entries()].sort((a, b) => ordnung(a[0]) - ordnung(b[0]));
   }
   const STOP = new Set(['der', 'die', 'das', 'und', 'drei', 'aus', 'beim', 'dem', 'den']);
+  // Stichwörter, die das Buch anders nennt: Wer nach der Kurve fragt, meint die Lahnkehre (G8)
+  const STICH = [[/(^|\s)(kurve|kurven|kehre|lahnkehre|boschung|isabella|borgward|zirngibl|autounfall)(\s|$)/, /\bg8\b/]];
+  function textPasst(text, nq) {
+    const ft = fold(text);
+    return ft.includes(nq) || STICH.some(([q, t]) => q.test(nq) && t.test(ft));
+  }
   function themaPasst(t, nq) {
     const ft = fold(t);
     if (ft.includes(nq)) return true;
@@ -271,7 +279,7 @@
   }
   function wissende(t, q, ohne) {
     const nq = q ? fold(q) : null;
-    return PERSONEN.filter((x) => x.id !== ohne && x.katalog.some((r) => (t ? themaKey(r.thema) === t : (themaPasst(r.thema, nq) || fold(r.text).includes(nq)))));
+    return PERSONEN.filter((x) => x.id !== ohne && x.katalog.some((r) => (t ? themaKey(r.thema) === t : (themaPasst(r.thema, nq) || textPasst(r.text, nq)))));
   }
   const andereHTML = (L) => (L.length ? `<div class="ak-andere">Etwas dazu wissen: ${L.slice(0, 8).map((x) => `<a href="#${x.id}" data-pid="${x.id}">${esc(kurzName(x))}</a>`).join(', ')}</div>` : '');
 
@@ -841,6 +849,41 @@
     const an = st.knoepfe.includes(id);
     return `<button type="button" class="kl-knopf${an ? ' an' : ''}" data-kl-knopf="${id}|${pegel}" aria-pressed="${an}">${esc(name)}</button>`;
   }
+  // Klang an der Stelle, an der das Buch ihn hören lässt: im Vorlesetext hinter dem Satz, im Ablauf unter dem Schritt
+  const KW = (window.LAHNREIT_KLANG && window.LAHNREIT_KLANG.wann) || {};
+  function wannKnopf(sid, x, st) {
+    const rz = KL.rezept(sid);
+    if (!rz) return '';
+    if (/^L\d+$/.test(x)) {
+      const i = Number(x.slice(1)), L = rz.lagen[i];
+      if (!L) return '';
+      const an = st.seite === sid && st.nr === i;
+      return `<button type="button" class="kl-lage kl-mini${an ? ' an' : ''}" data-kl-lage="${sid}|${i}" aria-pressed="${an}" title="${an ? 'Ausblenden' : 'Leise darunter laufen lassen'}"><span class="kl-z" aria-hidden="true">${an ? (st.bereit ? '■' : '…') : '▶'}</span>${esc(L.name)}</button>`;
+    }
+    const k = rz.knoepfe.find((q) => KL.knopfId(q) === x);
+    return klangKnopf(x, Array.isArray(k) && k[1] ? k[1] : KL.titel(x), (Array.isArray(k) && k[2]) || 0, st).replace('class="kl-knopf', 'class="kl-knopf kl-mini');
+  }
+  const wannInnen = (sid, ids, st = KL.status()) => ids.map((x) => wannKnopf(sid, x, st)).join('');
+  const wannHTML = (sid, ids, tag = 'span', cls = 'kl-wann') => `<${tag} class="${cls}" data-kl-wann="${sid}|${ids.join(',')}">${wannInnen(sid, ids)}</${tag}>`;
+  // Im Ablauf: die Klänge zu Schritt nr (ab 1)
+  function wannSchritt(sid, nr) {
+    if (!KL || !KW[sid]) return '';
+    const ids = KW[sid].filter((w) => w[0] === nr).flatMap((w) => w.slice(1));
+    return ids.length ? wannHTML(sid, ids, 'div', 'kl-wann kl-schritt') : '';
+  }
+  // Im Vorlesetext: hinter das Satzstück; was nicht gefunden wird, steht am Ende
+  function wannImText(sid, html) {
+    if (!KL || !KW[sid]) return html;
+    let rest = [];
+    for (const [bei, ...ids] of KW[sid]) {
+      if (typeof bei !== 'string') continue;
+      const i = html.indexOf(bei);
+      if (i < 0) { rest = rest.concat(ids); continue; }
+      const j = i + bei.length;
+      html = html.slice(0, j) + wannHTML(sid, ids) + html.slice(j);
+    }
+    return rest.length ? html + wannHTML(sid, rest, 'div', 'kl-wann kl-schritt') : html;
+  }
   function klangKopf(st) {
     return `<div class="etikett">Klang</div><h2>${st.seite ? esc(st.name) : 'Es ist still'}</h2><div class="klein-text">${st.seite ? esc(seitenName(st.seite)) : 'Auf jeder Szene und jedem Ort oben: ▶ startet, was darunter läuft.'}</div>`;
   }
@@ -865,6 +908,7 @@
     if (kopf) kopf.innerHTML = klangKopf(st);
     const alle = $('[data-klang-alle]');
     if (alle) alle.innerHTML = alleKnoepfe();
+    $$('[data-kl-wann]').forEach((el) => { const [sid, ids] = el.dataset.klWann.split('|'); el.innerHTML = wannInnen(sid, ids.split(','), st); });
   }
 
   function szeneSeite(sid) {
@@ -893,7 +937,7 @@
           const kk = (ks.ablauf || [])[k];
           const kurz = a.kurz || kk || saetze(flach(a.md), 1);
           const rest = a.kurz ? (kk || saetze(flach(a.md), 1)) : '';
-          return `<li>${zeile(`${sid}-a${k}`, esc(kurz), rest, md(a.md), kk ? 'mit-kurz' : '')}</li>`;
+          return `<li>${zeile(`${sid}-a${k}`, esc(kurz), rest, md(a.md), kk ? 'mit-kurz' : '')}${wannSchritt(sid, k + 1)}</li>`;
         }).join('')}</ol>${text}`;
       }
       if (e.hinweise.length) h += `<div class="hinweise">${e.hinweise.map((x, k) => { const kk = (ks.hinweise || [])[k]; return zeile(`${sid}-h${k}`, esc(x.titel), kk || saetze(flach(x.md), 1), md(x.md), kk ? 'hinweis mit-kurz' : 'hinweis'); }).join('')}</div>`;
@@ -913,7 +957,7 @@
     const v = SZ[sid].ebenen.vorlesen;
     if (!v.length) return '';
     const [erst, ...rest] = v;
-    return `<section class="vorlesen-box" id="${sid}-v0"><div class="etikett">Vorlesen</div>${md(erst.md)}${rest.map((x, k) => zeile(`${sid}-v${k + 1}`, esc(x.titel), saetze(flach(x.md), 1), md(x.md), 'vorlesen')).join('')}</section>`;
+    return `<section class="vorlesen-box" id="${sid}-v0"><div class="etikett">Vorlesen</div>${wannImText(sid, md(erst.md))}${rest.map((x, k) => zeile(`${sid}-v${k + 1}`, esc(x.titel), saetze(flach(x.md), 1), md(x.md), 'vorlesen')).join('')}</section>`;
   }
   // Alles, was die Spieler in einer Szene finden, prüfen, hören oder gezeigt bekommen, jedes nur einmal
   function wasHierSzene(sid) {
@@ -1116,7 +1160,7 @@
     const q = T.frage.trim();
     if (q.length >= 2) {
       const nq = fold(q);
-      const treffer = themenGruppen(p).filter(([t, rows]) => themaPasst(t, nq) || rows.some((r) => fold(r.text).includes(nq)));
+      const treffer = themenGruppen(p).filter(([t, rows]) => themaPasst(t, nq) || rows.some((r) => textPasst(r.text, nq)));
       if (!treffer.length) {
         return `<div class="ak"><div class="ak-thema">»${esc(q)}«</div><div class="ak-nichts">${Pron(p)} weiß dazu nichts oder hat keine Meinung.</div>${andereHTML(wissende(null, q, p.id))}</div>`;
       }
@@ -1326,6 +1370,7 @@
   // ---------- Kontextfenster: der ganze Text hinter einer Kurzfassung ----------
   function vollText(key) {
     const [art, id, was, nr] = key.split('|');
+    if (art === 'a') return ANH[id] ? { titel: ANH[id].titel, html: md(ANH[id].md) } : null;
     if (art === 'p') {
       const p = P[id];
       if (!p) return null;
@@ -1805,7 +1850,11 @@
     if ((el = t.closest('[data-kl-knopf]'))) { const [id, p] = el.dataset.klKnopf.split('|'); KL.knopf(id, Number(p) || 0); return; }
     if (t.closest('[data-kl-aus]')) { KL.lageAus(); return; }
     if (t.closest('[data-kl-still]')) { KL.allesAus(); return; }
-    if ((el = t.closest('[data-voll]')) && !t.closest('a, [data-pid], button')) { zeigeKontext(el); return; }
+    if ((el = t.closest('[data-voll]')) && !t.closest('a, [data-pid], button')) {
+      // Ein Verweis in einer Zeile klappt sie nicht mit auf
+      if (el.classList.contains('tok')) ev.preventDefault();
+      zeigeKontext(el); return;
+    }
     if (!t.closest('#kontext')) schliesseKontext();
     if ((el = t.closest('[data-klapp]'))) {
       const k = el.closest('.klapp'); k.classList.toggle('offen');
